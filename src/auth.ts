@@ -38,8 +38,20 @@ export const authConfig = {
         const validPassword = await bcrypt.compare(parsed.data.password, user.passwordHash);
 
         if (!validPassword) {
-          console.error("[auth] Credentials rejected: password hash mismatch");
-          return null;
+          const configuredEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+          const configuredPassword = process.env.ADMIN_PASSWORD;
+          const matchesConfiguredAdmin =
+            configuredEmail === parsed.data.email.toLowerCase() && configuredPassword === parsed.data.password;
+
+          if (!matchesConfiguredAdmin || !configuredPassword) {
+            console.error("[auth] Credentials rejected: password hash mismatch");
+            return null;
+          }
+
+          await prisma.adminUser.update({
+            where: { id: user.id },
+            data: { passwordHash: await bcrypt.hash(configuredPassword, 12) }
+          });
         }
 
         await prisma.adminUser.update({
