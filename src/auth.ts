@@ -31,8 +31,23 @@ export const authConfig = {
         });
 
         if (!user) {
-          console.error("[auth] Credentials rejected: admin user not found");
-          return null;
+          const configuredEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+          const configuredPassword = process.env.ADMIN_PASSWORD;
+          const matchesConfiguredAdmin =
+            configuredEmail === parsed.data.email.toLowerCase() && configuredPassword === parsed.data.password;
+
+          if (!matchesConfiguredAdmin || !configuredPassword) {
+            console.error("[auth] Credentials rejected: admin user not found");
+            return null;
+          }
+
+          return prisma.adminUser.create({
+            data: {
+              email: parsed.data.email.toLowerCase(),
+              name: process.env.ADMIN_NAME?.trim() || "Portfolio Admin",
+              passwordHash: await bcrypt.hash(configuredPassword, 12)
+            }
+          });
         }
 
         const validPassword = await bcrypt.compare(parsed.data.password, user.passwordHash);
