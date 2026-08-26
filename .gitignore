@@ -1,0 +1,27 @@
+# dependencies
+node_modules
+
+# next
+.next
+out
+
+# production
+build
+dist
+
+# env
+.env
+.env*.local
+!.env.example
+
+# testing
+coverage
+playwright-report
+test-results
+
+# misc
+.DS_Store
+*.pem
+*.log
+*.tsbuildinfo
+.npm-cache

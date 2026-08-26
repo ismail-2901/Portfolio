@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --color-midnight: #09090b;
+  --color-panel: #111114;
+  --color-panel-soft: #18181b;
+  --color-ink: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-indigo-electric: #4f46e5;
+  --color-cyan-signal: #22d3ee;
+  --color-emerald-signal: #34d399;
+}
+
+:root {
+  color-scheme: dark;
+  background: #09090b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    #09090b;
+  background-size: 52px 52px;
+  color: #fafafa;
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.35);
+  color: #fafafa;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.container-shell {
+  width: min(1160px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(17, 17, 20, 0.72);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(18px);
+}
+
+.center-underline {
+  position: relative;
+}
+
+.center-underline::after {
+  position: absolute;
+  right: 50%;
+  bottom: -4px;
+  left: 50%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, #22d3ee, #4f46e5);
+  transition: right 180ms ease, left 180ms ease;
+}
+
+.center-underline:hover::after,
+.center-underline:focus-visible::after {
+  right: 0;
+  left: 0;
+}
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 2px #09090b, 0 0 0 4px #22d3ee;
+}
+
+.hero-height {
+  min-height: clamp(680px, 92vh, 960px);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.bento-item {
+  grid-column: span 4;
+}
+
+.bento-item:nth-child(1) {
+  grid-column: span 7;
+}
+
+.bento-item:nth-child(2) {
+  grid-column: span 5;
+}
+
+.bento-item:nth-child(3) {
+  grid-column: span 5;
+}
+
+.bento-item:nth-child(4) {
+  grid-column: span 7;
+}
+
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-item,
+  .bento-item:nth-child(n) {
+    grid-column: span 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AdminRole {
+  OWNER
+  EDITOR
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SkillLevel {
+  WORKING
+  ADVANCED
+  EXPERT
+}
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         AdminRole @default(OWNER)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  auditLogs    AuditLog[]
+
+  @@index([role])
+}
+
+model Profile {
+  id          String   @id @default("singleton")
+  name        String
+  role        String
+  location    String
+  shortBio    String   @db.Text
+  email       String
+  githubUrl   String
+  linkedinUrl String
+  resumeUrl   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  summary     String        @db.Text
+  body        String        @db.Text
+  techTags    String[]
+  githubUrl   String?
+  liveUrl     String?
+  featured    Boolean       @default(false)
+  order       Int           @default(0)
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+  images      ProjectImage[]
+  tags        Tag[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status, featured, order])
+  @@index([publishedAt])
+}
+
+model ProjectImage {
+  id        String   @id @default(cuid())
+  projectId String
+  url       String
+  alt       String
+  width     Int?
+  height    Int?
+  isCover   Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, isCover, order])
+}
+
+model Article {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  excerpt        String        @db.Text
+  body           String        @db.Text
+  seoTitle       String?
+  seoDescription String?
+  status         ContentStatus @default(DRAFT)
+  publishedAt    DateTime?
+  readingMinutes Int           @default(1)
+  tags           Tag[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+model Tag {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  projects Project[]
+  articles Article[]
+
+  @@index([name])
+}
+
+model Skill {
+  id        String     @id @default(cuid())
+  name      String
+  category  String
+  level     SkillLevel @default(ADVANCED)
+  order     Int        @default(0)
+  featured  Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([name, category])
+  @@index([featured, order])
+}
+
+model Experience {
+  id          String        @id @default(cuid())
+  company     String
+  role        String
+  location    String?
+  summary     String        @db.Text
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean       @default(false)
+  order       Int           @default(0)
+  status      ContentStatus @default(PUBLISHED)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status, order, startDate])
+}
+
+model ContactMessage {
+  id        String    @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  message   String    @db.Text
+  ipHash    String?
+  userAgent String?
+  readAt    DateTime?
+  archivedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([archivedAt, createdAt])
+  @@index([email])
+}
+
+model AuditLog {
+  id        String     @id @default(cuid())
+  actorId   String?
+  actor     AdminUser? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  metadata  Json?
+  ipHash    String?
+  createdAt DateTime   @default(now())
+
+  @@index([actorId, createdAt])
+  @@index([entity, entityId])
+}
