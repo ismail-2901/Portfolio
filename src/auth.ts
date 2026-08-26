@@ -37,7 +37,10 @@ export const authConfig = {
             configuredEmail === parsed.data.email.toLowerCase() && configuredPassword === parsed.data.password;
 
           if (!matchesConfiguredAdmin || !configuredPassword) {
-            console.error("[auth] Credentials rejected: admin user not found");
+            console.error("[auth] Credentials rejected: admin user not found and bootstrap credentials do not match", {
+              configuredEmail: Boolean(configuredEmail),
+              configuredPassword: Boolean(configuredPassword)
+            });
             return null;
           }
 
