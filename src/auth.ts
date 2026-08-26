@@ -31,12 +31,14 @@ export const authConfig = {
         });
 
         if (!user) {
+          console.error("[auth] Credentials rejected: admin user not found");
           return null;
         }
 
         const validPassword = await bcrypt.compare(parsed.data.password, user.passwordHash);
 
         if (!validPassword) {
+          console.error("[auth] Credentials rejected: password hash mismatch");
           return null;
         }
 
