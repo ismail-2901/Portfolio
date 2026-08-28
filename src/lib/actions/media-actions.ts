@@ -80,7 +80,7 @@ export async function uploadProjectImageAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/projects");
-  redirect(`/admin/projects/${parsed.projectId}`);
+  redirect(`/admin/projects/${parsed.projectId}?notice=uploaded`);
 }
 
 export async function deleteProjectImageAction(id: string) {
@@ -103,5 +103,5 @@ export async function deleteProjectImageAction(id: string) {
 
   revalidatePath("/");
   revalidatePath("/projects");
-  redirect(`/admin/projects/${image.projectId}`);
+  redirect(`/admin/projects/${image.projectId}?notice=deleted`);
 }

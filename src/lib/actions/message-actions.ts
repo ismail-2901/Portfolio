@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin";
 import { writeAuditLog } from "@/lib/audit";
@@ -24,6 +25,7 @@ export async function markMessageReadAction(id: string) {
   });
 
   revalidatePath("/admin/messages");
+  redirect("/admin/messages?notice=read");
 }
 
 export async function archiveMessageAction(id: string) {
@@ -43,4 +45,5 @@ export async function archiveMessageAction(id: string) {
   });
 
   revalidatePath("/admin/messages");
+  redirect("/admin/messages?notice=archived");
 }

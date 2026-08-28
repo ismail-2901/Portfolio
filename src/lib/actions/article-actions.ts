@@ -73,7 +73,7 @@ export async function createArticleAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/blog");
-  redirect(`/admin/articles/${article.id}`);
+  redirect(`/admin/articles/${article.id}?notice=created`);
 }
 
 export async function updateArticleAction(id: string, formData: FormData) {
@@ -111,7 +111,7 @@ export async function updateArticleAction(id: string, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/blog");
   revalidatePath(`/blog/${article.slug}`);
-  redirect(`/admin/articles/${article.id}`);
+  redirect(`/admin/articles/${article.id}?notice=saved`);
 }
 
 export async function deleteArticleAction(id: string) {
@@ -130,5 +130,5 @@ export async function deleteArticleAction(id: string) {
 
   revalidatePath("/");
   revalidatePath("/blog");
-  redirect("/admin/articles");
+  redirect("/admin/articles?notice=deleted");
 }

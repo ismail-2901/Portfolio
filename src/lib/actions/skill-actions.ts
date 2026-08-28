@@ -42,7 +42,7 @@ export async function createSkillAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/about");
-  redirect("/admin/skills");
+  redirect("/admin/skills?notice=created");
 }
 
 export async function updateSkillAction(id: string, formData: FormData) {
@@ -65,7 +65,7 @@ export async function updateSkillAction(id: string, formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/about");
-  redirect("/admin/skills");
+  redirect("/admin/skills?notice=saved");
 }
 
 export async function deleteSkillAction(id: string) {
@@ -84,5 +84,5 @@ export async function deleteSkillAction(id: string) {
 
   revalidatePath("/");
   revalidatePath("/about");
-  redirect("/admin/skills");
+  redirect("/admin/skills?notice=deleted");
 }

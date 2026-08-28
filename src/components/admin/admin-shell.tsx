@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { BarChart3, FileText, Images, Inbox, Layers3, Settings, Sparkles } from "lucide-react";
 
 import { LogoutButton } from "@/components/admin/logout-button";
@@ -46,6 +46,34 @@ function AdminNavLink({
   );
 }
 
+const notices = {
+  saved: "Changes saved successfully.",
+  created: "Created successfully.",
+  deleted: "Deleted successfully.",
+  uploaded: "Image uploaded successfully.",
+  read: "Message marked as read.",
+  archived: "Message archived successfully."
+} as const;
+
+function AdminNotice() {
+  const searchParams = useSearchParams();
+  const noticeKey = searchParams.get("notice") as keyof typeof notices | null;
+  const notice = noticeKey ? notices[noticeKey] : undefined;
+
+  if (!notice) {
+    return null;
+  }
+
+  return (
+    <div
+      role="status"
+      className="fixed bottom-5 right-5 z-50 rounded-lg border border-emerald-300/30 bg-zinc-900 px-4 py-3 text-sm text-emerald-200 shadow-xl"
+    >
+      {notice}
+    </div>
+  );
+}
+
 export function AdminShell({
   children,
   userName
@@ -55,6 +83,7 @@ export function AdminShell({
 }) {
   return (
     <div className="min-h-screen bg-zinc-950">
+      <AdminNotice />
       <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-white/10 bg-zinc-950/90 p-5 lg:block">
         <Link href="/admin" className="font-mono text-sm font-semibold uppercase text-zinc-50">
           Portfolio Admin

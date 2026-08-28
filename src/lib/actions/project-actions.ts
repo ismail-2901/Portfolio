@@ -74,7 +74,7 @@ export async function createProjectAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/projects");
-  redirect(`/admin/projects/${project.id}`);
+  redirect(`/admin/projects/${project.id}?notice=created`);
 }
 
 export async function updateProjectAction(id: string, formData: FormData) {
@@ -114,7 +114,7 @@ export async function updateProjectAction(id: string, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/projects");
   revalidatePath(`/projects/${project.slug}`);
-  redirect(`/admin/projects/${project.id}`);
+  redirect(`/admin/projects/${project.id}?notice=saved`);
 }
 
 export async function deleteProjectAction(id: string) {
@@ -133,5 +133,5 @@ export async function deleteProjectAction(id: string) {
 
   revalidatePath("/");
   revalidatePath("/projects");
-  redirect("/admin/projects");
+  redirect("/admin/projects?notice=deleted");
 }

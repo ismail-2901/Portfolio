@@ -43,5 +43,5 @@ export async function updateProfileAction(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/about");
   revalidatePath("/contact");
-  redirect("/admin/profile");
+  redirect("/admin/profile?notice=saved");
 }
