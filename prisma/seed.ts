@@ -36,9 +36,18 @@ Great engineering portfolios should show how decisions were made, not only what 
 The strongest signal is a clear threat model, explicit tradeoffs, and evidence that quality gates ran before release.`;
 
 async function main() {
-  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@example.com";
-  const adminPassword = process.env.ADMIN_PASSWORD ?? "change-this-password-before-deploying";
-  const adminName = process.env.ADMIN_NAME ?? "Portfolio Admin";
+  const adminEmail = process.env.ADMIN_EMAIL?.trim();
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const adminName = process.env.ADMIN_NAME?.trim() || "Portfolio Admin";
+
+  if (!adminEmail || !adminPassword) {
+    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD must be configured before seeding.");
+  }
+
+  if (adminPassword.length < 12) {
+    throw new Error("ADMIN_PASSWORD must contain at least 12 characters.");
+  }
+
   const passwordHash = await bcrypt.hash(adminPassword, 12);
 
   await prisma.adminUser.upsert({

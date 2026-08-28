@@ -15,10 +15,16 @@ export async function assertSameOrigin() {
   const host = headerStore.get("host");
 
   if (!origin || !host) {
-    return;
+    throw new Error("Invalid request origin.");
   }
 
-  const originHost = new URL(origin).host;
+  let originHost: string;
+  try {
+    originHost = new URL(origin).host;
+  } catch {
+    throw new Error("Invalid request origin.");
+  }
+
   if (originHost !== host) {
     throw new Error("Invalid request origin.");
   }
