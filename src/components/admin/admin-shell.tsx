@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BarChart3, FileText, Images, Inbox, Layers3, Settings, Sparkles } from "lucide-react";
 
 import { LogoutButton } from "@/components/admin/logout-button";
@@ -12,6 +15,36 @@ const navItems = [
   { href: "/admin/media", label: "Media", icon: Images },
   { href: "/admin/messages", label: "Messages", icon: Inbox }
 ];
+
+function AdminNavLink({
+  href,
+  label,
+  icon: Icon,
+  compact = false
+}: {
+  href: string;
+  label: string;
+  icon: typeof BarChart3;
+  compact?: boolean;
+}) {
+  const pathname = usePathname();
+  const isActive = href === "/admin" ? pathname === href : pathname.startsWith(`${href}/`) || pathname === href;
+
+  return (
+    <Link
+      href={href}
+      aria-current={isActive ? "page" : undefined}
+      className={`focus-ring relative flex items-center gap-${compact ? "2" : "3"} rounded-lg px-3 py-2 text-${compact ? "xs" : "sm"} transition ${
+        isActive
+          ? "bg-cyan-300/10 text-zinc-50 before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-cyan-300"
+          : "text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-50"
+      }`}
+    >
+      <Icon aria-hidden="true" className={`size-4 ${isActive ? "text-cyan-300" : ""}`} />
+      {label}
+    </Link>
+  );
+}
 
 export function AdminShell({
   children,
@@ -28,17 +61,7 @@ export function AdminShell({
         </Link>
         <nav className="mt-8 grid gap-1" aria-label="Admin navigation">
           {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="focus-ring flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-400 transition hover:bg-white/[0.06] hover:text-zinc-50"
-              >
-                <Icon aria-hidden="true" className="size-4" />
-                {item.label}
-              </Link>
-            );
+            return <AdminNavLink key={item.href} {...item} />;
           })}
         </nav>
       </aside>
@@ -59,17 +82,7 @@ export function AdminShell({
           </div>
           <nav className="flex gap-1 overflow-x-auto border-t border-white/10 p-2 lg:hidden" aria-label="Admin navigation">
             {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="focus-ring flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-xs text-zinc-400"
-                >
-                  <Icon aria-hidden="true" className="size-4" />
-                  {item.label}
-                </Link>
-              );
+              return <AdminNavLink key={item.href} compact {...item} />;
             })}
           </nav>
         </header>
