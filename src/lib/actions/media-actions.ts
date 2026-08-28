@@ -15,7 +15,7 @@ const acceptedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/a
 const maxUploadBytes = 4 * 1024 * 1024;
 
 function getBlobToken() {
-  return process.env.BLOB_READ_WRITE_TOKEN ?? process.env.PORTFOLIO_BLOB_READ_WRITE_TOKEN;
+  return process.env["BLOB_READ_WRITE_TOKEN"] ?? process.env["PORTFOLIO_BLOB_READ_WRITE_TOKEN"];
 }
 
 export async function uploadProjectImageAction(formData: FormData) {
