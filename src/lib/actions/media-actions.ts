@@ -13,12 +13,13 @@ import { imageUploadSchema } from "@/lib/validation";
 
 const acceptedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
 const maxUploadBytes = 4 * 1024 * 1024;
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN ?? process.env.PORTFOLIO_BLOB_READ_WRITE_TOKEN;
 
 export async function uploadProjectImageAction(formData: FormData) {
   const session = await requireAdmin();
   await assertSameOrigin();
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  if (!blobToken) {
     throw new Error("BLOB_READ_WRITE_TOKEN is required before image uploads are enabled.");
   }
 
@@ -57,6 +58,7 @@ export async function uploadProjectImageAction(formData: FormData) {
 
   const blob = await put(`project-images/${parsed.projectId}/${file.name}`, file, {
     access: "public",
+    token: blobToken,
     addRandomSuffix: true
   });
 
@@ -89,8 +91,8 @@ export async function deleteProjectImageAction(id: string) {
 
   const image = await prisma.projectImage.delete({ where: { id } });
 
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    await del(image.url);
+  if (blobToken) {
+    await del(image.url, { token: blobToken });
   }
 
   await writeAuditLog({
