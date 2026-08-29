@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +30,18 @@ export default async function AboutPage() {
             {profile.name}, {profile.role.toLowerCase()}.
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-zinc-300">{profile.shortBio}</p>
+
+          <div className="mt-8 flex flex-wrap gap-3 text-sm text-zinc-200">
+            {[
+              "Security-first thinking",
+              "System design",
+              "Product-minded execution"
+            ].map((item) => (
+              <span key={item} className="metric-card rounded-full px-3 py-2">
+                {item}
+              </span>
+            ))}
+          </div>
         </Reveal>
 
         <Reveal delay={0.08}>
@@ -36,10 +49,12 @@ export default async function AboutPage() {
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[length:18px_18px]" />
             <div className="relative h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-zinc-950/70">
               {profile.imageUrl ? (
-                <img
+                <Image
                   src={profile.imageUrl}
                   alt={profile.name}
-                  className="h-full w-full object-cover object-center"
+                  fill
+                  priority
+                  className="object-cover object-center"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.18),rgba(17,24,39,0.9))] text-7xl font-semibold text-cyan-200">

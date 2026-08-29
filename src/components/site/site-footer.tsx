@@ -31,7 +31,7 @@ export async function SiteFooter() {
               <Linkedin aria-hidden="true" className="size-4" />
             </Link>
           </Button>
-          <Link className="center-underline text-sm text-zinc-400 hover:text-zinc-100" href="/privacy">
+          <Link className="center-underline text-sm text-zinc-400 transition hover:text-zinc-100" href="/privacy">
             Privacy
           </Link>
         </div>

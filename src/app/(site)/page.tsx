@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Github, Linkedin, Mail, ShieldCheck } from "lucide-react";
 
@@ -66,6 +67,20 @@ export default async function HomePage() {
                   </Button>
                 </div>
               </StaggerItem>
+
+              <StaggerItem>
+                <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                  {[
+                    "Product strategy",
+                    "Platform architecture",
+                    "Design clarity"
+                  ].map((label) => (
+                    <div key={label} className="metric-card rounded-2xl px-4 py-3 text-sm text-zinc-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              </StaggerItem>
             </Stagger>
 
             <Reveal delay={0.12} className="hidden justify-center lg:flex">
@@ -73,10 +88,12 @@ export default async function HomePage() {
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[length:18px_18px]" />
                 <div className="relative h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-zinc-950/70">
                   {profile.imageUrl ? (
-                    <img
+                    <Image
                       src={profile.imageUrl}
                       alt={profile.name}
-                      className="h-full w-full object-cover object-center"
+                      fill
+                      priority
+                      className="object-cover object-center"
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.18),rgba(17,24,39,0.9))] text-7xl font-semibold text-cyan-200">

@@ -1,4 +1,5 @@
-import { ImagePlus, Trash2, Upload } from "lucide-react";
+import Image from "next/image";
+import { ImagePlus, Trash2 } from "lucide-react";
 
 import { SubmitButton } from "@/components/admin/submit-button";
 import { Field } from "@/components/ui/field";
@@ -22,11 +23,11 @@ function getInitials(name: string) {
 export function ProfileForm({ profile }: { profile: PublicProfile }) {
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border border-white/10 bg-zinc-900/60 p-6">
+      <div className="rounded-[1.5rem] border border-white/10 bg-zinc-900/60 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
         <div className="flex flex-col gap-5 md:flex-row md:items-center">
-          <div className="flex size-24 items-center justify-center overflow-hidden rounded-full border border-cyan-300/30 bg-zinc-950 text-xl font-semibold text-cyan-200">
+          <div className="flex size-24 items-center justify-center overflow-hidden rounded-full border border-cyan-300/30 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.22),rgba(17,24,39,1))] text-xl font-semibold text-cyan-200 shadow-[0_0_36px_rgba(34,211,238,0.12)]">
             {profile.imageUrl ? (
-              <img src={profile.imageUrl} alt={profile.name} className="size-full object-cover" />
+              <Image src={profile.imageUrl} alt={profile.name} width={96} height={96} className="size-full object-cover" />
             ) : (
               getInitials(profile.name)
             )}
@@ -43,7 +44,7 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
                 <input type="file" name="file" accept="image/avif,image/jpeg,image/png,image/webp" className="hidden" id="profile-image-upload" required />
                 <label
                   htmlFor="profile-image-upload"
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-cyan-300/30 bg-cyan-300/10 px-3 py-2 text-sm font-medium text-cyan-100"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-2 text-sm font-medium text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-300/15"
                 >
                   <ImagePlus aria-hidden="true" className="size-4" />
                   Upload

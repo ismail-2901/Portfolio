@@ -25,14 +25,14 @@ export function SiteHeader() {
       <div className="container-shell flex items-center justify-between gap-3">
         <Link
           href="/"
-          className="focus-ring glass-panel rounded-full px-4 py-2 font-mono text-xs font-semibold uppercase text-zinc-100"
+          className="focus-ring glass-panel rounded-full px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-zinc-100"
           aria-label="Go to home page"
         >
           Ismail
         </Link>
 
         <nav
-          className="glass-panel hidden rounded-full px-2 py-2 md:flex"
+          className="glass-panel hidden rounded-full border border-white/10 px-2 py-2 shadow-[0_18px_48px_rgba(0,0,0,0.22)] md:flex"
           aria-label="Primary navigation"
         >
           {navItems.map((item) => {
@@ -43,7 +43,7 @@ export function SiteHeader() {
                 href={item.href}
                 className={cn(
                   "focus-ring center-underline rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:text-white",
-                  isActive && "bg-white/[0.06] text-white"
+                  isActive && "bg-white/[0.06] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                 )}
               >
                 {item.label}

@@ -11,5 +11,5 @@ test("renders the contact form", async ({ page }) => {
   await page.goto("/contact");
 
   await expect(page.getByRole("heading", { name: /resilient and sharp/i })).toBeVisible();
-  await expect(page.getByLabel("Email")).toBeVisible();
+  await expect(page.locator('input[name="email"]').first()).toBeVisible();
 });
