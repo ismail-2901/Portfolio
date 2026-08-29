@@ -25,47 +25,73 @@ export default async function HomePage() {
         <HeroParticles />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(9,9,11,0.45),rgba(9,9,11,0.82)_72%,#09090b)]" />
 
-        <div className="container-shell relative z-10 flex min-h-[calc(85vh-7rem)] flex-col justify-center pb-20">
-          <Stagger className="max-w-5xl">
-            <StaggerItem>
-              <Badge className="border-cyan-300/30 bg-cyan-300/10 text-cyan-200">
-                {profile.location}
-              </Badge>
-            </StaggerItem>
-            <StaggerItem>
-              <h1 className="mt-8 max-w-5xl text-balance text-5xl font-semibold leading-[1.02] text-zinc-50 sm:text-7xl lg:text-8xl">
-                I build secure, scalable, and beautiful digital experiences.
-              </h1>
-            </StaggerItem>
-            <StaggerItem>
-              <p className="mt-7 max-w-3xl text-lg leading-8 text-zinc-300 sm:text-xl">
-                {profile.name} is a {profile.role.toLowerCase()} focused on reliable architecture,
-                elegant interfaces, and production systems that hold up under real-world pressure.
-              </p>
-            </StaggerItem>
-            <StaggerItem>
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <MagneticLink href="/projects">
-                  <ShieldCheck aria-hidden="true" className="size-4" />
-                  View work
-                </MagneticLink>
-                <MagneticLink href="/contact" variant="secondary">
-                  <Mail aria-hidden="true" className="size-4" />
-                  Contact
-                </MagneticLink>
-                <Button asChild variant="ghost" size="icon" aria-label="GitHub">
-                  <Link href={profile.githubUrl} target="_blank" rel="noreferrer">
-                    <Github aria-hidden="true" className="size-5" />
-                  </Link>
-                </Button>
-                <Button asChild variant="ghost" size="icon" aria-label="LinkedIn">
-                  <Link href={profile.linkedinUrl} target="_blank" rel="noreferrer">
-                    <Linkedin aria-hidden="true" className="size-5" />
-                  </Link>
-                </Button>
+        <div className="container-shell relative z-10 flex min-h-[calc(85vh-7rem)] items-center pb-20">
+          <div className="grid w-full gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <Stagger className="max-w-5xl">
+              <StaggerItem>
+                <Badge className="border-cyan-300/30 bg-cyan-300/10 text-cyan-200">
+                  {profile.location}
+                </Badge>
+              </StaggerItem>
+              <StaggerItem>
+                <h1 className="mt-8 max-w-5xl text-balance text-5xl font-semibold leading-[1.02] text-zinc-50 sm:text-7xl lg:text-8xl">
+                  I build secure, scalable, and beautiful digital experiences.
+                </h1>
+              </StaggerItem>
+              <StaggerItem>
+                <p className="mt-7 max-w-3xl text-lg leading-8 text-zinc-300 sm:text-xl">
+                  {profile.name} is a {profile.role.toLowerCase()} focused on reliable architecture,
+                  elegant interfaces, and production systems that hold up under real-world pressure.
+                </p>
+              </StaggerItem>
+              <StaggerItem>
+                <div className="mt-9 flex flex-wrap items-center gap-3">
+                  <MagneticLink href="/projects">
+                    <ShieldCheck aria-hidden="true" className="size-4" />
+                    View work
+                  </MagneticLink>
+                  <MagneticLink href="/contact" variant="secondary">
+                    <Mail aria-hidden="true" className="size-4" />
+                    Contact
+                  </MagneticLink>
+                  <Button asChild variant="ghost" size="icon" aria-label="GitHub">
+                    <Link href={profile.githubUrl} target="_blank" rel="noreferrer">
+                      <Github aria-hidden="true" className="size-5" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="ghost" size="icon" aria-label="LinkedIn">
+                    <Link href={profile.linkedinUrl} target="_blank" rel="noreferrer">
+                      <Linkedin aria-hidden="true" className="size-5" />
+                    </Link>
+                  </Button>
+                </div>
+              </StaggerItem>
+            </Stagger>
+
+            <Reveal delay={0.12} className="hidden justify-center lg:flex">
+              <div className="relative aspect-[4/5] w-full max-w-[520px] overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.18),rgba(37,99,235,0.15)_28%,rgba(9,9,11,0.90)_65%)] p-3 shadow-[0_0_60px_rgba(34,211,238,0.12)]">
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[length:18px_18px]" />
+                <div className="relative h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-zinc-950/70">
+                  {profile.imageUrl ? (
+                    <img
+                      src={profile.imageUrl}
+                      alt={profile.name}
+                      className="h-full w-full object-cover object-center"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.18),rgba(17,24,39,0.9))] text-7xl font-semibold text-cyan-200">
+                      {profile.name
+                        .split(" ")
+                        .map((part) => part[0])
+                        .slice(0, 2)
+                        .join("")
+                        .toUpperCase()}
+                    </div>
+                  )}
+                </div>
               </div>
-            </StaggerItem>
-          </Stagger>
+            </Reveal>
+          </div>
         </div>
       </section>
 

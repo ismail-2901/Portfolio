@@ -32,19 +32,25 @@ export default async function AboutPage() {
         </Reveal>
 
         <Reveal delay={0.08}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-white/10 bg-zinc-900">
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(250,250,250,0.07)_1px,transparent_1px),linear-gradient(rgba(250,250,250,0.04)_1px,transparent_1px)] bg-[length:18px_18px]" />
-            <div className="absolute inset-8 rounded-lg border border-cyan-300/20 bg-zinc-950/70" />
-            <div className="absolute inset-x-10 bottom-12 top-20 rounded-lg border border-white/10 bg-[linear-gradient(180deg,rgba(79,70,229,0.18),rgba(34,211,238,0.08),rgba(9,9,11,0.4))]" />
-            <div className="absolute inset-x-0 top-1/3 flex justify-center">
-              <div className="flex size-36 items-center justify-center rounded-full border border-cyan-300/30 bg-zinc-950 font-mono text-4xl font-semibold text-cyan-200">
-                {profile.name
-                  .replace(/\[[^\]]+\]/g, "YN")
-                  .split(" ")
-                  .map((part) => part[0])
-                  .slice(0, 2)
-                  .join("")}
-              </div>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.18),rgba(37,99,235,0.15)_28%,rgba(9,9,11,0.90)_65%)] p-3 shadow-[0_0_60px_rgba(34,211,238,0.12)]">
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[length:18px_18px]" />
+            <div className="relative h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-zinc-950/70">
+              {profile.imageUrl ? (
+                <img
+                  src={profile.imageUrl}
+                  alt={profile.name}
+                  className="h-full w-full object-cover object-center"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.18),rgba(17,24,39,0.9))] text-7xl font-semibold text-cyan-200">
+                  {profile.name
+                    .replace(/\[[^\]]+\]/g, "YN")
+                    .split(" ")
+                    .map((part) => part[0])
+                    .slice(0, 2)
+                    .join("")}
+                </div>
+              )}
             </div>
           </div>
         </Reveal>

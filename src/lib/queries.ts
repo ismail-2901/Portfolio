@@ -11,6 +11,7 @@ export type PublicProfile = {
   githubUrl: string;
   linkedinUrl: string;
   resumeUrl: string;
+  imageUrl: string | null;
 };
 
 export type PublicTag = {
@@ -96,7 +97,8 @@ export const fallbackProfile: PublicProfile = {
   email: "hello@ismail.dev",
   githubUrl: "https://github.com",
   linkedinUrl: "https://www.linkedin.com",
-  resumeUrl: "/resume"
+  resumeUrl: "/resume",
+  imageUrl: null
 };
 
 export const fallbackProjects: PublicProject[] = [

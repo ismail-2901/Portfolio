@@ -48,6 +48,7 @@ model Profile {
   githubUrl   String
   linkedinUrl String
   resumeUrl   String
+  imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

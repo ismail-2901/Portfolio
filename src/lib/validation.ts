@@ -98,7 +98,8 @@ export const profileSchema = z.object({
   email: z.string().trim().email().max(180),
   githubUrl: publicUrlOrPath,
   linkedinUrl: publicUrlOrPath,
-  resumeUrl: publicUrlOrPath
+  resumeUrl: publicUrlOrPath,
+  imageUrl: z.string().trim().url().or(z.literal(""))
 });
 
 export const imageUploadSchema = z.object({

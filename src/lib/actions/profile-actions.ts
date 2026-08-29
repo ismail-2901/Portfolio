@@ -21,15 +21,21 @@ export async function updateProfileAction(formData: FormData) {
     email: formData.get("email"),
     githubUrl: formData.get("githubUrl"),
     linkedinUrl: formData.get("linkedinUrl"),
-    resumeUrl: formData.get("resumeUrl")
+    resumeUrl: formData.get("resumeUrl"),
+    imageUrl: formData.get("imageUrl") ?? ""
   });
+
+  const normalizedProfile = {
+    ...data,
+    imageUrl: data.imageUrl || null
+  };
 
   await prisma.profile.upsert({
     where: { id: "singleton" },
-    update: data,
+    update: normalizedProfile,
     create: {
       id: "singleton",
-      ...data
+      ...normalizedProfile
     }
   });
 
