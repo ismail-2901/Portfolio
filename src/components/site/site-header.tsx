@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 export function SiteHeader() {
   return (
     <header className="site-header sticky top-0 z-50 border-b border-rule">
-      <div className="container-shell relative flex min-h-[72px] items-center justify-between gap-4">
+      <div className="container-shell relative flex min-h-18 items-center justify-between gap-4">
         <Link
           href="/"
           className="focus-ring flex items-baseline gap-2 font-medium text-copy"

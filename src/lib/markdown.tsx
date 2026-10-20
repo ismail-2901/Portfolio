@@ -19,7 +19,7 @@ const components = {
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="font-medium text-accent underline decoration-[var(--color-rule)] underline-offset-4 transition hover:text-white"
+      className="font-medium text-accent underline decoration-rule underline-offset-4 transition hover:text-white"
       target={props.href?.startsWith("http") ? "_blank" : undefined}
       rel={props.href?.startsWith("http") ? "noreferrer" : undefined}
       {...props}

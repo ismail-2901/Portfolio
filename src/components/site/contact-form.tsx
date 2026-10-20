@@ -53,7 +53,7 @@ export function ContactForm() {
         </p>
       ) : null}
 
-      <button type="submit" disabled={pending} className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-[6px] border border-accent bg-[var(--color-accent)] px-5 text-sm font-medium text-canvas transition duration-200 ease-out hover:border-white hover:bg-white active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50">
+      <button type="submit" disabled={pending} className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-[6px] border border-accent bg-accent px-5 text-sm font-medium text-canvas transition duration-200 ease-out hover:border-white hover:bg-white active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50">
         <Send aria-hidden="true" className="size-4" />
         {pending ? "Sending" : "Send message"}
       </button>
