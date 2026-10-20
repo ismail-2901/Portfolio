@@ -1,19 +1,16 @@
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold transition duration-200 ease-out active:scale-95 disabled:pointer-events-none disabled:opacity-50",
+  "focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-[6px] px-5 text-sm font-medium transition duration-200 ease-out active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary:
-          "border border-cyan-300/30 bg-[linear-gradient(135deg,#22d3ee_0%,#4f46e5_56%,#312e81_100%)] text-white shadow-[0_18px_40px_rgba(79,70,229,0.35)] hover:-translate-y-0.5 hover:border-cyan-200/70 hover:shadow-[0_20px_46px_rgba(34,211,238,0.26)]",
-        secondary:
-          "border border-white/10 bg-white/[0.04] text-zinc-100 hover:-translate-y-0.5 hover:border-cyan-300/50 hover:bg-white/[0.07]",
-        ghost: "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
+        primary: "border border-accent bg-[var(--color-accent)] text-canvas hover:bg-white hover:border-white",
+        secondary: "border border-rule bg-surface text-copy hover:border-muted",
+        ghost: "text-muted hover:text-copy",
         danger:
           "border border-red-400/40 bg-red-500/10 text-red-100 hover:border-red-300/70 hover:bg-red-500/20"
       },
@@ -37,9 +34,27 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
+    const buttonClassName = cn(buttonVariants({ variant, size, className }));
+
+    if (asChild) {
+      const child = React.Children.only(children);
+
+      if (!React.isValidElement<{ className?: string }>(child)) {
+        throw new Error("Button with asChild requires a single React element.");
+      }
+
+      return React.cloneElement(child, {
+        ...props,
+        className: cn(buttonClassName, child.props.className)
+      });
+    }
+
+    return (
+      <button className={buttonClassName} ref={ref} {...props}>
+        {children}
+      </button>
+    );
   }
 );
 Button.displayName = "Button";

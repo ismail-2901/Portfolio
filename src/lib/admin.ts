@@ -9,7 +9,7 @@ export async function getAdminSession() {
 export async function requireAdmin() {
   const session = await auth();
 
-  if (!session?.user?.id) {
+  if (!session?.user?.id || !["OWNER", "EDITOR"].includes(session.user.role)) {
     redirect("/admin/login");
   }
 

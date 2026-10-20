@@ -2,16 +2,19 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy policy for the portfolio contact form and analytics posture."
+  description: "How portfolio contact details are handled and retained.",
+  alternates: { canonical: "/privacy" },
+  openGraph: { title: "Privacy Policy", description: "How portfolio contact details are handled and retained.", url: "/privacy" },
+  twitter: { card: "summary", title: "Privacy Policy", description: "How portfolio contact details are handled and retained." }
 };
 
 export default function PrivacyPage() {
   return (
-    <main className="pt-32">
-      <section className="container-shell max-w-3xl py-16">
-        <p className="font-mono text-sm uppercase text-cyan-300">Privacy</p>
-        <h1 className="mt-3 text-5xl font-semibold text-zinc-50">Privacy Policy</h1>
-        <div className="mt-8 space-y-6 leading-8 text-zinc-300">
+    <main id="main-content">
+      <section className="container-shell max-w-3xl pb-24 pt-16 md:pb-32 md:pt-24">
+        <p className="eyebrow">Privacy / policy</p>
+        <h1 className="mt-5 text-5xl font-medium text-copy md:text-6xl">Privacy Policy</h1>
+        <div className="mt-8 space-y-6 leading-8 text-muted">
           <p>
             Contact form submissions are stored to respond to inquiries. The form records your name, email,
             optional company, message, user agent, and a hashed IP fingerprint for abuse prevention.

@@ -1,39 +1,38 @@
 import Link from "next/link";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { getProfile } from "@/lib/queries";
 
 export async function SiteFooter() {
   const profile = await getProfile();
 
   return (
-    <footer className="border-t border-white/10 bg-zinc-950/40 py-12">
-      <div className="container-shell flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+    <footer className="border-t border-rule py-8 md:py-10">
+      <div className="container-shell grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
         <div>
-          <p className="font-semibold text-zinc-100">{profile.name}</p>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-zinc-400">{profile.role} in {profile.location}</p>
+          <Link href="/" className="focus-ring font-medium text-copy">{profile.name}</Link>
+          <p className="mt-2 font-mono text-xs text-muted">{profile.role} <span className="px-2">/</span> {profile.location}</p>
         </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <Button asChild variant="ghost" size="icon" aria-label="Email">
-            <Link href={`mailto:${profile.email}`}>
-              <Mail aria-hidden="true" className="size-4" />
+        <nav aria-label="Footer links" className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+          <Link href="/projects" className="focus-ring editorial-link text-muted">Projects</Link>
+          <Link href="/about" className="focus-ring editorial-link text-muted">About</Link>
+          <Link href="/resume" className="focus-ring editorial-link text-muted">Resume</Link>
+          <Link href="/privacy" className="focus-ring editorial-link text-muted">Privacy</Link>
+          <Link href="/admin" className="focus-ring editorial-link text-muted">Admin</Link>
+        </nav>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-rule pt-5 text-sm md:col-span-2 md:justify-between">
+          <p className="font-mono text-[10px] text-muted">© {new Date().getFullYear()} {profile.name}</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-3">
+            <Link href={`mailto:${profile.email}`} className="focus-ring editorial-link inline-flex items-center gap-2 text-muted">
+              <Mail aria-hidden="true" className="size-4" />Email
             </Link>
-          </Button>
-          <Button asChild variant="ghost" size="icon" aria-label="GitHub">
-            <Link href={profile.githubUrl} target="_blank" rel="noreferrer">
-              <Github aria-hidden="true" className="size-4" />
+            <Link href={profile.githubUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex items-center gap-2 text-muted">
+              <Github aria-hidden="true" className="size-4" />GitHub <ArrowUpRight aria-hidden="true" className="size-3" />
             </Link>
-          </Button>
-          <Button asChild variant="ghost" size="icon" aria-label="LinkedIn">
-            <Link href={profile.linkedinUrl} target="_blank" rel="noreferrer">
-              <Linkedin aria-hidden="true" className="size-4" />
+            <Link href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex items-center gap-2 text-muted">
+              <Linkedin aria-hidden="true" className="size-4" />LinkedIn <ArrowUpRight aria-hidden="true" className="size-3" />
             </Link>
-          </Button>
-          <Link className="center-underline text-sm text-zinc-400 transition hover:text-zinc-100" href="/privacy">
-            Privacy
-          </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
 import { prisma } from "@/lib/prisma";
+import { safeCompare } from "@/lib/security";
 import { loginSchema } from "@/lib/validation";
 
 export const authConfig = {
@@ -13,6 +14,7 @@ export const authConfig = {
     strategy: "jwt",
     maxAge: 60 * 60 * 8
   },
+  useSecureCookies: process.env.NODE_ENV === "production",
   providers: [
     Credentials({
       credentials: {
@@ -34,13 +36,10 @@ export const authConfig = {
           const configuredEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
           const configuredPassword = process.env.ADMIN_PASSWORD;
           const matchesConfiguredAdmin =
-            configuredEmail === parsed.data.email.toLowerCase() && configuredPassword === parsed.data.password;
+            configuredEmail === parsed.data.email.toLowerCase() &&
+            Boolean(configuredPassword && configuredPassword.length >= 12 && safeCompare(parsed.data.password, configuredPassword));
 
-          if (!matchesConfiguredAdmin || !configuredPassword) {
-            console.error("[auth] Credentials rejected: admin user not found and bootstrap credentials do not match", {
-              configuredEmail: Boolean(configuredEmail),
-              configuredPassword: Boolean(configuredPassword)
-            });
+          if (!matchesConfiguredAdmin || !configuredPassword || await prisma.adminUser.count() > 0) {
             return null;
           }
 
@@ -56,20 +55,7 @@ export const authConfig = {
         const validPassword = await bcrypt.compare(parsed.data.password, user.passwordHash);
 
         if (!validPassword) {
-          const configuredEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
-          const configuredPassword = process.env.ADMIN_PASSWORD;
-          const matchesConfiguredAdmin =
-            configuredEmail === parsed.data.email.toLowerCase() && configuredPassword === parsed.data.password;
-
-          if (!matchesConfiguredAdmin || !configuredPassword) {
-            console.error("[auth] Credentials rejected: password hash mismatch");
-            return null;
-          }
-
-          await prisma.adminUser.update({
-            where: { id: user.id },
-            data: { passwordHash: await bcrypt.hash(configuredPassword, 12) }
-          });
+          return null;
         }
 
         await prisma.adminUser.update({

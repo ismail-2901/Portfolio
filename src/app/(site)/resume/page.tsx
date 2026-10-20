@@ -6,27 +6,30 @@ import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getProfile } from "@/lib/queries";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Resume",
-  description: "Resume download."
+  description: "View or request Ismail's engineering resume.",
+  alternates: { canonical: "/resume" },
+  openGraph: { title: "Resume", description: "Ismail's engineering resume.", url: "/resume" },
+  twitter: { card: "summary", title: "Resume", description: "Ismail's engineering resume." }
 };
 
 export default async function ResumePage() {
   const profile = await getProfile();
-  const isConfigured = profile.resumeUrl.startsWith("http") || profile.resumeUrl.startsWith("/");
+  const isConfigured =
+    profile.resumeUrl !== "/resume" &&
+    (profile.resumeUrl.startsWith("http") || profile.resumeUrl.startsWith("/"));
 
   if (isConfigured) {
     redirect(profile.resumeUrl);
   }
 
   return (
-    <main className="pt-32">
-      <section className="container-shell max-w-3xl py-16">
-        <p className="font-mono text-sm uppercase text-cyan-300">Resume</p>
-        <h1 className="mt-3 text-5xl font-semibold text-zinc-50">Resume link pending.</h1>
-        <p className="mt-6 leading-8 text-zinc-300">
+    <main id="main-content">
+      <section className="container-shell max-w-3xl pb-24 pt-16 md:pb-32 md:pt-24">
+        <p className="eyebrow">Resume / CV</p>
+        <h1 className="mt-5 text-5xl font-medium text-copy md:text-6xl">Resume link pending.</h1>
+        <p className="mt-6 leading-8 text-muted">
           Add a public resume URL or uploaded file path in the Profile record to enable direct downloads.
         </p>
         <Button asChild className="mt-8">

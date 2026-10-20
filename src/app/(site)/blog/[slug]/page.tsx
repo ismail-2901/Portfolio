@@ -7,8 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MarkdownRenderer } from "@/lib/markdown";
 import { getArticleBySlug } from "@/lib/queries";
-
-export const dynamic = "force-dynamic";
+import { serializeStructuredData } from "@/lib/structured-data";
+import { getSiteUrl } from "@/lib/utils";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -25,10 +25,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: article.seoTitle ?? article.title,
     description: article.seoDescription ?? article.excerpt,
+    alternates: { canonical: `/blog/${article.slug}` },
     openGraph: {
       title: article.seoTitle ?? article.title,
       description: article.seoDescription ?? article.excerpt,
+      url: `/blog/${article.slug}`,
       type: "article"
+    },
+    twitter: {
+      card: "summary",
+      title: article.seoTitle ?? article.title,
+      description: article.seoDescription ?? article.excerpt
     }
   };
 }
@@ -41,30 +48,42 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound();
   }
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: article.title,
+    description: article.seoDescription ?? article.excerpt,
+    url: `${getSiteUrl()}/blog/${article.slug}`,
+    datePublished: (article.publishedAt ?? article.createdAt).toISOString(),
+    dateModified: article.updatedAt.toISOString(),
+    keywords: article.tags.map((tag) => tag.name)
+  };
+
   return (
-    <main className="pt-32">
-      <article className="container-shell py-16">
-        <Button asChild variant="ghost">
+    <main id="main-content">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeStructuredData(articleJsonLd) }} />
+      <article className="container-shell pb-24 pt-10 md:pb-32 md:pt-16">
+        <Button asChild variant="ghost" className="px-0">
           <Link href="/blog">
             <ArrowLeft aria-hidden="true" className="size-4" />
             Blog
           </Link>
         </Button>
 
-        <header className="mt-10 max-w-4xl">
-          <div className="flex flex-wrap items-center gap-2">
+        <header className="mt-12 max-w-4xl border-b border-rule pb-10 md:pb-14">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-muted">
             {article.tags.map((tag) => (
               <Badge key={tag.slug}>{tag.name}</Badge>
             ))}
-            <Badge>{article.readingMinutes} min read</Badge>
+            <span>{article.readingMinutes} min read</span>
           </div>
-          <h1 className="mt-6 text-balance text-5xl font-semibold leading-[1.05] text-zinc-50 md:text-7xl">
+          <h1 className="mt-6 text-balance text-5xl font-medium leading-[1.04] text-copy md:text-7xl">
             {article.title}
           </h1>
-          <p className="mt-6 text-lg leading-8 text-zinc-300">{article.excerpt}</p>
+          <p className="copy-measure mt-6 text-lg leading-8 text-muted">{article.excerpt}</p>
         </header>
 
-        <div className="mt-12 max-w-3xl">
+        <div className="project-content mt-12 max-w-3xl">
           <MarkdownRenderer source={article.body} />
         </div>
       </article>

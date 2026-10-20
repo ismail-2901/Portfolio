@@ -35,15 +35,28 @@ On Windows PowerShell:
 Copy-Item .env.example .env
 ```
 
-Required for local database:
+Required for production runtime and build:
 
 ```env
-DATABASE_URL="postgresql://portfolio:portfolio@localhost:5432/portfolio?schema=public"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?schema=public"
 AUTH_SECRET="replace-with-openssl-rand-base64-32"
+AUTH_TRUST_HOST="true"
+NEXT_PUBLIC_SITE_URL="https://your-domain.example"
+```
+
+`DATABASE_URL` must be a PostgreSQL connection URL reachable from both the build environment (public pages are statically generated/revalidated) and the running application. Add provider-required options such as `sslmode=require` when applicable. Never commit real connection strings.
+
+Local database setup also uses these seed/bootstrap values:
+
+```env
 ADMIN_EMAIL="admin@example.com"
 ADMIN_PASSWORD="replace-with-a-long-random-password"
 ADMIN_NAME="Portfolio Admin"
 ```
+
+`ADMIN_EMAIL` and `ADMIN_PASSWORD` are required by `db:seed`; use a unique password of at least 12 characters. They are not substitutes for `AUTH_SECRET`. With no `DATABASE_URL`, non-production environments use the read-only sample content in `src/lib/queries.ts`. Once a database URL is configured, connection/query errors are surfaced and empty content tables remain empty. Production does not use sample content and requires the seeded singleton profile.
+
+`GET /api/health` is a database readiness check. It returns `200` only after a PostgreSQL query succeeds and `503` when the URL is missing or the database is unavailable; responses are not cached and do not expose connection details.
 
 Optional services:
 
