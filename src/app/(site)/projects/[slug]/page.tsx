@@ -54,7 +54,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   if (!projectResult.available) {
     return (
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <section className="container-shell max-w-3xl pb-24 pt-16 md:pb-32 md:pt-24">
           <Button asChild variant="ghost" className="px-0">
             <Link href="/projects">
@@ -87,7 +87,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   };
 
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeStructuredData(projectJsonLd) }} />
       <article className="container-shell pb-24 pt-10 md:pb-32 md:pt-16">
         <Button asChild variant="ghost" className="px-0">

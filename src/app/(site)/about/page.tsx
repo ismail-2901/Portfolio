@@ -30,7 +30,7 @@ export default async function AboutPage() {
   const hasUnavailableData = !profileResult.available || !experienceResult.available || !skillsResult.available;
 
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <section className="container-shell grid gap-12 py-16 md:py-24 lg:grid-cols-[1fr_0.62fr] lg:items-center">
         {hasUnavailableData ? (
           <div className="lg:col-span-2">

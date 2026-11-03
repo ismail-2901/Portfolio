@@ -24,6 +24,18 @@ describe("withPublicData", () => {
     });
   });
 
+  it("recognizes an unreachable database endpoint when Prisma omits its error code", async () => {
+    const connectionError = new Prisma.PrismaClientInitializationError(
+      "Invalid prisma.profile.findUnique() invocation:\n\nCan't reach database server at `db.example.test`:5432",
+      "test"
+    );
+
+    await expect(withPublicData(async () => { throw connectionError; })).resolves.toEqual({
+      available: false,
+      data: null
+    });
+  });
+
   it("rethrows application errors instead of hiding them", async () => {
     const applicationError = new Error("Unexpected application failure");
 

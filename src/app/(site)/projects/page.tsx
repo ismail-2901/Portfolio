@@ -23,7 +23,7 @@ export default async function ProjectsPage() {
   const remainingProjects = projects.filter((project) => project.id !== leadProject?.id);
 
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <section className="container-shell pb-24 pt-16 md:pb-32 md:pt-24">
         <header className="mb-16 max-w-4xl md:mb-24">
           <p className="eyebrow">Selected work / case studies</p>

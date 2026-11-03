@@ -20,7 +20,10 @@ export function SkillForm({ skill }: { skill?: SkillFormValue }) {
   const action = skill ? updateSkillAction.bind(null, skill.id) : createSkillAction;
 
   return (
-    <form action={action} className="grid gap-4 rounded-panel border border-rule bg-surface-raised p-5 md:grid-cols-[1fr_1fr_160px_180px_auto] md:items-end">
+    <form
+      action={action}
+      className="grid gap-4 rounded-panel border border-rule bg-surface-raised p-5 sm:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_160px_180px_auto] xl:items-end"
+    >
       <Field>
         <Label htmlFor={`name-${skill?.id ?? "new"}`}>Name</Label>
         <Input id={`name-${skill?.id ?? "new"}`} name="name" defaultValue={skill?.name} required />
@@ -42,7 +45,7 @@ export function SkillForm({ skill }: { skill?: SkillFormValue }) {
         </Select>
       </Field>
       <div className="flex flex-wrap items-center gap-3">
-        <label className="flex items-center gap-2 text-label text-copy">
+        <label className="flex min-h-11 cursor-pointer items-center gap-2 text-label text-copy">
           <input name="featured" type="checkbox" defaultChecked={skill?.featured} className="focus-ring size-4 accent-accent-secondary" />
           Featured
         </label>

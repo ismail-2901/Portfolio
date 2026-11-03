@@ -95,7 +95,7 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
               <option value="ARCHIVED">Archived</option>
             </Select>
           </Field>
-          <label className="flex items-end gap-3 rounded-panel border border-rule bg-canvas/60 p-3 text-label text-copy">
+          <label className="flex min-h-11 cursor-pointer items-end gap-3 rounded-panel border border-rule bg-canvas/60 p-3 text-label text-copy">
             <input name="featured" type="checkbox" defaultChecked={project?.featured} className="focus-ring size-4 accent-accent-secondary" />
             Featured project
           </label>
@@ -128,7 +128,7 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
                   <Label htmlFor="imageOrder">Order</Label>
                   <Input id="imageOrder" name="order" type="number" min="0" defaultValue="0" required />
                 </Field>
-                <label className="flex items-center gap-3 text-label text-copy">
+                <label className="flex min-h-11 cursor-pointer items-center gap-3 text-label text-copy">
                   <input name="isCover" type="checkbox" className="focus-ring size-4 accent-accent-secondary" />
                   Cover image
                 </label>

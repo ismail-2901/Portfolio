@@ -43,16 +43,16 @@ export function CaseStudyCard({ project, index, variant, priority = false }: Cas
           {project.techTags.slice(0, 5).map((tag) => <li key={tag}>{tag}</li>)}
         </ul>
         <div className="case-study-actions">
-          <Link href={`/projects/${project.slug}`} className="focus-ring inline-flex items-center gap-2 text-body-small text-copy transition-colors hover:text-accent">
+          <Link href={`/projects/${project.slug}`} className="focus-ring inline-flex min-h-11 items-center gap-2 text-body-small text-copy transition-colors hover:text-accent">
             Read {project.title} case study <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
           {project.liveUrl ? (
-            <Link href={project.liveUrl} target="_blank" rel="noreferrer" className="focus-ring ml-5 inline-flex items-center gap-1 text-body-small text-muted hover:text-copy">
+            <Link href={project.liveUrl} target="_blank" rel="noreferrer" className="focus-ring ml-5 inline-flex min-h-11 items-center gap-1 text-body-small text-muted hover:text-copy">
               Live <ArrowUpRight aria-hidden="true" className="size-4" />
             </Link>
           ) : null}
           {project.githubUrl ? (
-            <Link href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`View ${project.title} source on GitHub`} className="focus-ring ml-3 inline-flex text-muted hover:text-copy">
+            <Link href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`View ${project.title} source on GitHub`} className="focus-ring ml-3 inline-flex size-11 items-center justify-center text-muted hover:text-copy">
               <Github aria-hidden="true" className="size-4" />
             </Link>
           ) : null}

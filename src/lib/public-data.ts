@@ -19,7 +19,10 @@ export type PublicDataResult<T> =
 
 export function isDatabaseUnavailableError(error: unknown): boolean {
   if (error instanceof Prisma.PrismaClientInitializationError) {
-    return unavailableDatabaseCodes.has(error.errorCode ?? "");
+    return (
+      unavailableDatabaseCodes.has(error.errorCode ?? "") ||
+      /Can't reach database server at `[^`]+`(?::\d+)?/i.test(error.message)
+    );
   }
 
   if (error instanceof Prisma.PrismaClientKnownRequestError) {

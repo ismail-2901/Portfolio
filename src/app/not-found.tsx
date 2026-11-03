@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen pt-32">
+    <main id="main-content" tabIndex={-1} className="min-h-screen pt-32">
       <section className="container-shell max-w-3xl py-16">
         <p className="font-mono text-metadata uppercase text-accent">404</p>
         <h1 className="mt-3 text-display font-semibold text-copy">This page slipped out of scope.</h1>

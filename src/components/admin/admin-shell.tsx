@@ -35,7 +35,7 @@ function AdminNavLink({
     <Link
       href={href}
       aria-current={isActive ? "page" : undefined}
-      className={`focus-ring relative flex items-center ${layoutClasses} rounded-panel px-3 py-2 transition ${
+      className={`focus-ring relative flex min-h-11 items-center ${layoutClasses} rounded-panel px-3 py-2 transition ${
         isActive
           ? "bg-accent/10 text-copy before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-accent"
           : "text-muted hover:bg-copy/5 hover:text-copy"
@@ -85,8 +85,8 @@ export function AdminShell({
   return (
     <div className="min-h-screen bg-canvas">
       <AdminNotice />
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-rule bg-canvas/90 p-5 lg:block">
-        <Link href="/admin" className="font-mono text-body-small font-semibold uppercase text-copy">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 overflow-y-auto border-r border-rule bg-canvas/90 p-5 lg:block">
+        <Link href="/admin" className="focus-ring inline-flex min-h-11 items-center font-mono text-body-small font-semibold uppercase text-copy">
           Portfolio Admin
         </Link>
         <nav className="mt-8 grid gap-1" aria-label="Admin navigation">
@@ -104,7 +104,7 @@ export function AdminShell({
               <p className="text-metadata text-muted">Session protected</p>
             </div>
             <div className="flex items-center gap-2">
-              <Link className="center-underline text-body-small text-muted hover:text-copy" href="/">
+              <Link className="focus-ring center-underline inline-flex min-h-11 items-center text-body-small text-muted hover:text-copy" href="/">
                 View site
               </Link>
               <LogoutButton />

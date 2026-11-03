@@ -25,3 +25,5 @@ test-results
 *.log
 *.tsbuildinfo
 .npm-cache
+.vscode/
+.venv/

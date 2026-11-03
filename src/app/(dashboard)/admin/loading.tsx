@@ -1,6 +1,6 @@
 export default function AdminLoading() {
   return (
-    <main className="mx-auto max-w-6xl" aria-busy="true">
+    <div className="mx-auto max-w-6xl" aria-busy="true">
       <div className="space-y-4" aria-hidden="true">
         <div className="h-4 w-24 animate-pulse rounded bg-accent/20" />
         <div className="h-9 w-64 animate-pulse rounded bg-copy/10" />
@@ -10,6 +10,6 @@ export default function AdminLoading() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

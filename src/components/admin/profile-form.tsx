@@ -40,7 +40,7 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <form action={uploadProfileImageAction} encType="multipart/form-data" className="flex flex-1 items-center gap-3">
+              <form action={uploadProfileImageAction} className="flex flex-1 items-center gap-3">
                 <input type="file" name="file" accept="image/avif,image/jpeg,image/png,image/webp" className="peer sr-only" id="profile-image-upload" required />
                 <label
                   htmlFor="profile-image-upload"

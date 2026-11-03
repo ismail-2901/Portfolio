@@ -22,7 +22,7 @@ export default async function HomePage() {
   const hasUnavailableData = !profileResult.available || !projectsResult.available || !skillsResult.available;
 
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <section className="home-hero border-b border-rule">
         <div className="container-shell grid gap-14 py-16 lg:min-h-[calc(100svh-var(--spacing-header-public))] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-16">
           <div className="max-w-3xl">
@@ -96,7 +96,7 @@ export default async function HomePage() {
 
           <div className="mt-8">
             {projects.map((project, index) => (
-              <CaseStudyCard key={project.id} project={project} index={index + 1} variant={index === 0 ? "featured" : "secondary"} />
+              <CaseStudyCard key={project.id} project={project} index={index + 1} variant={index === 0 ? "featured" : "secondary"} priority={index === 0} />
             ))}
           </div>
         </div>

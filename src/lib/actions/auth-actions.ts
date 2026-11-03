@@ -62,5 +62,6 @@ export async function loginAction(_previousState: LoginState, formData: FormData
 }
 
 export async function logoutAction() {
+  await assertSameOrigin();
   await signOut({ redirectTo: "/" });
 }

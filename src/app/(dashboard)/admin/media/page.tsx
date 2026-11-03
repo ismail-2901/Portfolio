@@ -55,7 +55,7 @@ export default async function AdminMediaPage() {
           <Label htmlFor="order">Order</Label>
           <Input id="order" name="order" type="number" min="0" defaultValue="0" required />
         </Field>
-        <label className="flex items-center gap-3 text-label text-copy">
+        <label className="flex min-h-11 cursor-pointer items-center gap-3 text-label text-copy">
           <input name="isCover" type="checkbox" className="focus-ring size-4 accent-accent-secondary" />
           Cover image
         </label>

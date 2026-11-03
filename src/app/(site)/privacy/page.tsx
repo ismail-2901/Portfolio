@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <section className="container-shell max-w-3xl pb-24 pt-16 md:pb-32 md:pt-24">
         <p className="eyebrow">Privacy / policy</p>
         <h1 className="mt-5 text-display font-medium text-copy md:text-display-large">Privacy Policy</h1>

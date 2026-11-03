@@ -20,7 +20,7 @@ export default async function BlogPage() {
   const articles = articlesResult.available ? articlesResult.data : [];
 
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <section className="container-shell pb-24 pt-16 md:pb-32 md:pt-24">
         <Reveal>
           <p className="eyebrow">Writing / field notes</p>

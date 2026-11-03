@@ -14,10 +14,10 @@ export const loginSchema = z.object({
 });
 
 export const contactSchema = z.object({
-  name: z.string().trim().min(2).max(120),
-  email: z.string().trim().email().max(180),
+  name: z.string().trim().min(2, "Enter at least 2 characters for your name.").max(120, "Keep your name under 120 characters."),
+  email: z.string().trim().email("Enter a valid email address.").max(180, "Keep your email address under 180 characters."),
   company: z.string().trim().max(160).optional().or(z.literal("")),
-  message: z.string().trim().min(20).max(4000),
+  message: z.string().trim().min(20, "Enter at least 20 characters so there is enough context.").max(4000, "Keep your message under 4,000 characters."),
   website: z.string().max(0).optional()
 });
 

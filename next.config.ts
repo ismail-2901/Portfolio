@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1:3000", "localhost:3000"],
   devIndicators: false,
   experimental: {
     serverActions: {
@@ -25,7 +26,7 @@ const nextConfig: NextConfig = {
           "font-src 'self' data:",
           "script-src 'self' 'unsafe-inline'",
           "style-src 'self' 'unsafe-inline'",
-          "connect-src 'self'"
+          "connect-src 'self' https://*.public.blob.vercel-storage.com"
         ].join("; ")
       },
       {
@@ -48,12 +49,14 @@ const nextConfig: NextConfig = {
 
     headers.push({
       key: "Strict-Transport-Security",
-      value: "max-age=31536000"
+      value: "max-age=31536000; includeSubDomains; preload"
     });
 
     return [{ source: "/:path*", headers }];
   },
   images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [70, 75, 80],
     remotePatterns: [
       {
         protocol: "https",

@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [projectsResult, articlesResult] = await Promise.all([getPublishedProjects(), getPublishedArticles()]);
   const projects = projectsResult.available ? projectsResult.data : [];
   const articles = articlesResult.available ? articlesResult.data : [];
-  const staticRoutes = ["", "/about", "/projects", "/blog", "/contact", "/privacy"].map((route) => ({
+  const staticRoutes = ["", "/about", "/projects", "/blog", "/contact", "/resume", "/privacy"].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date()
   }));

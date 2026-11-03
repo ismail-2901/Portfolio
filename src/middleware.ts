@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     const hasSessionCookie = request.cookies
       .getAll()
-      .some((cookie) => cookie.name.endsWith("authjs.session-token"));
+      .some((cookie) => cookie.name.includes("session-token"));
 
     if (!hasSessionCookie) {
       return NextResponse.redirect(new URL("/admin/login", request.url));

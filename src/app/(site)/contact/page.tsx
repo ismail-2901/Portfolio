@@ -19,7 +19,7 @@ export default async function ContactPage() {
   const profile = profileResult.available ? profileResult.data : null;
 
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <section className="container-shell grid gap-14 pb-24 pt-16 md:gap-20 md:pb-32 md:pt-24 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           {!profileResult.available ? <DatabaseUnavailableNotice className="mb-8" /> : null}
@@ -36,13 +36,13 @@ export default async function ContactPage() {
             <div className="mt-10 border-t border-rule pt-5">
               <p className="font-mono text-metadata text-muted">DIRECT CHANNELS</p>
               <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
-                <Link href={`mailto:${profile.email}`} className="focus-ring editorial-link inline-flex items-center gap-2 text-body-small text-copy">
+                <Link href={`mailto:${profile.email}`} className="focus-ring editorial-link inline-flex min-h-11 items-center gap-2 text-body-small text-copy">
                   <Mail aria-hidden="true" className="size-4 text-accent" />{profile.email}
                 </Link>
-                <Link href={profile.githubUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex items-center gap-2 text-body-small text-copy">
+                <Link href={profile.githubUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex min-h-11 items-center gap-2 text-body-small text-copy">
                   <Github aria-hidden="true" className="size-4" />GitHub <ArrowUpRight aria-hidden="true" className="size-3" />
                 </Link>
-                <Link href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex items-center gap-2 text-body-small text-copy">
+                <Link href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex min-h-11 items-center gap-2 text-body-small text-copy">
                   <Linkedin aria-hidden="true" className="size-4" />LinkedIn <ArrowUpRight aria-hidden="true" className="size-3" />
                 </Link>
               </div>

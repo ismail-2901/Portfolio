@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { ContentStatus } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
@@ -296,58 +297,58 @@ async function fetchProfile(): Promise<PublicProfile> {
   return profile;
 }
 
-export function getProfile(): Promise<PublicProfile> {
+export const getProfile = cache(function getProfile(): Promise<PublicProfile> {
   if (useFallbackContent) {
     return Promise.resolve(fallbackProfile);
   }
 
   return fetchProfile();
-}
+});
 
-export function getPublicProfile(): Promise<PublicDataResult<PublicProfile>> {
+export const getPublicProfile = cache(function getPublicProfile(): Promise<PublicDataResult<PublicProfile>> {
   return queryPublicData(fetchProfile, fallbackProfile);
-}
+});
 
-export function getFeaturedProjects(): Promise<PublicDataResult<PublicProject[]>> {
+export const getFeaturedProjects = cache(function getFeaturedProjects(): Promise<PublicDataResult<PublicProject[]>> {
   return queryPublicData(() => prisma.project.findMany({
     where: { status: ContentStatus.PUBLISHED, featured: true },
     select: projectSelect,
     orderBy: [{ order: "asc" }, { publishedAt: "desc" }],
     take: 6
   }), fallbackProjects);
-}
+});
 
-export function getPublishedProjects(): Promise<PublicDataResult<PublicProject[]>> {
+export const getPublishedProjects = cache(function getPublishedProjects(): Promise<PublicDataResult<PublicProject[]>> {
   return queryPublicData(() => prisma.project.findMany({
     where: { status: ContentStatus.PUBLISHED },
     select: projectSelect,
     orderBy: [{ order: "asc" }, { publishedAt: "desc" }]
   }), fallbackProjects);
-}
+});
 
-export function getProjectBySlug(slug: string): Promise<PublicDataResult<PublicProject | null>> {
+export const getProjectBySlug = cache(function getProjectBySlug(slug: string): Promise<PublicDataResult<PublicProject | null>> {
   return queryPublicData(() => prisma.project.findFirst({
     where: { slug, status: ContentStatus.PUBLISHED },
     select: projectSelect
   }), fallbackProjects.find((item) => item.slug === slug) ?? null);
-}
+});
 
-export function getPublishedArticles(): Promise<PublicDataResult<PublicArticle[]>> {
+export const getPublishedArticles = cache(function getPublishedArticles(): Promise<PublicDataResult<PublicArticle[]>> {
   return queryPublicData(() => prisma.article.findMany({
     where: { status: ContentStatus.PUBLISHED },
     select: articleSelect,
     orderBy: [{ publishedAt: "desc" }]
   }), fallbackArticles);
-}
+});
 
-export function getArticleBySlug(slug: string): Promise<PublicDataResult<PublicArticle | null>> {
+export const getArticleBySlug = cache(function getArticleBySlug(slug: string): Promise<PublicDataResult<PublicArticle | null>> {
   return queryPublicData(() => prisma.article.findFirst({
     where: { slug, status: ContentStatus.PUBLISHED },
     select: articleSelect
   }), fallbackArticles.find((item) => item.slug === slug) ?? null);
-}
+});
 
-export function getFeaturedSkills(): Promise<PublicDataResult<PublicSkill[]>> {
+export const getFeaturedSkills = cache(function getFeaturedSkills(): Promise<PublicDataResult<PublicSkill[]>> {
   return queryPublicData(() => prisma.skill.findMany({
     where: { featured: true },
     select: {
@@ -360,9 +361,9 @@ export function getFeaturedSkills(): Promise<PublicDataResult<PublicSkill[]>> {
     },
     orderBy: [{ order: "asc" }, { name: "asc" }]
   }), fallbackSkills);
-}
+});
 
-export function getExperienceTimeline(): Promise<PublicDataResult<PublicExperience[]>> {
+export const getExperienceTimeline = cache(function getExperienceTimeline(): Promise<PublicDataResult<PublicExperience[]>> {
   return queryPublicData(() => prisma.experience.findMany({
     where: { status: ContentStatus.PUBLISHED },
     select: {
@@ -378,7 +379,7 @@ export function getExperienceTimeline(): Promise<PublicDataResult<PublicExperien
     },
     orderBy: [{ order: "asc" }, { startDate: "desc" }]
   }), fallbackExperience);
-}
+});
 
 export async function getDashboardStats() {
   const [projects, articles, skills, unreadMessages] = await Promise.all([
