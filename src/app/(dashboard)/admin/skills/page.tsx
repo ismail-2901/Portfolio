@@ -10,8 +10,8 @@ export default async function AdminSkillsPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <p className="font-mono text-sm uppercase text-cyan-300">Skills</p>
-      <h1 className="mt-2 text-3xl font-semibold text-zinc-50">Skill taxonomy</h1>
+      <p className="font-mono text-metadata uppercase text-accent">Skills</p>
+      <h1 className="mt-2 text-heading font-semibold text-copy">Skill taxonomy</h1>
 
       <div className="mt-8 space-y-4">
         <SkillForm />

@@ -29,25 +29,25 @@ export function CaseStudyCard({ project, index, variant, priority = false }: Cas
         />
       </Link>
 
-      {!isFeatured ? <span className="case-study-secondary-index font-mono text-xs text-accent">{String(index).padStart(2, "0")}</span> : null}
+      {!isFeatured ? <span className="case-study-secondary-index font-mono text-metadata text-accent">{String(index).padStart(2, "0")}</span> : null}
 
       <div className={isFeatured ? "case-study-featured-copy" : "case-study-secondary-copy"}>
         <p className="eyebrow">
           {isFeatured ? `CASE STUDY / ${String(index).padStart(2, "0")}` : project.tags.map((tag) => tag.name).join(" / ") || "Project study"}
         </p>
-        <h3 className={isFeatured ? "mt-3 text-3xl font-medium leading-tight md:text-4xl" : "mt-2 text-xl font-medium leading-snug md:text-2xl"}>
+        <h3 className={isFeatured ? "mt-3 text-heading font-medium md:text-heading-large" : "mt-2 text-subheading font-medium md:text-heading-small"}>
           <Link href={`/projects/${project.slug}`} className="focus-ring editorial-link">{project.title}</Link>
         </h3>
-        <p className="mt-4 max-w-xl leading-7 text-muted">{project.summary}</p>
-        <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-xs text-copy" aria-label={`${project.title} technologies`}>
+        <p className="mt-4 max-w-xl text-body text-muted">{project.summary}</p>
+        <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-metadata text-copy" aria-label={`${project.title} technologies`}>
           {project.techTags.slice(0, 5).map((tag) => <li key={tag}>{tag}</li>)}
         </ul>
         <div className="case-study-actions">
-          <Link href={`/projects/${project.slug}`} className="focus-ring inline-flex items-center gap-2 text-sm text-copy transition-colors hover:text-accent">
+          <Link href={`/projects/${project.slug}`} className="focus-ring inline-flex items-center gap-2 text-body-small text-copy transition-colors hover:text-accent">
             Read {project.title} case study <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
           {project.liveUrl ? (
-            <Link href={project.liveUrl} target="_blank" rel="noreferrer" className="focus-ring ml-5 inline-flex items-center gap-1 text-sm text-muted hover:text-copy">
+            <Link href={project.liveUrl} target="_blank" rel="noreferrer" className="focus-ring ml-5 inline-flex items-center gap-1 text-body-small text-muted hover:text-copy">
               Live <ArrowUpRight aria-hidden="true" className="size-4" />
             </Link>
           ) : null}

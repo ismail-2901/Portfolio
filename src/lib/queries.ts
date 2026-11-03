@@ -1,6 +1,7 @@
 import { ContentStatus } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
+import { withPublicData, type PublicDataResult } from "@/lib/public-data";
 
 export type PublicProfile = {
   name: string;
@@ -88,6 +89,21 @@ export type PublicExperience = {
 
 const now = new Date("2026-01-01T00:00:00.000Z");
 const useFallbackContent = process.env.NODE_ENV !== "production" && !process.env.DATABASE_URL;
+
+function queryPublicData<T>(
+  query: () => Promise<T>,
+  developmentFallback?: T
+): Promise<PublicDataResult<T>> {
+  if (useFallbackContent && developmentFallback !== undefined) {
+    return Promise.resolve({ available: true, data: developmentFallback });
+  }
+
+  if (!process.env.DATABASE_URL) {
+    return Promise.resolve({ available: false, data: null });
+  }
+
+  return withPublicData(query);
+}
 
 export const fallbackProfile: PublicProfile = {
   name: "Ismail",
@@ -270,11 +286,7 @@ const articleSelect = {
   }
 };
 
-export async function getProfile(): Promise<PublicProfile> {
-  if (useFallbackContent) {
-    return fallbackProfile;
-  }
-
+async function fetchProfile(): Promise<PublicProfile> {
   const profile = await prisma.profile.findUnique({ where: { id: "singleton" } });
 
   if (!profile) {
@@ -284,71 +296,59 @@ export async function getProfile(): Promise<PublicProfile> {
   return profile;
 }
 
-export async function getFeaturedProjects(): Promise<PublicProject[]> {
+export function getProfile(): Promise<PublicProfile> {
   if (useFallbackContent) {
-    return fallbackProjects;
+    return Promise.resolve(fallbackProfile);
   }
 
-  return prisma.project.findMany({
+  return fetchProfile();
+}
+
+export function getPublicProfile(): Promise<PublicDataResult<PublicProfile>> {
+  return queryPublicData(fetchProfile, fallbackProfile);
+}
+
+export function getFeaturedProjects(): Promise<PublicDataResult<PublicProject[]>> {
+  return queryPublicData(() => prisma.project.findMany({
     where: { status: ContentStatus.PUBLISHED, featured: true },
     select: projectSelect,
     orderBy: [{ order: "asc" }, { publishedAt: "desc" }],
     take: 6
-  });
+  }), fallbackProjects);
 }
 
-export async function getPublishedProjects(): Promise<PublicProject[]> {
-  if (useFallbackContent) {
-    return fallbackProjects;
-  }
-
-  return prisma.project.findMany({
+export function getPublishedProjects(): Promise<PublicDataResult<PublicProject[]>> {
+  return queryPublicData(() => prisma.project.findMany({
     where: { status: ContentStatus.PUBLISHED },
     select: projectSelect,
     orderBy: [{ order: "asc" }, { publishedAt: "desc" }]
-  });
+  }), fallbackProjects);
 }
 
-export async function getProjectBySlug(slug: string): Promise<PublicProject | null> {
-  if (useFallbackContent) {
-    return fallbackProjects.find((item) => item.slug === slug) ?? null;
-  }
-
-  return prisma.project.findFirst({
+export function getProjectBySlug(slug: string): Promise<PublicDataResult<PublicProject | null>> {
+  return queryPublicData(() => prisma.project.findFirst({
     where: { slug, status: ContentStatus.PUBLISHED },
     select: projectSelect
-  });
+  }), fallbackProjects.find((item) => item.slug === slug) ?? null);
 }
 
-export async function getPublishedArticles(): Promise<PublicArticle[]> {
-  if (useFallbackContent) {
-    return fallbackArticles;
-  }
-
-  return prisma.article.findMany({
+export function getPublishedArticles(): Promise<PublicDataResult<PublicArticle[]>> {
+  return queryPublicData(() => prisma.article.findMany({
     where: { status: ContentStatus.PUBLISHED },
     select: articleSelect,
     orderBy: [{ publishedAt: "desc" }]
-  });
+  }), fallbackArticles);
 }
 
-export async function getArticleBySlug(slug: string): Promise<PublicArticle | null> {
-  if (useFallbackContent) {
-    return fallbackArticles.find((item) => item.slug === slug) ?? null;
-  }
-
-  return prisma.article.findFirst({
+export function getArticleBySlug(slug: string): Promise<PublicDataResult<PublicArticle | null>> {
+  return queryPublicData(() => prisma.article.findFirst({
     where: { slug, status: ContentStatus.PUBLISHED },
     select: articleSelect
-  });
+  }), fallbackArticles.find((item) => item.slug === slug) ?? null);
 }
 
-export async function getFeaturedSkills(): Promise<PublicSkill[]> {
-  if (useFallbackContent) {
-    return fallbackSkills;
-  }
-
-  return prisma.skill.findMany({
+export function getFeaturedSkills(): Promise<PublicDataResult<PublicSkill[]>> {
+  return queryPublicData(() => prisma.skill.findMany({
     where: { featured: true },
     select: {
       id: true,
@@ -359,15 +359,11 @@ export async function getFeaturedSkills(): Promise<PublicSkill[]> {
       featured: true
     },
     orderBy: [{ order: "asc" }, { name: "asc" }]
-  });
+  }), fallbackSkills);
 }
 
-export async function getExperienceTimeline(): Promise<PublicExperience[]> {
-  if (useFallbackContent) {
-    return fallbackExperience;
-  }
-
-  return prisma.experience.findMany({
+export function getExperienceTimeline(): Promise<PublicDataResult<PublicExperience[]>> {
+  return queryPublicData(() => prisma.experience.findMany({
     where: { status: ContentStatus.PUBLISHED },
     select: {
       id: true,
@@ -381,7 +377,7 @@ export async function getExperienceTimeline(): Promise<PublicExperience[]> {
       order: true
     },
     orderBy: [{ order: "asc" }, { startDate: "desc" }]
-  });
+  }), fallbackExperience);
 }
 
 export async function getDashboardStats() {

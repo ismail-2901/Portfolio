@@ -6,20 +6,20 @@ import { cn } from "@/lib/utils";
 
 const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="mt-10 text-3xl font-medium text-copy" {...props} />
+    <h2 className="mt-10 text-heading font-medium text-copy" {...props} />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="mt-10 text-2xl font-medium text-copy" {...props} />
+    <h2 className="mt-10 text-heading-small font-medium text-copy" {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="mt-8 text-xl font-medium text-copy" {...props} />
+    <h3 className="mt-8 text-subheading font-medium text-copy" {...props} />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mt-5 leading-8 text-muted" {...props} />
+    <p className="mt-5 text-body text-muted" {...props} />
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="font-medium text-accent underline decoration-rule underline-offset-4 transition hover:text-white"
+      className="font-medium text-accent underline decoration-rule underline-offset-4 transition hover:text-copy"
       target={props.href?.startsWith("http") ? "_blank" : undefined}
       rel={props.href?.startsWith("http") ? "noreferrer" : undefined}
       {...props}
@@ -34,7 +34,7 @@ const components = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "rounded border border-zinc-800 bg-zinc-950 px-1.5 py-0.5 font-mono text-sm text-cyan-200",
+        "rounded-tight border border-rule bg-canvas px-1.5 py-0.5 font-mono text-metadata text-accent",
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ const components = {
   ),
   pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
     <pre
-      className="mt-6 overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-950 p-5 text-sm leading-7 text-zinc-200"
+      className="mt-6 overflow-x-auto rounded-panel border border-rule bg-canvas p-5 text-body-small text-copy"
       {...props}
     />
   )

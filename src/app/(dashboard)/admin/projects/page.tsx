@@ -19,8 +19,8 @@ export default async function AdminProjectsPage() {
     <div className="mx-auto max-w-6xl">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="font-mono text-sm uppercase text-cyan-300">Projects</p>
-          <h1 className="mt-2 text-3xl font-semibold text-zinc-50">Project library</h1>
+          <p className="font-mono text-metadata uppercase text-accent">Projects</p>
+          <h1 className="mt-2 text-heading font-semibold text-copy">Project library</h1>
         </div>
         <Button asChild>
           <Link href="/admin/projects/new">
@@ -35,18 +35,18 @@ export default async function AdminProjectsPage() {
           <Link
             key={project.id}
             href={`/admin/projects/${project.id}`}
-            className="focus-ring group grid gap-4 rounded-lg border border-white/10 bg-zinc-900/60 p-5 transition hover:border-cyan-300/50 md:grid-cols-[1fr_auto]"
+            className="focus-ring group grid gap-4 rounded-panel border border-rule bg-surface-raised p-5 transition hover:border-accent/50 md:grid-cols-[1fr_auto]"
           >
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge>{project.status}</Badge>
-                {project.featured ? <Badge className="border-cyan-300/30 text-cyan-200">Featured</Badge> : null}
+                {project.featured ? <Badge className="border-accent/30 text-accent">Featured</Badge> : null}
                 <Badge>{project.images.length} images</Badge>
               </div>
-              <h2 className="mt-4 text-2xl font-semibold text-zinc-50">{project.title}</h2>
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">{project.summary}</p>
+              <h2 className="mt-4 text-heading-small font-semibold text-copy">{project.title}</h2>
+              <p className="mt-2 max-w-3xl text-body-small text-muted">{project.summary}</p>
             </div>
-            <ArrowRight aria-hidden="true" className="size-5 text-cyan-300 transition group-hover:translate-x-1" />
+            <ArrowRight aria-hidden="true" className="size-5 text-accent transition group-hover:translate-x-1" />
           </Link>
         ))}
       </div>

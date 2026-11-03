@@ -20,8 +20,8 @@ export default async function AdminDashboardPage() {
     <div className="mx-auto max-w-6xl">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="font-mono text-sm uppercase text-cyan-300">Dashboard</p>
-          <h1 className="mt-2 text-3xl font-semibold text-zinc-50">Content overview</h1>
+          <p className="font-mono text-metadata uppercase text-accent">Dashboard</p>
+          <h1 className="mt-2 text-heading font-semibold text-copy">Content overview</h1>
         </div>
         <Button asChild>
           <Link href="/admin/projects/new">
@@ -38,11 +38,11 @@ export default async function AdminDashboardPage() {
             <Link
               href={card.href}
               key={card.key}
-              className="focus-ring rounded-lg border border-white/10 bg-zinc-900/60 p-5 transition hover:border-cyan-300/50"
+              className="focus-ring rounded-panel border border-rule bg-surface-raised p-5 transition hover:border-accent/50"
             >
-              <Icon aria-hidden="true" className="size-5 text-cyan-300" />
-              <p className="mt-5 text-3xl font-semibold text-zinc-50">{stats[card.key]}</p>
-              <p className="mt-1 text-sm text-zinc-400">{card.label}</p>
+              <Icon aria-hidden="true" className="size-5 text-accent" />
+              <p className="mt-5 text-heading font-semibold text-copy">{stats[card.key]}</p>
+              <p className="mt-1 text-body-small text-muted">{card.label}</p>
             </Link>
           );
         })}

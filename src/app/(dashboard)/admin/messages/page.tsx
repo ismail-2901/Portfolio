@@ -15,21 +15,21 @@ export default async function AdminMessagesPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <p className="font-mono text-sm uppercase text-cyan-300">Messages</p>
-      <h1 className="mt-2 text-3xl font-semibold text-zinc-50">Contact inbox</h1>
+      <p className="font-mono text-metadata uppercase text-accent">Messages</p>
+      <h1 className="mt-2 text-heading font-semibold text-copy">Contact inbox</h1>
 
       <div className="mt-8 grid gap-4">
         {messages.map((message) => (
-          <article key={message.id} className="rounded-lg border border-white/10 bg-zinc-900/60 p-5">
+          <article key={message.id} className="rounded-panel border border-rule bg-surface-raised p-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
               <div>
                 <div className="flex flex-wrap gap-2">
-                  {!message.readAt ? <Badge className="border-cyan-300/30 text-cyan-200">Unread</Badge> : null}
+                  {!message.readAt ? <Badge className="border-accent/30 text-accent">Unread</Badge> : null}
                   {message.archivedAt ? <Badge>Archived</Badge> : null}
                   {message.company ? <Badge>{message.company}</Badge> : null}
                 </div>
-                <h2 className="mt-4 text-xl font-semibold text-zinc-50">{message.name}</h2>
-                <p className="mt-1 text-sm text-zinc-400">{message.email}</p>
+                <h2 className="mt-4 text-subheading font-semibold text-copy">{message.name}</h2>
+                <p className="mt-1 text-body-small text-muted">{message.email}</p>
               </div>
               <div className="flex flex-wrap gap-2">
                 {!message.readAt ? (
@@ -50,7 +50,7 @@ export default async function AdminMessagesPage() {
                 ) : null}
               </div>
             </div>
-            <p className="mt-5 whitespace-pre-wrap leading-7 text-zinc-300">{message.message}</p>
+            <p className="mt-5 whitespace-pre-wrap text-body text-copy-soft">{message.message}</p>
           </article>
         ))}
       </div>

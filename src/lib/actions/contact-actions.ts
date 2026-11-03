@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { Resend } from "resend";
 
 import { prisma } from "@/lib/prisma";
+import { withPublicData } from "@/lib/public-data";
 import { assertRateLimit } from "@/lib/rate-limit";
 import { assertSameOrigin, hashSensitive } from "@/lib/security";
 import { contactSchema } from "@/lib/validation";
@@ -47,16 +48,27 @@ export async function sendContactMessage(
     windowSeconds: 60 * 10
   });
 
-  const message = await prisma.contactMessage.create({
-    data: {
-      name: parsed.data.name,
-      email: parsed.data.email.toLowerCase(),
-      company: parsed.data.company || null,
-      message: parsed.data.message,
-      ipHash,
-      userAgent: headerStore.get("user-agent")
-    }
-  });
+  const messageResult = await withPublicData(() =>
+    prisma.contactMessage.create({
+      data: {
+        name: parsed.data.name,
+        email: parsed.data.email.toLowerCase(),
+        company: parsed.data.company || null,
+        message: parsed.data.message,
+        ipHash,
+        userAgent: headerStore.get("user-agent")
+      }
+    })
+  );
+
+  if (!messageResult.available) {
+    return {
+      ok: false,
+      message: "The contact service is temporarily unavailable. Please try again shortly."
+    };
+  }
+
+  const message = messageResult.data;
 
   if (process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL) {
     const resend = new Resend(process.env.RESEND_API_KEY);

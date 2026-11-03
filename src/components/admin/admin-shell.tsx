@@ -29,18 +29,19 @@ function AdminNavLink({
 }) {
   const pathname = usePathname();
   const isActive = href === "/admin" ? pathname === href : pathname.startsWith(`${href}/`) || pathname === href;
+  const layoutClasses = compact ? "gap-2 text-metadata" : "gap-3 text-body-small";
 
   return (
     <Link
       href={href}
       aria-current={isActive ? "page" : undefined}
-      className={`focus-ring relative flex items-center gap-${compact ? "2" : "3"} rounded-lg px-3 py-2 text-${compact ? "xs" : "sm"} transition ${
+      className={`focus-ring relative flex items-center ${layoutClasses} rounded-panel px-3 py-2 transition ${
         isActive
-          ? "bg-cyan-300/10 text-zinc-50 before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-cyan-300"
-          : "text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-50"
+          ? "bg-accent/10 text-copy before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-accent"
+          : "text-muted hover:bg-copy/5 hover:text-copy"
       }`}
     >
-      <Icon aria-hidden="true" className={`size-4 ${isActive ? "text-cyan-300" : ""}`} />
+      <Icon aria-hidden="true" className={`size-4 ${isActive ? "text-accent" : ""}`} />
       {label}
     </Link>
   );
@@ -67,7 +68,7 @@ function AdminNotice() {
   return (
     <div
       role="status"
-      className="fixed bottom-5 right-5 z-50 rounded-lg border border-emerald-300/30 bg-zinc-900 px-4 py-3 text-sm text-emerald-200 shadow-xl"
+      className="fixed bottom-5 right-5 z-50 rounded-panel border border-success-border/30 bg-surface-raised px-4 py-3 text-body-small text-success shadow-xl"
     >
       {notice}
     </div>
@@ -82,10 +83,10 @@ export function AdminShell({
   userName?: string | null;
 }) {
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-canvas">
       <AdminNotice />
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-white/10 bg-zinc-950/90 p-5 lg:block">
-        <Link href="/admin" className="font-mono text-sm font-semibold uppercase text-zinc-50">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-rule bg-canvas/90 p-5 lg:block">
+        <Link href="/admin" className="font-mono text-body-small font-semibold uppercase text-copy">
           Portfolio Admin
         </Link>
         <nav className="mt-8 grid gap-1" aria-label="Admin navigation">
@@ -96,20 +97,20 @@ export function AdminShell({
       </aside>
 
       <div className="lg:pl-64">
-        <header className="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/80 backdrop-blur">
-          <div className="flex min-h-16 items-center justify-between gap-4 px-5">
+        <header className="sticky top-0 z-40 border-b border-rule bg-canvas/80 backdrop-blur">
+          <div className="flex min-h-header-admin items-center justify-between gap-4 px-5">
             <div>
-              <p className="text-sm font-medium text-zinc-100">{userName ?? "Admin"}</p>
-              <p className="text-xs text-zinc-500">Session protected</p>
+              <p className="text-body-small font-medium text-copy">{userName ?? "Admin"}</p>
+              <p className="text-metadata text-muted">Session protected</p>
             </div>
             <div className="flex items-center gap-2">
-              <Link className="center-underline text-sm text-zinc-400 hover:text-zinc-100" href="/">
+              <Link className="center-underline text-body-small text-muted hover:text-copy" href="/">
                 View site
               </Link>
               <LogoutButton />
             </div>
           </div>
-          <nav className="flex gap-1 overflow-x-auto border-t border-white/10 p-2 lg:hidden" aria-label="Admin navigation">
+          <nav className="flex gap-1 overflow-x-auto border-t border-rule p-2 lg:hidden" aria-label="Admin navigation">
             {navItems.map((item) => {
               return <AdminNavLink key={item.href} compact {...item} />;
             })}

@@ -24,7 +24,7 @@ export function ProjectMediaFrame({ project, index, className, sizes, priority =
           sizes={sizes}
           priority={priority}
           quality={priority ? 75 : 70}
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+          className="object-cover transition-transform duration-slow group-hover:scale-[1.025]"
         />
       ) : (
         <div className="project-media-placeholder">

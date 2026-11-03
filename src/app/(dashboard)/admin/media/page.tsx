@@ -29,10 +29,10 @@ export default async function AdminMediaPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <p className="font-mono text-sm uppercase text-cyan-300">Media</p>
-      <h1 className="mt-2 text-3xl font-semibold text-zinc-50">Project image management</h1>
+      <p className="font-mono text-metadata uppercase text-accent">Media</p>
+      <h1 className="mt-2 text-heading font-semibold text-copy">Project image management</h1>
 
-      <form action={uploadProjectImageAction} className="mt-8 grid gap-5 rounded-lg border border-white/10 bg-zinc-900/60 p-6 md:grid-cols-2">
+      <form action={uploadProjectImageAction} className="mt-8 grid gap-5 rounded-panel border border-rule bg-surface-raised p-6 md:grid-cols-2">
         <Field>
           <Label htmlFor="projectId">Project</Label>
           <Select id="projectId" name="projectId" required>
@@ -55,8 +55,8 @@ export default async function AdminMediaPage() {
           <Label htmlFor="order">Order</Label>
           <Input id="order" name="order" type="number" min="0" defaultValue="0" required />
         </Field>
-        <label className="flex items-center gap-3 text-sm text-zinc-200">
-          <input name="isCover" type="checkbox" className="size-4 accent-indigo-500" />
+        <label className="flex items-center gap-3 text-label text-copy">
+          <input name="isCover" type="checkbox" className="focus-ring size-4 accent-accent-secondary" />
           Cover image
         </label>
         <div>
@@ -69,15 +69,15 @@ export default async function AdminMediaPage() {
 
       <div className="mt-8 grid gap-4">
         {images.map((image) => (
-          <article key={image.id} className="rounded-lg border border-white/10 bg-zinc-900/60 p-5">
+          <article key={image.id} className="rounded-panel border border-rule bg-surface-raised p-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
               <div>
                 <div className="flex flex-wrap gap-2">
                   <Badge>{image.project.title}</Badge>
-                  {image.isCover ? <Badge className="border-cyan-300/30 text-cyan-200">Cover</Badge> : null}
+                  {image.isCover ? <Badge className="border-accent/30 text-accent">Cover</Badge> : null}
                 </div>
-                <p className="mt-4 text-zinc-100">{image.alt}</p>
-                <p className="mt-2 break-all font-mono text-xs text-zinc-500">{image.url}</p>
+                <p className="mt-4 text-copy">{image.alt}</p>
+                <p className="mt-2 break-all font-mono text-metadata text-muted">{image.url}</p>
               </div>
               <form action={deleteProjectImageAction.bind(null, image.id)}>
                 <SubmitButton variant="danger" pendingLabel="Deleting">

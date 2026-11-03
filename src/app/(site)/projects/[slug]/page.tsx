@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
 
 import { ProjectMediaFrame } from "@/components/site/project-media-frame";
 import { Button } from "@/components/ui/button";
+import { DatabaseUnavailableNotice } from "@/components/site/database-unavailable-notice";
 import { MarkdownRenderer } from "@/lib/markdown";
 import { getProjectBySlug } from "@/lib/queries";
 import { serializeStructuredData } from "@/lib/structured-data";
@@ -16,7 +17,13 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const projectResult = await getProjectBySlug(slug);
+
+  if (!projectResult.available) {
+    return { title: "Project temporarily unavailable" };
+  }
+
+  const project = projectResult.data;
 
   if (!project) {
     return { title: "Project Not Found" };
@@ -43,7 +50,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProjectDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const projectResult = await getProjectBySlug(slug);
+
+  if (!projectResult.available) {
+    return (
+      <main id="main-content">
+        <section className="container-shell max-w-3xl pb-24 pt-16 md:pb-32 md:pt-24">
+          <Button asChild variant="ghost" className="px-0">
+            <Link href="/projects">
+              <ArrowLeft aria-hidden="true" className="size-4" />
+              Projects
+            </Link>
+          </Button>
+          <h1 className="mt-8 text-display-compact font-medium text-copy md:text-display">Project details temporarily unavailable.</h1>
+          <DatabaseUnavailableNotice className="mt-6" />
+        </section>
+      </main>
+    );
+  }
+
+  const project = projectResult.data;
 
   if (!project) {
     notFound();
@@ -74,13 +100,13 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <header className="mt-12 grid gap-8 border-b border-rule pb-10 md:grid-cols-[1fr_0.55fr] md:items-end md:pb-14">
           <div className="min-w-0">
             <p className="eyebrow">Case study <span className="px-2 text-muted">/</span> {project.tags.slice(0, 2).map((tag) => tag.name).join(" / ") || "Project"}</p>
-            <h1 className="mt-5 text-balance text-4xl font-medium leading-[1.04] text-copy sm:text-5xl md:text-7xl">
+            <h1 className="mt-5 text-balance text-display-compact font-medium text-copy sm:text-display md:text-display-xl">
             {project.title}
             </h1>
           </div>
           <div className="min-w-0">
-            <p className="text-lg leading-8 text-muted">{project.summary}</p>
-            <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-xs text-copy" aria-label="Project technologies">
+            <p className="text-body-large text-muted">{project.summary}</p>
+            <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-metadata text-copy" aria-label="Project technologies">
               {project.techTags.map((tag) => <li key={tag}>{tag}</li>)}
             </ul>
           </div>

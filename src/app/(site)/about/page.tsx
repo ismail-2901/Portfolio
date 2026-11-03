@@ -4,10 +4,11 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { CapabilityCluster } from "@/components/site/capability-cluster";
+import { DatabaseUnavailableNotice } from "@/components/site/database-unavailable-notice";
 import { ExperienceTimeline } from "@/components/site/experience-timeline";
 import { SectionIntro } from "@/components/site/section-intro";
 import { Button } from "@/components/ui/button";
-import { getExperienceTimeline, getFeaturedSkills, getProfile } from "@/lib/queries";
+import { getExperienceTimeline, getFeaturedSkills, getPublicProfile } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "About",
@@ -18,23 +19,34 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const [profile, experience, skills] = await Promise.all([
-    getProfile(),
+  const [profileResult, experienceResult, skillsResult] = await Promise.all([
+    getPublicProfile(),
     getExperienceTimeline(),
     getFeaturedSkills()
   ]);
+  const profile = profileResult.available ? profileResult.data : null;
+  const experience = experienceResult.available ? experienceResult.data : [];
+  const skills = skillsResult.available ? skillsResult.data : [];
+  const hasUnavailableData = !profileResult.available || !experienceResult.available || !skillsResult.available;
 
   return (
     <main id="main-content">
       <section className="container-shell grid gap-12 py-16 md:py-24 lg:grid-cols-[1fr_0.62fr] lg:items-center">
+        {hasUnavailableData ? (
+          <div className="lg:col-span-2">
+            <DatabaseUnavailableNotice />
+          </div>
+        ) : null}
         <div>
-          <p className="eyebrow">About <span className="px-2 text-muted">/</span> {profile.location}</p>
-          <h1 className="mt-5 text-balance text-5xl font-medium leading-[1.04] text-copy md:text-6xl">
-            {profile.name}
+          <p className="eyebrow">
+            About{profile ? <><span className="px-2 text-muted">/</span>{profile.location}</> : null}
+          </p>
+          <h1 className="mt-5 text-balance text-display font-medium text-copy md:text-display-large">
+            {profile?.name ?? "Profile details temporarily unavailable."}
           </h1>
-          <p className="mt-3 text-xl text-muted md:text-2xl">{profile.role}</p>
-          <p className="copy-measure mt-7 text-lg leading-8 text-muted">{profile.shortBio}</p>
-          <p className="mt-8 max-w-2xl border-l border-accent pl-4 text-sm leading-7 text-copy">
+          {profile ? <p className="mt-3 text-subheading text-muted md:text-heading-small">{profile.role}</p> : null}
+          {profile ? <p className="copy-measure mt-7 text-body-large text-muted">{profile.shortBio}</p> : null}
+          <p className="mt-8 max-w-2xl border-l border-accent pl-4 text-body-small leading-7 text-copy">
             Product thinking, interface craft, and operational discipline belong in the same engineering practice.
           </p>
           <Button asChild variant="ghost" className="mt-7 px-0">
@@ -42,7 +54,7 @@ export default async function AboutPage() {
           </Button>
         </div>
 
-        {profile.imageUrl ? (
+        {profile?.imageUrl ? (
           <div className="relative aspect-4/5 max-h-130 overflow-hidden border-rule bg-surface">
             <Image
               src={profile.imageUrl}
@@ -59,14 +71,14 @@ export default async function AboutPage() {
       <section className="border-y border-rule py-20 md:py-28">
         <div className="container-shell grid gap-10 lg:grid-cols-[220px_1fr]">
           <SectionIntro eyebrow="Experience" title="The work, over time." className="block border-0 pb-0" />
-          <ExperienceTimeline experience={experience} />
+          {experienceResult.available ? <ExperienceTimeline experience={experience} /> : null}
         </div>
       </section>
 
       <section className="container-shell py-20 md:py-28">
         <SectionIntro eyebrow="Capabilities" title="Tools in service of the work." description="Skills are grouped by the kind of problem they help solve. Groups appear when there is relevant profile data." />
         <div className="mt-8">
-          <CapabilityCluster skills={skills} />
+          {skillsResult.available ? <CapabilityCluster skills={skills} /> : null}
         </div>
       </section>
     </main>

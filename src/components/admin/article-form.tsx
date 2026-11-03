@@ -27,7 +27,7 @@ export function ArticleForm({ article }: { article?: ArticleFormValue }) {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[1fr_320px]">
-      <form action={action} className="space-y-6 rounded-lg border border-white/10 bg-zinc-900/60 p-6">
+      <form action={action} className="space-y-6 rounded-panel border border-rule bg-surface-raised p-6">
         <div className="grid gap-5 md:grid-cols-2">
           <Field>
             <Label htmlFor="title">Title</Label>
@@ -84,9 +84,9 @@ export function ArticleForm({ article }: { article?: ArticleFormValue }) {
       </form>
 
       {article ? (
-        <form action={deleteArticleAction.bind(null, article.id)} className="h-fit rounded-lg border border-red-400/20 bg-red-500/5 p-5">
-          <h2 className="text-lg font-semibold text-red-100">Delete Article</h2>
-          <p className="mt-2 text-sm leading-6 text-red-200/80">This removes the article and detaches its tags.</p>
+        <form action={deleteArticleAction.bind(null, article.id)} className="h-fit rounded-panel border border-danger/20 bg-danger-surface/5 p-5">
+          <h2 className="text-heading-compact font-semibold text-danger-strong">Delete Article</h2>
+          <p className="mt-2 text-body-small text-danger-soft/80">This removes the article and detaches its tags.</p>
           <SubmitButton variant="danger" pendingLabel="Deleting" className="mt-4">
             <Trash2 aria-hidden="true" className="size-4" />
             Delete article

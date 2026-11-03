@@ -38,8 +38,8 @@ export function CapabilityCluster({ skills }: { skills: PublicSkill[] }) {
     <div className="capability-list">
       {groups.map(({ title, items }) => (
         <section key={title} className="capability-row">
-          <h3 className="font-mono text-xs text-accent">{title}</h3>
-          <ul className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-copy">
+          <h3 className="font-mono text-metadata text-accent">{title}</h3>
+          <ul className="flex flex-wrap gap-x-5 gap-y-3 text-body-small text-copy">
             {items.map((skill) => <li key={skill.id}>{skill.name}</li>)}
           </ul>
         </section>

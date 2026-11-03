@@ -11,7 +11,7 @@ export default async function AdminLoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-950 p-5">
+    <main className="flex min-h-screen items-center justify-center bg-canvas p-5">
       <LoginForm />
     </main>
   );

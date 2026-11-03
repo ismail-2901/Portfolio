@@ -23,9 +23,9 @@ function getInitials(name: string) {
 export function ProfileForm({ profile }: { profile: PublicProfile }) {
   return (
     <div className="space-y-6">
-      <div className="rounded-[1.5rem] border border-white/10 bg-zinc-900/60 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
+      <div className="admin-profile-card rounded-panel border border-rule bg-surface-raised p-6">
         <div className="flex flex-col gap-5 md:flex-row md:items-center">
-          <div className="flex size-24 items-center justify-center overflow-hidden rounded-full border border-cyan-300/30 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.22),rgba(17,24,39,1))] text-xl font-semibold text-cyan-200 shadow-[0_0_36px_rgba(34,211,238,0.12)]">
+          <div className="admin-avatar flex size-24 items-center justify-center overflow-hidden rounded-full border border-accent/30 text-subheading font-semibold text-accent">
             {profile.imageUrl ? (
               <Image src={profile.imageUrl} alt={profile.name} width={96} height={96} className="size-full object-cover" />
             ) : (
@@ -35,16 +35,16 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
 
           <div className="flex-1 space-y-3">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-400">Profile image</p>
-              <p className="mt-1 text-sm text-zinc-400">Upload a new portrait or paste a public image URL.</p>
+              <p className="font-mono text-metadata uppercase tracking-[0.2em] text-muted">Profile image</p>
+              <p className="mt-1 text-body-small text-muted">Upload a new portrait or paste a public image URL.</p>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
               <form action={uploadProfileImageAction} encType="multipart/form-data" className="flex flex-1 items-center gap-3">
-                <input type="file" name="file" accept="image/avif,image/jpeg,image/png,image/webp" className="hidden" id="profile-image-upload" required />
+                <input type="file" name="file" accept="image/avif,image/jpeg,image/png,image/webp" className="peer sr-only" id="profile-image-upload" required />
                 <label
                   htmlFor="profile-image-upload"
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-2 text-sm font-medium text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-300/15"
+                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-2 text-label font-medium text-accent transition duration-interactive hover:border-accent/60 hover:bg-accent/15 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
                 >
                   <ImagePlus aria-hidden="true" className="size-4" />
                   Upload
@@ -65,7 +65,7 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
         </div>
       </div>
 
-      <form action={updateProfileAction} className="space-y-6 rounded-lg border border-white/10 bg-zinc-900/60 p-6">
+      <form action={updateProfileAction} className="space-y-6 rounded-panel border border-rule bg-surface-raised p-6">
         <div className="grid gap-5 md:grid-cols-2">
           <Field>
             <Label htmlFor="name">Name</Label>

@@ -15,5 +15,5 @@ export function FieldError({ children }: { children?: React.ReactNode }) {
     return null;
   }
 
-  return <p className="text-sm text-red-300">{children}</p>;
+  return <p className="text-body-small text-danger">{children}</p>;
 }

@@ -13,11 +13,11 @@ export function SectionIntro({ eyebrow, title, description, action, className }:
     <div className={cn("grid gap-5 border-b border-rule pb-6 md:grid-cols-[1fr_auto] md:items-end", className)}>
       <div>
         <p className="eyebrow">{eyebrow}</p>
-        <h2 className="mt-3 max-w-3xl text-3xl font-medium leading-tight text-copy md:text-4xl">
+        <h2 className="mt-3 max-w-3xl text-heading font-medium text-copy md:text-heading-large">
           {title}
         </h2>
         {description ? (
-          <p className="copy-measure mt-4 leading-7 text-muted">{description}</p>
+          <p className="copy-measure mt-4 text-body text-muted">{description}</p>
         ) : null}
       </div>
       {action ? <div className="md:pb-1">{action}</div> : null}

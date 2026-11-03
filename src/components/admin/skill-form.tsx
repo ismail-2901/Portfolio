@@ -20,7 +20,7 @@ export function SkillForm({ skill }: { skill?: SkillFormValue }) {
   const action = skill ? updateSkillAction.bind(null, skill.id) : createSkillAction;
 
   return (
-    <form action={action} className="grid gap-4 rounded-lg border border-white/10 bg-zinc-900/60 p-5 md:grid-cols-[1fr_1fr_160px_180px_auto] md:items-end">
+    <form action={action} className="grid gap-4 rounded-panel border border-rule bg-surface-raised p-5 md:grid-cols-[1fr_1fr_160px_180px_auto] md:items-end">
       <Field>
         <Label htmlFor={`name-${skill?.id ?? "new"}`}>Name</Label>
         <Input id={`name-${skill?.id ?? "new"}`} name="name" defaultValue={skill?.name} required />
@@ -42,15 +42,15 @@ export function SkillForm({ skill }: { skill?: SkillFormValue }) {
         </Select>
       </Field>
       <div className="flex flex-wrap items-center gap-3">
-        <label className="flex items-center gap-2 text-sm text-zinc-200">
-          <input name="featured" type="checkbox" defaultChecked={skill?.featured} className="size-4 accent-indigo-500" />
+        <label className="flex items-center gap-2 text-label text-copy">
+          <input name="featured" type="checkbox" defaultChecked={skill?.featured} className="focus-ring size-4 accent-accent-secondary" />
           Featured
         </label>
         <SubmitButton pendingLabel="Saving">{skill ? "Save" : "Create"}</SubmitButton>
         {skill ? (
           <button
             formAction={deleteSkillAction.bind(null, skill.id)}
-            className="focus-ring inline-flex size-10 items-center justify-center rounded-full border border-red-400/30 text-red-200 transition hover:bg-red-500/10"
+            className="focus-ring inline-flex size-11 items-center justify-center rounded-full border border-danger/30 text-danger-soft transition duration-interactive hover:bg-danger-surface/10"
             aria-label={`Delete ${skill.name}`}
           >
             <Trash2 aria-hidden="true" className="size-4" />

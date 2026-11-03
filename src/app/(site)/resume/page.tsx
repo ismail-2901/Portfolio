@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import { Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { getProfile } from "@/lib/queries";
+import { DatabaseUnavailableNotice } from "@/components/site/database-unavailable-notice";
+import { getPublicProfile } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Resume",
@@ -15,12 +16,14 @@ export const metadata: Metadata = {
 };
 
 export default async function ResumePage() {
-  const profile = await getProfile();
+  const profileResult = await getPublicProfile();
+  const profile = profileResult.available ? profileResult.data : null;
   const isConfigured =
+    profile?.resumeUrl !== undefined &&
     profile.resumeUrl !== "/resume" &&
     (profile.resumeUrl.startsWith("http") || profile.resumeUrl.startsWith("/"));
 
-  if (isConfigured) {
+  if (profile && isConfigured) {
     redirect(profile.resumeUrl);
   }
 
@@ -28,10 +31,16 @@ export default async function ResumePage() {
     <main id="main-content">
       <section className="container-shell max-w-3xl pb-24 pt-16 md:pb-32 md:pt-24">
         <p className="eyebrow">Resume / CV</p>
-        <h1 className="mt-5 text-5xl font-medium text-copy md:text-6xl">Resume link pending.</h1>
-        <p className="mt-6 leading-8 text-muted">
-          Add a public resume URL or uploaded file path in the Profile record to enable direct downloads.
-        </p>
+        <h1 className="mt-5 text-display font-medium text-copy md:text-display-large">
+          {profile ? "Resume link pending." : "Resume details temporarily unavailable."}
+        </h1>
+        {profile ? (
+          <p className="mt-6 text-body text-muted">
+            Add a public resume URL or uploaded file path in the Profile record to enable direct downloads.
+          </p>
+        ) : (
+          <DatabaseUnavailableNotice className="mt-6" />
+        )}
         <Button asChild className="mt-8">
           <Link href="/contact">
             <Download aria-hidden="true" className="size-4" />

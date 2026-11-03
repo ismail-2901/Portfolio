@@ -38,7 +38,7 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
-      <form action={action} className="space-y-6 rounded-lg border border-white/10 bg-zinc-900/60 p-6">
+      <form action={action} className="space-y-6 rounded-panel border border-rule bg-surface-raised p-6">
         <div className="grid gap-5 md:grid-cols-2">
           <Field>
             <Label htmlFor="title">Title</Label>
@@ -95,8 +95,8 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
               <option value="ARCHIVED">Archived</option>
             </Select>
           </Field>
-          <label className="flex items-end gap-3 rounded-lg border border-white/10 bg-zinc-950/60 p-3 text-sm text-zinc-200">
-            <input name="featured" type="checkbox" defaultChecked={project?.featured} className="size-4 accent-indigo-500" />
+          <label className="flex items-end gap-3 rounded-panel border border-rule bg-canvas/60 p-3 text-label text-copy">
+            <input name="featured" type="checkbox" defaultChecked={project?.featured} className="focus-ring size-4 accent-accent-secondary" />
             Featured project
           </label>
         </div>
@@ -112,8 +112,8 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
       <aside className="space-y-6">
         {project ? (
           <>
-            <section className="rounded-lg border border-white/10 bg-zinc-900/60 p-5">
-              <h2 className="text-lg font-semibold text-zinc-50">Project Images</h2>
+            <section className="rounded-panel border border-rule bg-surface-raised p-5">
+              <h2 className="text-heading-compact font-semibold text-copy">Project Images</h2>
               <form action={uploadProjectImageAction} className="mt-5 space-y-4">
                 <input type="hidden" name="projectId" value={project.id} />
                 <Field>
@@ -128,8 +128,8 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
                   <Label htmlFor="imageOrder">Order</Label>
                   <Input id="imageOrder" name="order" type="number" min="0" defaultValue="0" required />
                 </Field>
-                <label className="flex items-center gap-3 text-sm text-zinc-200">
-                  <input name="isCover" type="checkbox" className="size-4 accent-indigo-500" />
+                <label className="flex items-center gap-3 text-label text-copy">
+                  <input name="isCover" type="checkbox" className="focus-ring size-4 accent-accent-secondary" />
                   Cover image
                 </label>
                 <SubmitButton pendingLabel="Uploading">
@@ -140,9 +140,9 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
 
               <div className="mt-6 space-y-3">
                 {project.images.map((image) => (
-                  <div key={image.id} className="rounded-lg border border-white/10 bg-zinc-950/60 p-3">
-                    <p className="text-sm text-zinc-200">{image.alt}</p>
-                    <p className="mt-1 break-all font-mono text-xs text-zinc-500">{image.url}</p>
+                  <div key={image.id} className="rounded-panel border border-rule bg-canvas/60 p-3">
+                    <p className="text-body-small text-copy">{image.alt}</p>
+                    <p className="mt-1 break-all font-mono text-metadata text-muted">{image.url}</p>
                     <form action={deleteProjectImageAction.bind(null, image.id)} className="mt-3">
                       <SubmitButton variant="danger" pendingLabel="Deleting">
                         <Trash2 aria-hidden="true" className="size-4" />
@@ -154,9 +154,9 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
               </div>
             </section>
 
-            <form action={deleteProjectAction.bind(null, project.id)} className="rounded-lg border border-red-400/20 bg-red-500/5 p-5">
-              <h2 className="text-lg font-semibold text-red-100">Delete Project</h2>
-              <p className="mt-2 text-sm leading-6 text-red-200/80">This removes the project, its images, and related tags.</p>
+            <form action={deleteProjectAction.bind(null, project.id)} className="rounded-panel border border-danger/20 bg-danger-surface/5 p-5">
+              <h2 className="text-heading-compact font-semibold text-danger-strong">Delete Project</h2>
+              <p className="mt-2 text-body-small text-danger-soft/80">This removes the project, its images, and related tags.</p>
               <SubmitButton variant="danger" pendingLabel="Deleting" className="mt-4">
                 <Trash2 aria-hidden="true" className="size-4" />
                 Delete project
@@ -164,9 +164,9 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
             </form>
           </>
         ) : (
-          <section className="rounded-lg border border-white/10 bg-zinc-900/60 p-5">
-            <h2 className="text-lg font-semibold text-zinc-50">Images</h2>
-            <p className="mt-2 text-sm leading-6 text-zinc-400">Create the project first, then upload cover and gallery images.</p>
+          <section className="rounded-panel border border-rule bg-surface-raised p-5">
+            <h2 className="text-heading-compact font-semibold text-copy">Images</h2>
+            <p className="mt-2 text-body-small text-muted">Create the project first, then upload cover and gallery images.</p>
           </section>
         )}
       </aside>

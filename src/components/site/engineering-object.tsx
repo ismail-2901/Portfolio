@@ -34,7 +34,7 @@ export function EngineeringObject() {
 
       <figcaption id="engineering-object-caption" className="engineering-object-caption">
         <span className="font-mono text-[10px] text-accent">SYSTEMS THINKING</span>
-        <span className="text-sm text-muted">Clear boundaries. Useful interfaces. Reliable foundations.</span>
+        <span className="text-body text-muted">Clear boundaries. Useful interfaces. Reliable foundations.</span>
       </figcaption>
     </figure>
   );

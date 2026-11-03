@@ -18,10 +18,10 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form action={action} className="glass-panel w-full max-w-md rounded-lg p-6">
+    <form action={action} className="glass-panel w-full max-w-md rounded-panel p-6">
       <div>
-        <p className="font-mono text-sm uppercase text-cyan-300">Admin</p>
-        <h1 className="mt-3 text-3xl font-semibold text-zinc-50">Secure dashboard login</h1>
+        <p className="font-mono text-metadata uppercase text-accent">Admin</p>
+        <h1 className="mt-3 text-heading font-semibold text-copy">Secure dashboard login</h1>
       </div>
 
       <div className="mt-8 space-y-5">
@@ -42,7 +42,7 @@ export function LoginForm() {
             />
             <button
               type="button"
-              className="focus-ring absolute right-1 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full text-zinc-400 transition hover:text-white"
+              className="focus-ring absolute right-1 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full text-muted transition duration-interactive hover:text-copy"
               onClick={() => setShowPassword((visible) => !visible)}
               aria-label={showPassword ? "Hide password" : "Show password"}
               title={showPassword ? "Hide password" : "Show password"}
@@ -53,7 +53,7 @@ export function LoginForm() {
         </Field>
       </div>
 
-      {state.message ? <p className="mt-5 text-sm text-red-300">{state.message}</p> : null}
+      {state.message ? <p className="mt-5 text-body-small text-danger">{state.message}</p> : null}
 
       <Button type="submit" disabled={pending} className="mt-6 w-full">
         <LogIn aria-hidden="true" className="size-4" />

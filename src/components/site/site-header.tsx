@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/button";
 export function SiteHeader() {
   return (
     <header className="site-header sticky top-0 z-50 border-b border-rule">
-      <div className="container-shell relative flex min-h-18 items-center justify-between gap-4">
+      <div className="container-shell relative flex min-h-header-public items-center justify-between gap-4">
         <Link
           href="/"
           className="focus-ring flex items-baseline gap-2 font-medium text-copy"
         >
-          <span className="text-lg">Ismail</span>
-          <span className="hidden font-mono text-[10px] text-muted sm:inline">/ ENGINEER</span>
+          <span className="text-body-large">Ismail</span>
+          <span className="hidden font-mono text-metadata text-muted sm:inline">/ ENGINEER</span>
         </Link>
 
         <nav
@@ -26,7 +26,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="focus-ring nav-link py-2 text-sm"
+                className="focus-ring nav-link py-2 text-body-small"
               >
                 {item.label}
               </Link>
@@ -35,8 +35,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-4 md:flex">
-          <Link href="/resume" className="focus-ring nav-link text-sm">Resume</Link>
-          <Link href="/admin" className="focus-ring nav-link text-sm">Admin</Link>
+          <Link href="/resume" className="focus-ring nav-link text-body-small">Resume</Link>
+          <Link href="/admin" className="focus-ring nav-link text-body-small">Admin</Link>
           <Button asChild size="sm">
             <Link href="/contact" prefetch={false}>Contact <ArrowUpRight aria-hidden="true" className="size-4" /></Link>
           </Button>

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 
-import { getProfile } from "@/lib/queries";
+import { getPublicProfile } from "@/lib/queries";
 import { getSiteUrl } from "@/lib/utils";
 
 import "./globals.css";
@@ -18,32 +18,37 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const profile = await getProfile();
+  const profileResult = await getPublicProfile();
+  const profile = profileResult.available ? profileResult.data : null;
   const siteUrl = getSiteUrl();
+  const ownerName = profile?.name ?? "Portfolio";
+  const siteName = profile ? `${profile.name} Portfolio` : "Portfolio";
+  const title = profile ? `${profile.name} | ${profile.role}` : "Portfolio";
+  const description = profile?.shortBio ?? "Portfolio website";
 
   return {
     metadataBase: new URL(siteUrl),
     title: {
-      default: `${profile.name} | ${profile.role}`,
-      template: `%s | ${profile.name}`
+      default: title,
+      template: `%s | ${ownerName}`
     },
-    description: profile.shortBio,
+    description,
     alternates: {
       canonical: "/"
     },
     openGraph: {
-      title: `${profile.name} | ${profile.role}`,
-      description: profile.shortBio,
+      title,
+      description,
       url: siteUrl,
-      siteName: `${profile.name} Portfolio`,
+      siteName,
       type: "website",
-      images: profile.imageUrl ? [{ url: profile.imageUrl, alt: profile.name }] : undefined
+      images: profile?.imageUrl ? [{ url: profile.imageUrl, alt: profile.name }] : undefined
     },
     twitter: {
-      card: profile.imageUrl ? "summary_large_image" : "summary",
-      title: `${profile.name} | ${profile.role}`,
-      description: profile.shortBio,
-      images: profile.imageUrl ? [profile.imageUrl] : undefined
+      card: profile?.imageUrl ? "summary_large_image" : "summary",
+      title,
+      description,
+      images: profile?.imageUrl ? [profile.imageUrl] : undefined
     },
     robots: {
       index: true,

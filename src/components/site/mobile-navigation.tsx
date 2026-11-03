@@ -17,7 +17,7 @@ export function MobileNavigation() {
 
   return (
     <details ref={menuRef} className="mobile-navigation md:hidden">
-      <summary className="mobile-navigation-toggle focus-ring flex size-10 cursor-pointer items-center justify-center rounded-[6px] border border-rule bg-surface text-copy">
+      <summary className="mobile-navigation-toggle focus-ring flex size-11 cursor-pointer items-center justify-center rounded-small border border-control-border bg-surface text-copy">
         <span className="sr-only">Navigation menu</span>
         <Menu aria-hidden="true" className="mobile-navigation-open size-5" />
         <X aria-hidden="true" className="mobile-navigation-close size-5" />
@@ -32,15 +32,15 @@ export function MobileNavigation() {
             key={item.href}
             href={item.href}
             prefetch={item.href === "/contact" ? false : undefined}
-            className="focus-ring px-3 py-3 text-sm text-copy hover:text-accent"
+            className="focus-ring px-3 py-3 text-body-small text-copy hover:text-accent"
           >
             {item.label}
           </Link>
         ))}
-        <Link href="/resume" className="focus-ring px-3 py-3 text-sm text-copy hover:text-accent">
+        <Link href="/resume" className="focus-ring px-3 py-3 text-body-small text-copy hover:text-accent">
           Resume
         </Link>
-        <Link href="/admin" className="focus-ring px-3 py-3 text-sm text-muted hover:text-accent">
+        <Link href="/admin" className="focus-ring px-3 py-3 text-body-small text-muted hover:text-accent">
           Admin
         </Link>
       </nav>

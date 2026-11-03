@@ -4,20 +4,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-[6px] px-5 text-sm font-medium transition duration-200 ease-out active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
+  "focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-small px-5 text-label font-medium transition duration-interactive ease-out active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary: "border border-accent bg-[var(--color-accent)] text-canvas hover:bg-white hover:border-white",
-        secondary: "border border-rule bg-surface text-copy hover:border-muted",
+        primary: "border border-accent bg-accent text-canvas hover:bg-copy hover:border-copy",
+        secondary: "border border-control-border bg-surface text-copy hover:border-control-hover",
         ghost: "text-muted hover:text-copy",
         danger:
-          "border border-red-400/40 bg-red-500/10 text-red-100 hover:border-red-300/70 hover:bg-red-500/20"
+          "border border-danger/40 bg-danger-surface/10 text-danger-strong hover:border-danger/70 hover:bg-danger-surface/20"
       },
       size: {
         default: "h-11 px-5",
-        sm: "h-9 px-4 text-xs",
-        icon: "size-10 p-0"
+        sm: "h-11 px-4 text-label",
+        icon: "size-11 p-0"
       }
     },
     defaultVariants: {

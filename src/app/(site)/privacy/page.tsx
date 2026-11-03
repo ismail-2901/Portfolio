@@ -13,8 +13,8 @@ export default function PrivacyPage() {
     <main id="main-content">
       <section className="container-shell max-w-3xl pb-24 pt-16 md:pb-32 md:pt-24">
         <p className="eyebrow">Privacy / policy</p>
-        <h1 className="mt-5 text-5xl font-medium text-copy md:text-6xl">Privacy Policy</h1>
-        <div className="mt-8 space-y-6 leading-8 text-muted">
+        <h1 className="mt-5 text-display font-medium text-copy md:text-display-large">Privacy Policy</h1>
+        <div className="mt-8 space-y-6 text-body text-muted">
           <p>
             Contact form submissions are stored to respond to inquiries. The form records your name, email,
             optional company, message, user agent, and a hashed IP fingerprint for abuse prevention.

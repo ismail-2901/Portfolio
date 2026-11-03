@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { CaseStudyCard } from "@/components/site/case-study-card";
+import { DatabaseUnavailableNotice } from "@/components/site/database-unavailable-notice";
 import { SectionIntro } from "@/components/site/section-intro";
 import { Button } from "@/components/ui/button";
 import { getPublishedProjects } from "@/lib/queries";
@@ -16,7 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
-  const projects = await getPublishedProjects();
+  const projectsResult = await getPublishedProjects();
+  const projects = projectsResult.available ? projectsResult.data : [];
   const leadProject = projects.find((project) => project.featured) ?? projects[0];
   const remainingProjects = projects.filter((project) => project.id !== leadProject?.id);
 
@@ -25,16 +27,18 @@ export default async function ProjectsPage() {
       <section className="container-shell pb-24 pt-16 md:pb-32 md:pt-24">
         <header className="mb-16 max-w-4xl md:mb-24">
           <p className="eyebrow">Selected work / case studies</p>
-          <h1 className="mt-5 text-balance text-5xl font-medium leading-[1.04] text-copy md:text-7xl">
+          <h1 className="mt-5 text-balance text-display font-medium text-copy md:text-display-xl">
             Engineering decisions, made visible.
           </h1>
-          <p className="copy-measure mt-6 text-lg leading-8 text-muted">
+          <p className="copy-measure mt-6 text-body-large text-muted">
             A closer look at product and platform work: the problems, systems, and implementation details behind each project.
           </p>
           <Button asChild variant="ghost" className="mt-5 px-0">
             <Link href="/contact">Discuss a project <ArrowUpRight aria-hidden="true" className="size-4" /></Link>
           </Button>
         </header>
+
+        {!projectsResult.available ? <DatabaseUnavailableNotice className="mb-8" /> : null}
 
         {leadProject ? (
           <div>
@@ -56,7 +60,7 @@ export default async function ProjectsPage() {
           </div>
         ) : null}
 
-        {!projects.length ? (
+        {projectsResult.available && !projects.length ? (
           <p className="border-t border-rule py-8 text-muted">Project studies are being prepared.</p>
         ) : null}
       </section>
