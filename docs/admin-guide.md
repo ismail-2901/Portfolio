@@ -164,3 +164,4 @@ Every admin action (create, update, delete, login) is recorded in the `AuditLog`
 - All admin server actions validate the session before executing.
 - Contact form has rate limiting and IP hashing — raw IPs are never stored.
 - Uploaded images are stored in Vercel Blob behind a read-write token — not publicly guessable.
+

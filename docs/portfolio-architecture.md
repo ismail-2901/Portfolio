@@ -148,3 +148,4 @@ Accent color: `#73dee5` (teal). Dark editorial aesthetic.
 | `BLOB_READ_WRITE_TOKEN` | Yes | Vercel Blob storage access |
 | `RESEND_API_KEY` | Yes | Email delivery via Resend |
 | `NEXT_PUBLIC_SITE_URL` | Yes | Canonical site URL for metadata |
+

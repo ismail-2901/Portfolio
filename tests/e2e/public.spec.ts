@@ -3,14 +3,14 @@ import { expect, test } from "@playwright/test";
 test("renders the public home page", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: /complex work feel clear/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /full-stack web applications/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /explore selected work/i })).toBeVisible();
 });
 
 test("renders the contact form", async ({ page }) => {
   await page.goto("/contact");
 
-  await expect(page.getByRole("heading", { name: /good engineering starts with a good problem/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /have a project or opportunity/i })).toBeVisible();
   await expect(page.locator('input[name="email"]').first()).toBeVisible();
 });
 
