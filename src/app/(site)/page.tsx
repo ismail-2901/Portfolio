@@ -1,9 +1,14 @@
-import Link from "next/link";
-import { Mail } from "lucide-react";
-
-import { getFeaturedProjects, getFeaturedSkills, getPublicProfile, getExperienceTimeline } from "@/lib/queries";
+import {
+  getFeaturedProjects,
+  getFeaturedSkills,
+  getPublicProfile,
+  getExperienceTimeline
+} from "@/lib/queries";
 import { HeroSection } from "@/components/site/hero-section";
 import { ProjectGrid } from "@/components/site/project-grid";
+import { SkillsSection } from "@/components/site/skills-section";
+import { GithubSection } from "@/components/site/github-section";
+import { ContactSection } from "@/components/site/contact-section";
 import { DatabaseUnavailableNotice } from "@/components/site/database-unavailable-notice";
 
 export default async function HomePage() {
@@ -21,7 +26,7 @@ export default async function HomePage() {
   const hasUnavailable = !profileResult.available || !projectsResult.available || !skillsResult.available;
 
   return (
-    <main id="main-content" tabIndex={-1}>
+    <main id="main-content" tabIndex={-1} className="w-full">
       {hasUnavailable ? (
         <div className="container-shell pt-6">
           <DatabaseUnavailableNotice />
@@ -32,50 +37,48 @@ export default async function HomePage() {
       <HeroSection profile={profile} skills={skills} />
 
       {/* ── PROJECTS ─────────────────────────────────────────── */}
-      <section className="projects-section motion-reveal" id="projects" style={{ animationDelay: "0.1s" }}>
+      <section className="py-16 md:py-24 motion-reveal" id="projects">
         <div className="container-shell">
           <ProjectGrid projects={projects} />
         </div>
       </section>
 
       {/* ── EXPERIENCE ───────────────────────────────────────── */}
-      <section className="experience-section motion-reveal" id="experience" style={{ animationDelay: "0.15s" }}>
+      <section className="py-16 md:py-24 motion-reveal" id="experience">
         <div className="container-shell">
-          <div className="section-header">
-            <h2 className="section-title">Education &amp; Experience</h2>
-          </div>
-          <div className="experience-timeline-new">
+          <h2 className="section-giant-title text-center md:text-left select-none mb-10 md:mb-14">
+            EXPERIENCE
+          </h2>
+          <div className="flex flex-col gap-8 max-w-4xl">
             {experience.map((item) => (
-              <div key={item.id} className="exp-entry">
-                <div className="exp-entry-left">
-                  <div className="exp-logo-block">
-                    <span className="exp-logo-initials">
-                      {item.company
-                        .split(" ")
-                        .map((w) => w[0])
-                        .join("")
-                        .slice(0, 3)
-                        .toUpperCase()}
-                    </span>
+              <div
+                key={item.id}
+                className="flex flex-col md:flex-row md:items-start justify-between gap-4 p-6 md:p-8 rounded-3xl bg-surface border border-rule transition-shadow hover:shadow-md"
+              >
+                <div className="flex-1">
+                  <div className="flex items-center gap-3">
+                    <span className="size-3 rounded-full bg-emerald-500" />
+                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-copy">
+                      {item.role}
+                    </h3>
                   </div>
-                </div>
-                <div className="exp-entry-right">
-                  <div className="exp-entry-header">
-                    <h3 className="exp-role">{item.role}</h3>
-                    <span className="exp-dates">
-                      {new Date(item.startDate).getFullYear()} —{" "}
-                      {item.current
-                        ? "Present"
-                        : item.endDate
-                          ? new Date(item.endDate).getFullYear()
-                          : ""}
-                    </span>
-                  </div>
-                  <p className="exp-company">
+                  <p className="text-sm font-semibold text-copy mt-2">
                     {item.company}
                     {item.location ? ` · ${item.location}` : ""}
                   </p>
-                  <p className="exp-summary">{item.summary}</p>
+                  <p className="text-xs md:text-sm text-muted mt-3 leading-relaxed">
+                    {item.summary}
+                  </p>
+                </div>
+                <div className="shrink-0 md:text-right">
+                  <span className="inline-block rounded-full bg-surface-raised px-3 py-1 text-xs font-semibold text-copy border border-rule">
+                    {new Date(item.startDate).getFullYear()} —{" "}
+                    {item.current
+                      ? "Present"
+                      : item.endDate
+                        ? new Date(item.endDate).getFullYear()
+                        : ""}
+                  </span>
                 </div>
               </div>
             ))}
@@ -83,19 +86,18 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────────────────────── */}
-      <section className="cta-section motion-reveal" style={{ animationDelay: "0.2s" }}>
-        <div className="container-shell cta-inner">
-          <div>
-            <p className="eyebrow">Get in touch</p>
-            <h2 className="cta-heading">Looking for a software engineering internship.</h2>
-          </div>
-          <Link href="/contact" className="hero-btn hero-btn-primary" prefetch={false}>
-            <Mail className="size-4" aria-hidden="true" />
-            Start a conversation
-          </Link>
-        </div>
-      </section>
+      {/* ── SKILLS ───────────────────────────────────────────── */}
+      <SkillsSection />
+
+      {/* ── GITHUB ───────────────────────────────────────────── */}
+      <GithubSection />
+
+      {/* ── CONTACT ──────────────────────────────────────────── */}
+      <ContactSection />
+
+      <div className="container-shell pointer-events-none" aria-hidden="true">
+        <div className="engineering-object-stage h-[1px] opacity-0" />
+      </div>
     </main>
   );
 }

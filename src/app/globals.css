@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
-  --color-canvas: #0b0d0e;
-  --color-surface: #121516;
-  --color-surface-raised: #1a1e1f;
-  --color-rule: #293032;
-  --color-copy: #f1f2ef;
-  --color-copy-soft: #d4d6d5;
-  --color-muted: #a0a8a7;
-  --color-accent: #73dee5;
-  --color-accent-secondary: #7e8de8;
-  --color-control-border: #647172;
-  --color-control-hover: #7c8889;
+  --color-canvas: #f8f8f9;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f1f2f4;
+  --color-rule: #e5e7eb;
+  --color-copy: #0a0a0a;
+  --color-copy-soft: #27272a;
+  --color-muted: #71717a;
+  --color-accent: #0a0a0a;
+  --color-accent-secondary: #8b5cf6;
+  --color-control-border: #d4d4d8;
+  --color-control-hover: #a1a1aa;
   --color-danger: #fca5a5;
   --color-danger-soft: #fecaca;
   --color-danger-strong: #fee2e2;
   --color-danger-surface: #ef4444;
-  --color-success: #a7f3d0;
-  --color-success-border: #6ee7b7;
-  --radius-tight: 2px;
-  --radius-small: 6px;
-  --radius-panel: 12px;
-  --spacing-page-gutter: 2.5rem;
-  --spacing-header-public: 4.5rem;
+  --color-success: #22c55e;
+  --color-success-border: #86efac;
+  --radius-tight: 4px;
+  --radius-small: 8px;
+  --radius-panel: 16px;
+  --spacing-page-gutter: 2rem;
+  --spacing-header-public: 4rem;
   --spacing-header-admin: 4rem;
   --text-display: 3rem;
   --text-display--line-height: 1.04;
@@ -65,16 +65,30 @@
   --duration-stagger-4: 360ms;
   --duration-stagger-5: 440ms;
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-panel: 0 18px 60px rgb(0 0 0 / 18%);
+  --shadow-panel: 0 18px 60px rgb(0 0 0 / 8%);
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light dark;
   background: var(--color-canvas);
   --default-transition-duration: var(--duration-interactive);
   --container-editorial: 1200px;
   --measure-copy: 62ch;
-  --shadow-soft: 0 14px 40px rgb(0 0 0 / 24%);
+  --shadow-soft: 0 14px 40px rgb(0 0 0 / 6%);
+}
+
+.dark,
+[data-theme="dark"] {
+  --color-canvas: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-raised: #1c1c1c;
+  --color-rule: #27272a;
+  --color-copy: #ffffff;
+  --color-copy-soft: #e4e4e7;
+  --color-muted: #a1a1aa;
+  --color-accent: #ffffff;
+  --color-control-border: #3f3f46;
+  --shadow-soft: 0 14px 40px rgb(0 0 0 / 30%);
 }
 
 * {
@@ -1292,4 +1306,29 @@ main {
   .projects-section, .experience-section, .cta-section { padding: 3.5rem 0; }
   .exp-entry { grid-template-columns: 1fr; }
   .exp-entry-left { display: none; }
+}
+
+/* ── Reference 1:1 Typography & Divider Tokens ───────────────────────── */
+.hero-giant-title {
+  font-size: clamp(2.75rem, 10.5vw, 8.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: var(--color-copy);
+}
+
+.section-giant-title {
+  font-size: clamp(3rem, 11vw, 9rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: var(--color-copy);
+}
+
+.hairline-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-rule);
 }

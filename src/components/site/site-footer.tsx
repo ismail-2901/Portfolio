@@ -9,34 +9,65 @@ export async function SiteFooter() {
   const profile = profileResult.available ? profileResult.data : null;
 
   return (
-    <footer className="site-footer border-t border-rule py-8 md:py-10">
-      <div className="container-shell grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
-        <div>
-          <SiteNavigationLink href="/" className="focus-ring inline-flex min-h-11 items-center font-medium text-copy">{profile?.name ?? "Portfolio"}</SiteNavigationLink>
-          {profile ? <p className="mt-2 font-mono text-metadata text-muted">{profile.role} <span className="px-2">/</span> {profile.location}</p> : null}
+    <footer className="border-t border-rule/60 py-12 md:py-16 text-copy bg-canvas">
+      <div className="container-shell">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-rule/50">
+          <div>
+            <SiteNavigationLink href="/" className="font-bold text-base md:text-lg text-copy">
+              {profile?.name ?? "Md Ismail Hossain"}
+            </SiteNavigationLink>
+            <p className="text-xs text-muted mt-1">
+              Software Engineering Student · Dhaka, Bangladesh
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-6 text-xs font-semibold tracking-wider uppercase">
+            <SiteNavigationLink href="/projects" className="text-muted hover:text-copy transition-colors">
+              Projects
+            </SiteNavigationLink>
+            <SiteNavigationLink href="/about" className="text-muted hover:text-copy transition-colors">
+              About
+            </SiteNavigationLink>
+            <SiteNavigationLink href="/resume" className="text-muted hover:text-copy transition-colors">
+              Resume
+            </SiteNavigationLink>
+            <SiteNavigationLink href="/contact" className="text-muted hover:text-copy transition-colors">
+              Contact
+            </SiteNavigationLink>
+            <SiteNavigationLink href="/admin" className="text-muted hover:text-copy transition-colors">
+              Admin
+            </SiteNavigationLink>
+          </div>
         </div>
-        <nav aria-label="Footer links" className="flex flex-wrap gap-x-6 gap-y-3 text-body-small">
-          <SiteNavigationLink href="/projects" className="focus-ring editorial-link inline-flex min-h-11 items-center text-muted">Projects</SiteNavigationLink>
-          <SiteNavigationLink href="/about" className="focus-ring editorial-link inline-flex min-h-11 items-center text-muted">About</SiteNavigationLink>
-          <SiteNavigationLink href="/resume" className="focus-ring editorial-link inline-flex min-h-11 items-center text-muted">Resume</SiteNavigationLink>
-          <SiteNavigationLink href="/privacy" className="focus-ring editorial-link inline-flex min-h-11 items-center text-muted">Privacy</SiteNavigationLink>
-          <SiteNavigationLink href="/admin" className="focus-ring editorial-link inline-flex min-h-11 items-center text-muted">Admin</SiteNavigationLink>
-        </nav>
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-rule pt-5 text-body-small md:col-span-2 md:justify-between">
-          <p className="font-mono text-[10px] text-muted">© {new Date().getFullYear()} {profile?.name ?? "Portfolio"}</p>
-          {profile ? (
-            <div className="flex flex-wrap gap-x-5 gap-y-3">
-              <Link href={`mailto:${profile.email}`} className="focus-ring editorial-link inline-flex min-h-11 items-center gap-2 text-muted">
-                <Mail aria-hidden="true" className="size-4" />Email
-              </Link>
-              <Link href={profile.githubUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex min-h-11 items-center gap-2 text-muted">
-                <Github aria-hidden="true" className="size-4" />GitHub <ArrowUpRight aria-hidden="true" className="size-3" />
-              </Link>
-              <Link href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="focus-ring editorial-link inline-flex min-h-11 items-center gap-2 text-muted">
-                <Linkedin aria-hidden="true" className="size-4" />LinkedIn <ArrowUpRight aria-hidden="true" className="size-3" />
-              </Link>
-            </div>
-          ) : null}
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-xs text-muted">
+          <p>© {new Date().getFullYear()} {profile?.name ?? "Md Ismail Hossain"}. All rights reserved.</p>
+          <div className="flex items-center gap-5">
+            <Link
+              href="mailto:ismailsajinabusaleh@gmail.com"
+              className="hover:text-copy transition-colors inline-flex items-center gap-1.5"
+            >
+              <Mail className="size-3.5" /> Email
+            </Link>
+            <Link
+              href="https://github.com/ismail-2901"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-copy transition-colors inline-flex items-center gap-1.5"
+              aria-label="GitHub"
+            >
+              <Github className="size-3.5" /> GitHub <ArrowUpRight className="size-3" />
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/md-ismail-hossain-2001"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-copy transition-colors inline-flex items-center gap-1.5"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="size-3.5" /> LinkedIn <ArrowUpRight className="size-3" />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

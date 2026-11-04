@@ -25,7 +25,7 @@ async function expectNoHorizontalOverflow(page: import("@playwright/test").Page,
 test("homepage and engineering object fit the requested viewport matrix", async ({ page }) => {
   mkdirSync("test-results/responsive", { recursive: true });
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1, name: /full-stack web applications/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: /ismail/i })).toBeVisible();
 
   for (const viewport of viewports) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });

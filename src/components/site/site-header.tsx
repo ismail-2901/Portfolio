@@ -1,51 +1,56 @@
-import { ArrowUpRight } from "lucide-react";
-
 import { MobileNavigation } from "@/components/site/mobile-navigation";
 import { navItems } from "@/components/site/site-navigation";
 import { SiteNavigationLink } from "@/components/site/site-navigation-link";
-import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/site/theme-toggle";
 
 export function SiteHeader() {
   return (
-    <header className="site-header sticky top-0 z-50 border-b border-rule">
+    <header className="sticky top-0 z-50 w-full bg-canvas/85 backdrop-blur-md border-b border-rule/50 transition-colors duration-200">
       <div className="container-shell relative flex min-h-header-public items-center justify-between gap-4">
         <SiteNavigationLink
           href="/"
-          className="site-brand focus-ring inline-flex min-h-11 items-baseline gap-2 font-medium text-copy"
+          className="font-medium text-sm md:text-base text-copy hover:opacity-75 transition-opacity tracking-tight"
         >
-          <span className="text-body-large">Ismail</span>
-          <span className="hidden font-mono text-metadata text-muted sm:inline">/ STUDENT</span>
+          Md Ismail Hossain
         </SiteNavigationLink>
 
         <nav
-          className="hidden items-center gap-7 md:flex"
+          className="hidden md:flex items-center gap-6 lg:gap-8"
           aria-label="Primary navigation"
         >
-          {navItems.filter((item) => item.href !== "/" && item.href !== "/contact").map((item) => {
-            return (
+          {navItems
+            .filter((item) => item.href !== "/" && item.href !== "/contact")
+            .map((item) => (
               <SiteNavigationLink
                 key={item.href}
                 href={item.href}
-                className="focus-ring nav-link inline-flex min-h-11 items-center py-2 text-body-small"
+                className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold"
               >
                 {item.label}
               </SiteNavigationLink>
-            );
-          })}
+            ))}
+          <SiteNavigationLink
+            href="/#experience"
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors"
+          >
+            Experience
+          </SiteNavigationLink>
+          <SiteNavigationLink
+            href="/#skills"
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors"
+          >
+            Skills
+          </SiteNavigationLink>
+          <SiteNavigationLink
+            href="/contact"
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold"
+          >
+            Contact
+          </SiteNavigationLink>
         </nav>
 
-        <div className="hidden items-center gap-4 md:flex">
-          <SiteNavigationLink href="/resume" className="focus-ring nav-link inline-flex min-h-11 items-center text-body-small">Resume</SiteNavigationLink>
-          <SiteNavigationLink href="/admin" className="focus-ring nav-link inline-flex min-h-11 items-center text-body-small">Admin</SiteNavigationLink>
-          <Button asChild size="sm">
-            <SiteNavigationLink
-              href="/contact"
-              prefetch={false}
-              className="aria-[current=page]:ring-2 aria-[current=page]:ring-accent aria-[current=page]:ring-offset-2 aria-[current=page]:ring-offset-canvas"
-            >
-              Contact <ArrowUpRight aria-hidden="true" className="size-4" />
-            </SiteNavigationLink>
-          </Button>
+        <div className="flex items-center gap-2 pr-12 md:pr-0">
+          <ThemeToggle />
         </div>
 
         <MobileNavigation />

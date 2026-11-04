@@ -1,30 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import { getPublicProfile } from "@/lib/queries";
 import { getSiteUrl } from "@/lib/utils";
 
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  display: "swap"
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800", "900"]
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0B0D0E",
-  colorScheme: "dark"
+  themeColor: "#f7f7f8",
+  colorScheme: "light dark"
 };
 
 export async function generateMetadata(): Promise<Metadata> {
   const profileResult = await getPublicProfile();
   const profile = profileResult.available ? profileResult.data : null;
   const siteUrl = getSiteUrl();
-  const ownerName = profile?.name ?? "Portfolio";
-  const siteName = profile ? `${profile.name} Portfolio` : "Portfolio";
-  const title = profile ? `${profile.name} | ${profile.role}` : "Portfolio";
-  const description = profile?.shortBio ?? "Portfolio website";
+  const ownerName = profile?.name ?? "Md Ismail Hossain";
+  const siteName = profile ? `${profile.name} Portfolio` : "Md Ismail Hossain Portfolio";
+  const title = profile ? `${profile.name} | ${profile.role}` : "Md Ismail Hossain | Software Engineer";
+  const description = profile?.shortBio ?? "Software Engineering student and full-stack developer portfolio.";
 
   return {
     metadataBase: new URL(siteUrl),
@@ -59,8 +60,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={geistSans.variable}>
-      <body>{children}</body>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body className="antialiased min-h-screen bg-canvas text-copy font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black">
+        {children}
+      </body>
     </html>
   );
 }
