@@ -12,8 +12,11 @@ export type PublicProfile = {
   email: string;
   githubUrl: string;
   linkedinUrl: string;
+  twitterUrl: string | null;
   resumeUrl: string;
   imageUrl: string | null;
+  availabilityStatus: string | null;
+  availableForHire: boolean;
 };
 
 export type PublicTag = {
@@ -115,8 +118,11 @@ export const fallbackProfile: PublicProfile = {
   email: "ismailsajinabusaleh@gmail.com",
   githubUrl: "https://github.com/ismail-2901",
   linkedinUrl: "https://www.linkedin.com/in/md-ismail-hossain-2001",
+  twitterUrl: null,
   resumeUrl: "/resume",
-  imageUrl: null
+  imageUrl: null,
+  availabilityStatus: "Open to internships",
+  availableForHire: true
 };
 
 export const fallbackProjects: PublicProject[] = [
@@ -380,3 +386,56 @@ export async function getDashboardStats() {
 
   return { projects, articles, skills, unreadMessages };
 }
+
+export type PublicEducation = {
+  id: string;
+  institution: string;
+  degree: string;
+  field: string;
+  location: string | null;
+  startDate: Date;
+  endDate: Date | null;
+  current: boolean;
+  gpa: string | null;
+  summary: string | null;
+  order: number;
+};
+
+const fallbackEducation: PublicEducation[] = [
+  {
+    id: "fallback-edu-diu",
+    institution: "Daffodil International University",
+    degree: "Bachelor of Science",
+    field: "Software Engineering",
+    location: "Dhaka, Bangladesh",
+    startDate: new Date("2023-01-01T00:00:00.000Z"),
+    endDate: new Date("2027-01-01T00:00:00.000Z"),
+    current: true,
+    gpa: null,
+    summary:
+      "Pursuing a B.Sc. in Software Engineering with a focus on full-stack web development, software architecture, and database design. Building production-ready applications as academic and personal projects.",
+    order: 1
+  }
+];
+
+export const getEducation = cache(function getEducation(): Promise<PublicDataResult<PublicEducation[]>> {
+  return queryPublicData(() =>
+    prisma.education.findMany({
+      select: {
+        id: true,
+        institution: true,
+        degree: true,
+        field: true,
+        location: true,
+        startDate: true,
+        endDate: true,
+        current: true,
+        gpa: true,
+        summary: true,
+        order: true
+      },
+      orderBy: [{ order: "asc" }, { startDate: "desc" }]
+    }),
+    fallbackEducation
+  );
+});

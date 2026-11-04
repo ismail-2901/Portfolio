@@ -14,7 +14,10 @@ const seedProfile = {
   email: "ismailsajinabusaleh@gmail.com",
   githubUrl: "https://github.com/ismail-2901",
   linkedinUrl: "https://www.linkedin.com/in/md-ismail-hossain-2001",
-  resumeUrl: "/resume"
+  twitterUrl: null,
+  resumeUrl: "/resume",
+  availabilityStatus: "Open to internships",
+  availableForHire: true
 };
 
 const fixMyCampusBody = `## Overview
@@ -301,6 +304,35 @@ async function main() {
       current: true,
       order: 1,
       status: ContentStatus.PUBLISHED
+    }
+  });
+
+  await prisma.education.upsert({
+    where: { id: "seed-edu-diu" },
+    update: {
+      institution: "Daffodil International University",
+      degree: "Bachelor of Science",
+      field: "Software Engineering",
+      location: "Dhaka, Bangladesh",
+      startDate: new Date("2023-01-01T00:00:00.000Z"),
+      endDate: new Date("2027-01-01T00:00:00.000Z"),
+      current: true,
+      summary:
+        "Pursuing a B.Sc. in Software Engineering with a focus on full-stack web development, software architecture, and database design. Building production-ready applications as academic and personal projects.",
+      order: 1
+    },
+    create: {
+      id: "seed-edu-diu",
+      institution: "Daffodil International University",
+      degree: "Bachelor of Science",
+      field: "Software Engineering",
+      location: "Dhaka, Bangladesh",
+      startDate: new Date("2023-01-01T00:00:00.000Z"),
+      endDate: new Date("2027-01-01T00:00:00.000Z"),
+      current: true,
+      summary:
+        "Pursuing a B.Sc. in Software Engineering with a focus on full-stack web development, software architecture, and database design. Building production-ready applications as academic and personal projects.",
+      order: 1
     }
   });
 

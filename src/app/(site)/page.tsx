@@ -28,10 +28,16 @@ export default async function HomePage() {
           <div className="max-w-3xl">
             <Stagger className="home-hero-copy">
               <StaggerItem>
-                <p className="eyebrow">
-                  Software Engineering Student
-                  {profile ? <><span className="px-2 text-muted">/</span>{profile.location}</> : null}
-                </p>
+                <div className="flex flex-wrap items-center gap-4">
+                  <p className="eyebrow">
+                    Software Engineering Student
+                    {profile ? <><span className="px-2 text-muted">/</span>{profile.location}</> : null}
+                  </p>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-rule bg-surface px-2.5 py-1 font-mono text-[10px] text-muted">
+                    <span className="size-1.5 animate-pulse rounded-full bg-green-500" aria-hidden="true" />
+                    Open to internships
+                  </span>
+                </div>
               </StaggerItem>
               <StaggerItem>
                 <h1 className="mt-7 max-w-3xl text-balance text-display font-medium text-copy sm:text-display-large lg:text-display-xl">

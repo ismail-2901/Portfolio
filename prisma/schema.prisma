@@ -39,18 +39,21 @@ model AdminUser {
 }
 
 model Profile {
-  id          String   @id @default("singleton")
-  name        String
-  role        String
-  location    String
-  shortBio    String   @db.Text
-  email       String
-  githubUrl   String
-  linkedinUrl String
-  resumeUrl   String
-  imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String   @id @default("singleton")
+  name               String
+  role               String
+  location           String
+  shortBio           String   @db.Text
+  email              String
+  githubUrl          String
+  linkedinUrl        String
+  twitterUrl         String?
+  resumeUrl          String
+  imageUrl           String?
+  availabilityStatus String?
+  availableForHire   Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Project {
@@ -178,4 +181,22 @@ model AuditLog {
 
   @@index([actorId, createdAt])
   @@index([entity, entityId])
+}
+
+model Education {
+  id          String    @id @default(cuid())
+  institution String
+  degree      String
+  field       String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean   @default(false)
+  gpa         String?
+  summary     String?   @db.Text
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([order, startDate])
 }

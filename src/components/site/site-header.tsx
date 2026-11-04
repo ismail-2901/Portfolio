@@ -14,7 +14,7 @@ export function SiteHeader() {
           className="site-brand focus-ring inline-flex min-h-11 items-baseline gap-2 font-medium text-copy"
         >
           <span className="text-body-large">Ismail</span>
-          <span className="hidden font-mono text-metadata text-muted sm:inline">/ ENGINEER</span>
+          <span className="hidden font-mono text-metadata text-muted sm:inline">/ STUDENT</span>
         </SiteNavigationLink>
 
         <nav

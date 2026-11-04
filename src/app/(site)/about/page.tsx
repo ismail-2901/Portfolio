@@ -70,7 +70,7 @@ export default async function AboutPage() {
 
       <section className="border-y border-rule py-20 md:py-28">
         <div className="container-shell grid gap-10 lg:grid-cols-[220px_1fr]">
-          <SectionIntro eyebrow="Experience" title="The work, over time." className="block border-0 pb-0" />
+          <SectionIntro eyebrow="Education &amp; Background" title="The path, over time." className="block border-0 pb-0" />
           {experienceResult.available ? <ExperienceTimeline experience={experience} /> : null}
         </div>
       </section>
