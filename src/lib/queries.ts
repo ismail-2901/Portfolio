@@ -107,27 +107,28 @@ function queryPublicData<T>(
 }
 
 export const fallbackProfile: PublicProfile = {
-  name: "Ismail",
-  role: "Senior Full-Stack Engineer",
-  location: "Remote",
+  name: "Md Ismail Hossain",
+  role: "Full-Stack Software Engineering Student",
+  location: "Dhaka, Bangladesh",
   shortBio:
-    "I build secure, scalable, and beautiful digital experiences across product strategy, infrastructure, and polished frontend systems.",
-  email: "hello@ismail.dev",
-  githubUrl: "https://github.com",
-  linkedinUrl: "https://www.linkedin.com",
+    "Undergraduate Software Engineering student at Daffodil International University (DIU), building production-ready full-stack web applications with modern technologies. Passionate about clean architecture, meaningful user experiences, and AI-integrated systems.",
+  email: "ismailsajinabusaleh@gmail.com",
+  githubUrl: "https://github.com/ismail-2901",
+  linkedinUrl: "https://www.linkedin.com/in/md-ismail-hossain-2001",
   resumeUrl: "/resume",
   imageUrl: null
 };
 
 export const fallbackProjects: PublicProject[] = [
   {
-    id: "fallback-zero-trust",
-    title: "Zero Trust SaaS Platform",
-    slug: "zero-trust-saas-platform",
-    summary: "A multi-tenant SaaS control plane with hardened auth, audit trails, and low-latency dashboards.",
-    body: "## Overview\n\nA production-grade SaaS platform built around clear tenancy boundaries, observable workflows, and a fast operator experience.\n\n## Highlights\n\n- Role-based access control and audit trails.\n- Server-side validation for all mutations.\n- Observable deployment workflow with rollback discipline.",
-    techTags: ["Next.js", "PostgreSQL", "Prisma", "Auth.js"],
-    githubUrl: null,
+    id: "fallback-fixmycampus",
+    title: "FixMyCampus",
+    slug: "fixmycampus",
+    summary:
+      "A campus issue reporting and management platform for Daffodil International University. Features anonymous reporting, role-based admin workflows, an AI chatbot, and a transparency board.",
+    body: "## Overview\n\nFixMyCampus is a campus issue reporting and management platform built for Daffodil International University (DIU). It streamlines how students report infrastructure and academic problems, and how administrators respond, assign, and resolve them.\n\n## Highlights\n\n- Anonymous issue reporting system.\n- Role-based access control (Student / Admin / SuperAdmin).\n- AI chatbot for student guidance.\n- Transparency board with aggregated statistics.",
+    techTags: ["React", "Node.js", "Express.js", "MySQL", "JWT", "Tailwind CSS"],
+    githubUrl: "https://github.com/ismail-2901",
     liveUrl: null,
     featured: true,
     order: 1,
@@ -137,18 +138,19 @@ export const fallbackProjects: PublicProject[] = [
     updatedAt: now,
     images: [],
     tags: [
-      { name: "security", slug: "security" },
-      { name: "platform", slug: "platform" }
+      { name: "full stack", slug: "full-stack" },
+      { name: "campus tech", slug: "campus-tech" }
     ]
   },
   {
-    id: "fallback-ops-console",
-    title: "Realtime Operations Console",
-    slug: "realtime-operations-console",
-    summary: "A dense but calm command center for incidents, live system state, and operational workflows.",
-    body: "## Overview\n\nA realtime operations interface designed for high-pressure teams that need a calm view of changing system state.\n\n## Highlights\n\n- Accessible information density.\n- Optimistic workflows with durable server writes.\n- E2E smoke coverage for critical paths.",
-    techTags: ["React", "TypeScript", "WebSockets", "Playwright"],
-    githubUrl: null,
+    id: "fallback-elaris",
+    title: "ELARIS",
+    slug: "elaris",
+    summary:
+      "A modern fashion e-commerce platform with a full customer storefront, shopping cart, order management, and an integrated admin dashboard. Built with Next.js and PostgreSQL.",
+    body: "## Overview\n\nELARIS is a modern fashion e-commerce platform with a full customer storefront and an integrated admin management system.\n\n## Highlights\n\n- Dynamic product catalog with categories and filtering.\n- Persistent shopping cart and checkout flow.\n- Order lifecycle management (creation, fulfilment, history).\n- Admin dashboard for product and inventory management.",
+    techTags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS"],
+    githubUrl: "https://github.com/ismail-2901",
     liveUrl: null,
     featured: true,
     order: 2,
@@ -158,29 +160,8 @@ export const fallbackProjects: PublicProject[] = [
     updatedAt: now,
     images: [],
     tags: [
-      { name: "frontend", slug: "frontend" },
-      { name: "devops", slug: "devops" }
-    ]
-  },
-  {
-    id: "fallback-dev-portal",
-    title: "Secure Developer Portal",
-    slug: "secure-developer-portal",
-    summary: "A documentation and API onboarding platform with permissions, MDX publishing, and compliance evidence.",
-    body: "## Overview\n\nA developer portal focused on reducing support load and improving integration quality.\n\n## Highlights\n\n- MDX documentation workflow.\n- Fine-grained admin publishing.\n- Security-forward content model.",
-    techTags: ["MDX", "Node.js", "PostgreSQL", "CI/CD"],
-    githubUrl: null,
-    liveUrl: null,
-    featured: true,
-    order: 3,
-    status: "PUBLISHED",
-    publishedAt: now,
-    createdAt: now,
-    updatedAt: now,
-    images: [],
-    tags: [
-      { name: "platform", slug: "platform" },
-      { name: "frontend", slug: "frontend" }
+      { name: "full stack", slug: "full-stack" },
+      { name: "e-commerce", slug: "e-commerce" }
     ]
   }
 ];
@@ -188,42 +169,45 @@ export const fallbackProjects: PublicProject[] = [
 const fallbackArticles: PublicArticle[] = [
   {
     id: "fallback-article",
-    title: "What Senior Engineering Portfolios Should Prove",
-    slug: "what-senior-engineering-portfolios-should-prove",
-    excerpt: "A concise rubric for showing architecture judgment, delivery maturity, and security awareness.",
-    body: "# What Senior Engineering Portfolios Should Prove\n\nStrong portfolios show decision quality. They make tradeoffs visible, explain constraints, and connect implementation details to product outcomes.\n\n## Signals\n\n- Threat modeling before implementation.\n- Clear release and rollback thinking.\n- Accessibility and performance treated as core quality.",
-    seoTitle: "Senior Engineering Portfolio Rubric",
-    seoDescription: "A practical rubric for senior engineering portfolio case studies.",
+    title: "Building FixMyCampus: A Campus Issue Reporting Platform",
+    slug: "building-fixmycampus",
+    excerpt: "How I designed and built a full-stack campus issue reporting system for Daffodil International University with role-based access control, anonymous reporting, and an AI chatbot.",
+    body: "# Building FixMyCampus\n\nFixMyCampus is a campus issue reporting and management platform built for Daffodil International University. Students can anonymously report problems on campus, track their resolution status, and participate in group discussions.\n\n## Key Features\n\n- Anonymous issue reporting with category tagging.\n- Role-based access control for students, moderators, and admins.\n- Admin assignment and resolution workflow.\n- Group discussion threads per issue.\n- AI chatbot for issue guidance.\n- Transparency board showing resolved issues.\n\n## Technical Decisions\n\nThe frontend is built with React and communicates with a Node.js and Express REST API. MySQL stores all relational data. JWT-based authentication handles role separation cleanly.",
+    seoTitle: "Building FixMyCampus — Full-Stack Campus Platform",
+    seoDescription: "A case study on building a full-stack campus issue reporting platform with React, Node.js, Express, and MySQL.",
     status: "PUBLISHED",
     publishedAt: now,
-    readingMinutes: 2,
+    readingMinutes: 4,
     createdAt: now,
     updatedAt: now,
     tags: [
-      { name: "security", slug: "security" },
-      { name: "devops", slug: "devops" }
+      { name: "full-stack", slug: "full-stack" },
+      { name: "campus-tech", slug: "campus-tech" },
+      { name: "react", slug: "react" }
     ]
   }
 ];
 
 const fallbackSkills: PublicSkill[] = [
-  { id: "skill-next", name: "Next.js", category: "Frontend", level: "EXPERT", order: 1, featured: true },
-  { id: "skill-react", name: "React", category: "Frontend", level: "EXPERT", order: 2, featured: true },
-  { id: "skill-ts", name: "TypeScript", category: "Language", level: "EXPERT", order: 3, featured: true },
-  { id: "skill-pg", name: "PostgreSQL", category: "Database", level: "ADVANCED", order: 4, featured: true },
-  { id: "skill-auth", name: "Auth.js", category: "Security", level: "ADVANCED", order: 5, featured: true },
-  { id: "skill-owasp", name: "OWASP", category: "Security", level: "ADVANCED", order: 6, featured: true }
+  { id: "skill-js", name: "JavaScript", category: "Frontend", level: "ADVANCED", order: 1, featured: true },
+  { id: "skill-react", name: "React", category: "Frontend", level: "ADVANCED", order: 2, featured: true },
+  { id: "skill-next", name: "Next.js", category: "Frontend", level: "WORKING", order: 3, featured: true },
+  { id: "skill-ts", name: "TypeScript", category: "Frontend", level: "WORKING", order: 4, featured: true },
+  { id: "skill-node", name: "Node.js", category: "Backend", level: "ADVANCED", order: 5, featured: true },
+  { id: "skill-mysql", name: "MySQL", category: "Database", level: "ADVANCED", order: 6, featured: true },
+  { id: "skill-tailwind", name: "Tailwind CSS", category: "Frontend", level: "ADVANCED", order: 7, featured: false },
+  { id: "skill-express", name: "Express.js", category: "Backend", level: "ADVANCED", order: 8, featured: false }
 ];
 
 const fallbackExperience: PublicExperience[] = [
   {
-    id: "fallback-experience",
-    company: "Independent Practice",
-    role: "Senior Full-Stack Engineer",
-    location: "Remote",
+    id: "fallback-diu",
+    company: "Daffodil International University",
+    role: "B.Sc. in Software Engineering",
+    location: "Dhaka, Bangladesh",
     summary:
-      "Leading architecture, security reviews, and delivery for production web systems.",
-    startDate: new Date("2021-01-01T00:00:00.000Z"),
+      "Pursuing a Bachelor of Science in Software Engineering, building production-ready full-stack applications as academic and personal projects. Focused on web technologies, database design, and software architecture.",
+    startDate: new Date("2023-01-01T00:00:00.000Z"),
     endDate: null,
     current: true,
     order: 1

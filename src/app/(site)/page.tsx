@@ -29,19 +29,19 @@ export default async function HomePage() {
             <Stagger className="home-hero-copy">
               <StaggerItem>
                 <p className="eyebrow">
-                  Product engineering
+                  Software Engineering Student
                   {profile ? <><span className="px-2 text-muted">/</span>{profile.location}</> : null}
                 </p>
               </StaggerItem>
               <StaggerItem>
                 <h1 className="mt-7 max-w-3xl text-balance text-display font-medium text-copy sm:text-display-large lg:text-display-xl">
-                  I build software that makes complex work feel clear.
+                  I build full-stack web applications that solve real problems.
                 </h1>
               </StaggerItem>
               <StaggerItem>
                 <p className="copy-measure mt-6 text-body text-muted sm:text-body-large">
-                  I work across product interfaces, application architecture, and operational foundations,
-                  bringing full-stack engineering together with purposeful AI integration.
+                  Undergraduate Software Engineering student at Daffodil International University,
+                  building production-ready platforms with React, Node.js, and modern web technologies.
                 </p>
               </StaggerItem>
               <StaggerItem>
@@ -83,8 +83,8 @@ export default async function HomePage() {
         <div className="container-shell">
           <SectionIntro
             eyebrow="Selected work / 01"
-            title="Systems shaped around real product needs."
-            description="A selection of platform, product, and interface work. Each study focuses on the engineering decisions behind the experience."
+            title="Projects built to solve real problems."
+            description="A selection of full-stack platforms and applications I've built. Each project reflects engineering decisions made around real user needs."
             action={
             <Button asChild variant="secondary">
               <Link href="/projects">
@@ -106,10 +106,10 @@ export default async function HomePage() {
         <div className="container-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <Reveal>
             <p className="eyebrow">How I work</p>
-            <h2 className="mt-4 max-w-lg text-heading font-medium text-copy md:text-heading-large">Engineering is a product discipline.</h2>
+            <h2 className="mt-4 max-w-lg text-heading font-medium text-copy md:text-heading-large">Full-stack development with purpose.</h2>
             <p className="copy-measure mt-5 text-body text-muted">
-              Good systems balance user clarity with operational reality. I bring interface craft,
-              full-stack implementation, and security-minded decisions into the same conversation.
+              I approach each project by understanding the problem first. Good code serves real users —
+              I build full-stack systems with clean architecture, clear UX, and reliable delivery.
             </p>
           </Reveal>
           <Reveal delay={0.08}>
@@ -122,7 +122,7 @@ export default async function HomePage() {
         <div className="container-shell flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="eyebrow">Next step</p>
-            <h2 className="mt-3 max-w-2xl text-heading font-medium text-copy">Have a complex product or platform problem?</h2>
+            <h2 className="mt-3 max-w-2xl text-heading font-medium text-copy">Looking for a software engineering internship.</h2>
           </div>
           <Button asChild>
             <Link href="/contact" prefetch={false}>

@@ -8,10 +8,10 @@ import { getPublicProfile } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact Ismail about product engineering, platform work, and security-minded delivery.",
+  description: "Get in touch about software engineering internships, collaborations, or full-stack project work.",
   alternates: { canonical: "/contact" },
-  openGraph: { title: "Contact", description: "Start a conversation about product and platform engineering.", url: "/contact" },
-  twitter: { card: "summary", title: "Contact Ismail", description: "Start a conversation about product and platform engineering." }
+  openGraph: { title: "Contact", description: "Get in touch about software engineering internships and collaborations.", url: "/contact" },
+  twitter: { card: "summary", title: "Contact Ismail", description: "Get in touch about software engineering internships and collaborations." }
 };
 
 export default async function ContactPage() {
@@ -25,11 +25,11 @@ export default async function ContactPage() {
           {!profileResult.available ? <DatabaseUnavailableNotice className="mb-8" /> : null}
           <p className="eyebrow">Contact <span className="px-2 text-muted">/</span> Start a conversation</p>
           <h1 className="mt-5 text-balance text-display font-medium text-copy md:text-display-large">
-            Good engineering starts with a good problem.
+            Have a project or opportunity?
           </h1>
           <p className="copy-measure mt-6 text-body-large text-muted">
-            Share what you are trying to make clearer, faster, or more dependable. I work across product engineering,
-            platform foundations, and security-minded delivery.
+            I am actively looking for software engineering internships and open to collaborating on interesting
+            full-stack projects. Whether you have an opportunity or just want to connect — reach out.
           </p>
 
           {profile ? (

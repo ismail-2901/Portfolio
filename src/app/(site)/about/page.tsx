@@ -12,10 +12,10 @@ import { getExperienceTimeline, getFeaturedSkills, getPublicProfile } from "@/li
 
 export const metadata: Metadata = {
   title: "About",
-  description: "A concise overview of Ismail's engineering practice, experience, and capabilities.",
+  description: "Software Engineering student at Daffodil International University — building full-stack web applications and preparing for internships.",
   alternates: { canonical: "/about" },
-  openGraph: { title: "About", description: "Engineering practice, experience, and capabilities.", url: "/about" },
-  twitter: { card: "summary", title: "About Ismail", description: "Engineering practice, experience, and capabilities." }
+  openGraph: { title: "About", description: "Software Engineering student at DIU — full-stack development, React, Node.js, and modern web technologies.", url: "/about" },
+  twitter: { card: "summary", title: "About Ismail", description: "Software Engineering student at DIU — full-stack development." }
 };
 
 export default async function AboutPage() {
@@ -47,7 +47,7 @@ export default async function AboutPage() {
           {profile ? <p className="mt-3 text-subheading text-muted md:text-heading-small">{profile.role}</p> : null}
           {profile ? <p className="copy-measure mt-7 text-body-large text-muted">{profile.shortBio}</p> : null}
           <p className="mt-8 max-w-2xl border-l border-accent pl-4 text-body-small leading-7 text-copy">
-            Product thinking, interface craft, and operational discipline belong in the same engineering practice.
+            Building production-ready applications while still at university — combining academic foundations with real-world engineering practice.
           </p>
           <Button asChild variant="ghost" className="mt-7 px-0">
             <Link href="/projects">Explore selected work <ArrowUpRight aria-hidden="true" className="size-4" /></Link>

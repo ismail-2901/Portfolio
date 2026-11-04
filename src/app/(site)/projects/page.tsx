@@ -10,10 +10,10 @@ import { getPublishedProjects } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected full-stack engineering, security, and platform projects.",
+  description: "Full-stack projects built for real users — FixMyCampus, ELARIS, and more.",
   alternates: { canonical: "/projects" },
-  openGraph: { title: "Projects", description: "Selected product and platform case studies.", url: "/projects" },
-  twitter: { card: "summary", title: "Projects", description: "Selected product and platform case studies." }
+  openGraph: { title: "Projects", description: "Full-stack projects built for real users.", url: "/projects" },
+  twitter: { card: "summary", title: "Projects", description: "Full-stack projects built for real users." }
 };
 
 export default async function ProjectsPage() {
@@ -28,10 +28,11 @@ export default async function ProjectsPage() {
         <header className="mb-16 max-w-4xl md:mb-24">
           <p className="eyebrow">Selected work / case studies</p>
           <h1 className="mt-5 text-balance text-display font-medium text-copy md:text-display-xl">
-            Engineering decisions, made visible.
+            Projects built for real users.
           </h1>
           <p className="copy-measure mt-6 text-body-large text-muted">
-            A closer look at product and platform work: the problems, systems, and implementation details behind each project.
+            A closer look at full-stack projects I have designed and built: the problems, technical decisions, and
+            implementation details behind each one.
           </p>
           <Button asChild variant="ghost" className="mt-5 px-0">
             <Link href="/contact">Discuss a project <ArrowUpRight aria-hidden="true" className="size-4" /></Link>
@@ -42,7 +43,7 @@ export default async function ProjectsPage() {
 
         {leadProject ? (
           <div>
-            <SectionIntro eyebrow="Featured study / 01" title="Start with the system that sets the direction." />
+            <SectionIntro eyebrow="Featured project / 01" title="Start with the project that shows the most." />
             <div className="mt-4">
               <CaseStudyCard project={leadProject} index={1} variant="featured" priority />
             </div>
@@ -51,7 +52,7 @@ export default async function ProjectsPage() {
 
         {remainingProjects.length ? (
           <div className="mt-20 md:mt-28">
-            <SectionIntro eyebrow="More work" title="Other systems and product surfaces." />
+            <SectionIntro eyebrow="More projects" title="Other full-stack work." />
             <div className="mt-4">
               {remainingProjects.map((project, index) => (
                 <CaseStudyCard key={project.id} project={project} index={index + 2} variant="secondary" />
