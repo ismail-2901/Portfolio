@@ -96,10 +96,13 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
               <option value="ARCHIVED">Archived</option>
             </Select>
           </Field>
-          <label className="flex min-h-11 cursor-pointer items-end gap-3 rounded-panel border border-rule bg-canvas/60 p-3 text-label text-copy">
-            <input name="featured" type="checkbox" defaultChecked={project?.featured} className="focus-ring size-4 accent-accent-secondary" />
-            Featured project
-          </label>
+          <Field>
+            <Label className="invisible select-none" aria-hidden="true">Featured</Label>
+            <label className="flex h-11 cursor-pointer items-center gap-3 rounded-small border border-control-border bg-canvas/60 px-3 text-body-small text-copy transition duration-interactive hover:border-control-hover">
+              <input name="featured" type="checkbox" defaultChecked={project?.featured} className="focus-ring size-4 accent-accent-secondary" />
+              Featured project
+            </label>
+          </Field>
         </div>
 
         <div className="flex flex-wrap gap-3">
