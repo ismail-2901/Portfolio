@@ -84,11 +84,7 @@ export function SiteHeader() {
             href="/#experience"
             onClick={() => setActiveSection("experience")}
             aria-current={isExperienceActive ? "page" : undefined}
-            className={`text-xs lg:text-sm font-medium transition-colors min-h-[44px] inline-flex items-center ${
-              isExperienceActive
-                ? "text-copy font-bold"
-                : "text-muted hover:text-copy"
-            }`}
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold min-h-[44px] inline-flex items-center"
           >
             Experience
           </Link>
@@ -96,11 +92,7 @@ export function SiteHeader() {
             href="/#skills"
             onClick={() => setActiveSection("skills")}
             aria-current={isSkillsActive ? "page" : undefined}
-            className={`text-xs lg:text-sm font-medium transition-colors min-h-[44px] inline-flex items-center ${
-              isSkillsActive
-                ? "text-copy font-bold"
-                : "text-muted hover:text-copy"
-            }`}
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold min-h-[44px] inline-flex items-center"
           >
             Skills
           </Link>
