@@ -34,9 +34,6 @@ export async function SiteFooter() {
             <SiteNavigationLink href="/contact" className="text-muted hover:text-copy transition-colors">
               Contact
             </SiteNavigationLink>
-            <SiteNavigationLink href="/admin" className="text-muted hover:text-copy transition-colors">
-              Admin
-            </SiteNavigationLink>
           </div>
         </div>
 
