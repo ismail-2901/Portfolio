@@ -10,7 +10,7 @@ export function SiteHeader() {
         <SiteNavigationLink
           href="/"
           aria-label="Home"
-          className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold min-h-[44px] inline-flex items-center tracking-wider"
+          className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors min-h-[44px] inline-flex items-center tracking-wider"
         >
           IH
         </SiteNavigationLink>
