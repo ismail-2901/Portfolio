@@ -1,9 +1,60 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
 import { MobileNavigation } from "@/components/site/mobile-navigation";
 import { navItems } from "@/components/site/site-navigation";
 import { SiteNavigationLink } from "@/components/site/site-navigation-link";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 
 export function SiteHeader() {
+  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setActiveSection(null);
+      return;
+    }
+
+    const checkHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash === "experience" || hash === "skills") {
+        setActiveSection(hash);
+      }
+    };
+
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+
+    const sectionIds = ["experience", "skills", "projects", "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-25% 0px -55% 0px" }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener("hashchange", checkHash);
+      observer.disconnect();
+    };
+  }, [pathname]);
+
+  const isExperienceActive = pathname === "/" && activeSection === "experience";
+  const isSkillsActive = pathname === "/" && activeSection === "skills";
+
   return (
     <header className="sticky top-0 z-50 w-full bg-canvas/85 backdrop-blur-md border-b border-rule/50 transition-colors duration-200">
       <div className="container-shell relative flex min-h-header-public items-center justify-between gap-4">
@@ -29,18 +80,30 @@ export function SiteHeader() {
                 {item.label}
               </SiteNavigationLink>
             ))}
-          <SiteNavigationLink
+          <Link
             href="/#experience"
-            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors min-h-[44px] inline-flex items-center"
+            onClick={() => setActiveSection("experience")}
+            aria-current={isExperienceActive ? "page" : undefined}
+            className={`text-xs lg:text-sm font-medium transition-colors min-h-[44px] inline-flex items-center ${
+              isExperienceActive
+                ? "text-copy font-bold"
+                : "text-muted hover:text-copy"
+            }`}
           >
             Experience
-          </SiteNavigationLink>
-          <SiteNavigationLink
+          </Link>
+          <Link
             href="/#skills"
-            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors min-h-[44px] inline-flex items-center"
+            onClick={() => setActiveSection("skills")}
+            aria-current={isSkillsActive ? "page" : undefined}
+            className={`text-xs lg:text-sm font-medium transition-colors min-h-[44px] inline-flex items-center ${
+              isSkillsActive
+                ? "text-copy font-bold"
+                : "text-muted hover:text-copy"
+            }`}
           >
             Skills
-          </SiteNavigationLink>
+          </Link>
           <SiteNavigationLink
             href="/contact"
             className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold min-h-[44px] inline-flex items-center"

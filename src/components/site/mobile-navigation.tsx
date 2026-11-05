@@ -65,11 +65,23 @@ export function MobileNavigation() {
             {item.label}
           </SiteNavigationLink>
         ))}
-        <SiteNavigationLink href="/resume" className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-copy hover:text-accent">
-          Resume
+        <SiteNavigationLink
+          href="/#experience"
+          className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-copy hover:text-accent"
+        >
+          Experience
         </SiteNavigationLink>
-        <SiteNavigationLink href="/admin" className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-muted hover:text-accent">
-          Admin
+        <SiteNavigationLink
+          href="/#skills"
+          className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-copy hover:text-accent"
+        >
+          Skills
+        </SiteNavigationLink>
+        <SiteNavigationLink
+          href="/resume"
+          className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-copy hover:text-accent"
+        >
+          Resume
         </SiteNavigationLink>
       </nav>
     </div>
