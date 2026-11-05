@@ -141,86 +141,94 @@ export async function deleteProjectImageAction(id: string) {
 }
 
 export async function uploadProfileImageAction(formData: FormData) {
-  const session = await requireAdmin();
-  await assertSameOrigin();
-  const blobToken = getBlobToken();
+  try {
+    const session = await requireAdmin();
+    await assertSameOrigin();
+    const blobToken = getBlobToken();
 
-  assertUploadTokenConfigured();
+    assertUploadTokenConfigured();
 
-  await assertRateLimit({
-    key: `profile-upload:${session.user.id}`,
-    limit: 6,
-    windowSeconds: 60
-  });
-
-  const file = formData.get("file");
-
-  if (!(file instanceof File)) {
-    throw new Error("Select an image file.");
-  }
-
-  if (!acceptedTypes.has(file.type)) {
-    throw new Error("Only JPEG, PNG, WebP, and AVIF images are accepted.");
-  }
-
-  if (file.size > maxUploadBytes) {
-    throw new Error("Image uploads must be 4 MB or smaller.");
-  }
-
-  const existing = await prisma.profile.findUnique({ where: { id: "singleton" } });
-  const blob = await put(`profile-images/${session.user.id}/${file.name}`, file, {
-    access: "public",
-    token: blobToken,
-    addRandomSuffix: true
-  });
-
-  if (existing?.imageUrl && existing.imageUrl !== blob.url) {
-    await del(existing.imageUrl, { token: blobToken }).catch(() => undefined);
-  }
-
-  const profileData = existing ?? {
-    id: "singleton",
-    name: fallbackProfile.name,
-    role: fallbackProfile.role,
-    location: fallbackProfile.location,
-    shortBio: fallbackProfile.shortBio,
-    email: fallbackProfile.email,
-    githubUrl: fallbackProfile.githubUrl,
-    linkedinUrl: fallbackProfile.linkedinUrl,
-    resumeUrl: fallbackProfile.resumeUrl,
-    imageUrl: null,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
-
-  if (existing) {
-    await prisma.profile.update({
-      where: { id: "singleton" },
-      data: {
-        ...profileData,
-        imageUrl: blob.url
-      }
+    await assertRateLimit({
+      key: `profile-upload:${session.user.id}`,
+      limit: 6,
+      windowSeconds: 60
     });
-  } else {
-    await prisma.profile.create({
-      data: {
-        ...profileData,
-        imageUrl: blob.url
-      }
+
+    const file = formData.get("file");
+
+    if (!(file instanceof File)) {
+      throw new Error("Select an image file.");
+    }
+
+    if (!acceptedTypes.has(file.type)) {
+      throw new Error("Only JPEG, PNG, WebP, and AVIF images are accepted.");
+    }
+
+    if (file.size > maxUploadBytes) {
+      throw new Error("Image uploads must be 4 MB or smaller.");
+    }
+
+    const existing = await prisma.profile.findUnique({ where: { id: "singleton" } });
+    const blob = await put(`profile-images/${session.user.id}/${file.name}`, file, {
+      access: "public",
+      token: blobToken,
+      addRandomSuffix: true
     });
+
+    if (existing?.imageUrl && existing.imageUrl !== blob.url) {
+      await del(existing.imageUrl, { token: blobToken }).catch(() => undefined);
+    }
+
+    const profileData = existing ?? {
+      id: "singleton",
+      name: fallbackProfile.name,
+      role: fallbackProfile.role,
+      location: fallbackProfile.location,
+      shortBio: fallbackProfile.shortBio,
+      email: fallbackProfile.email,
+      githubUrl: fallbackProfile.githubUrl,
+      linkedinUrl: fallbackProfile.linkedinUrl,
+      resumeUrl: fallbackProfile.resumeUrl,
+      imageUrl: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    if (existing) {
+      await prisma.profile.update({
+        where: { id: "singleton" },
+        data: {
+          ...profileData,
+          imageUrl: blob.url
+        }
+      });
+    } else {
+      await prisma.profile.create({
+        data: {
+          ...profileData,
+          imageUrl: blob.url
+        }
+      });
+    }
+
+    await writeAuditLog({
+      actorId: session.user.id,
+      action: "upload",
+      entity: "profileImage",
+      entityId: "singleton"
+    });
+
+    revalidatePath("/");
+    revalidatePath("/about");
+    revalidatePath("/admin/profile");
+    redirect("/admin/profile?notice=uploaded");
+  } catch (error) {
+    if (error instanceof Error && error.message.includes("NEXT_REDIRECT")) {
+      throw error;
+    }
+    const message = error instanceof Error ? encodeURIComponent(error.message) : "Upload failed.";
+    redirect(`/admin/profile?error=${message}`);
   }
-
-  await writeAuditLog({
-    actorId: session.user.id,
-    action: "upload",
-    entity: "profileImage",
-    entityId: "singleton"
-  });
-
-  revalidatePath("/");
-  revalidatePath("/about");
-  revalidatePath("/admin/profile");
-  redirect("/admin/profile?notice=uploaded");
 }
 
 export async function deleteProfileImageAction() {

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { BarChart3, FileText, Images, Inbox, Layers3, Settings, Sparkles } from "lucide-react";
@@ -59,7 +60,19 @@ const notices = {
 function AdminNotice() {
   const searchParams = useSearchParams();
   const noticeKey = searchParams.get("notice") as keyof typeof notices | null;
+  const errorParam = searchParams.get("error");
   const notice = noticeKey ? notices[noticeKey] : undefined;
+
+  if (errorParam) {
+    return (
+      <div
+        role="alert"
+        className="fixed bottom-5 right-5 z-50 rounded-panel border border-danger/30 bg-surface-raised px-4 py-3 text-body-small text-danger shadow-xl"
+      >
+        {decodeURIComponent(errorParam)}
+      </div>
+    );
+  }
 
   if (!notice) {
     return null;
@@ -84,7 +97,9 @@ export function AdminShell({
 }) {
   return (
     <div className="min-h-screen bg-canvas">
-      <AdminNotice />
+      <Suspense fallback={null}>
+        <AdminNotice />
+      </Suspense>
       <aside className="fixed inset-y-0 left-0 hidden w-64 overflow-y-auto border-r border-rule bg-canvas/90 p-5 lg:block">
         <Link href="/admin" className="focus-ring inline-flex min-h-11 items-center font-mono text-body-small font-semibold uppercase text-copy">
           Portfolio Admin

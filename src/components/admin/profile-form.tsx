@@ -22,16 +22,80 @@ function getInitials(name: string) {
     .toUpperCase();
 }
 
+function compressProfileImage(file: File): Promise<File | null> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const maxDim = 1200;
+      let { width, height } = img;
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return resolve(null);
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return resolve(null);
+          resolve(new File([blob], file.name.replace(/\.[^.]+$/, ".webp"), { type: "image/webp" }));
+        },
+        "image/webp",
+        0.85
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(null);
+    };
+    img.src = objectUrl;
+  });
+}
+
 export function ProfileForm({ profile }: { profile: PublicProfile }) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(profile.imageUrl);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setPreviewUrl(URL.createObjectURL(file));
-      setFileName(file.name);
+    if (!file) return;
+
+    setFileError(null);
+
+    let processedFile = file;
+    if (file.size > 1.5 * 1024 * 1024) {
+      try {
+        const compressed = await compressProfileImage(file);
+        if (compressed) {
+          processedFile = compressed;
+          const dt = new DataTransfer();
+          dt.items.add(compressed);
+          e.target.files = dt.files;
+        }
+      } catch {
+        // Fallback to original file
+      }
     }
+
+    if (processedFile.size > 4 * 1024 * 1024) {
+      setFileError("Image must be smaller than 4 MB. Please choose a smaller photo.");
+      e.target.value = "";
+      return;
+    }
+
+    setPreviewUrl(URL.createObjectURL(processedFile));
+    setFileName(processedFile.name);
   };
 
   return (
@@ -87,6 +151,12 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
                 </form>
               ) : null}
             </div>
+
+            {fileError ? (
+              <p className="text-body-small text-danger" role="alert">
+                {fileError}
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
