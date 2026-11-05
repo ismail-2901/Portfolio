@@ -6,6 +6,124 @@ import { ArrowRight, Github, Globe } from "lucide-react";
 
 import type { PublicProject } from "@/lib/queries";
 
+export function ProjectCard({ project, index }: { project: PublicProject; index: number }) {
+  const cover = project.images?.find((img) => img.isCover) ?? project.images?.[0];
+
+  return (
+    <div
+      key={project.id}
+      className="group flex flex-col rounded-3xl bg-surface border border-rule overflow-hidden p-5 md:p-6 transition-all duration-300 hover:shadow-lg hover:border-muted/50"
+    >
+      {/* Mockup / Preview Area — Sleek dark aesthetic */}
+      <Link
+        href={`/projects/${project.slug}`}
+        className="group/preview relative aspect-[16/10] w-full rounded-2xl bg-neutral-950 text-white border border-neutral-800/80 overflow-hidden flex flex-col justify-between p-6 mb-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-neutral-700"
+      >
+        {/* Subtle Ambient Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-black via-neutral-900 to-neutral-800 opacity-90 transition-opacity duration-300 group-hover/preview:opacity-100" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
+
+        {/* Wireframe Architectural Accent Mark in Background */}
+        <div
+          aria-hidden="true"
+          className="absolute -right-6 -bottom-6 size-40 rounded-2xl border border-white/10 rotate-12 pointer-events-none"
+        />
+
+        {cover ? (
+          <Image
+            src={cover.url}
+            alt={cover.alt}
+            fill
+            className="object-cover transition-transform duration-500 group-hover/preview:scale-[1.03]"
+          />
+        ) : (
+          <>
+            {/* Top Bar: Project index + tag badge */}
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                PROJECT / {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="rounded-md bg-white/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-200 border border-white/15 backdrop-blur-sm">
+                {project.techTags[0] ?? "PROJECT"}
+              </span>
+            </div>
+
+            {/* Center: Punchy Title & Summary Graphic */}
+            <div className="relative z-10 my-auto text-center px-4 select-none">
+              <h4 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white mb-2">
+                {project.title}
+              </h4>
+              <p className="text-xs md:text-sm text-neutral-300/85 line-clamp-2 max-w-sm mx-auto leading-relaxed">
+                {project.summary}
+              </p>
+            </div>
+
+            {/* Bottom: Tech tags */}
+            <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-neutral-400">
+              <span>{project.techTags.slice(0, 3).join(" / ")}</span>
+              <span className="text-[10px] tracking-wider text-neutral-500 uppercase">CASE STUDY</span>
+            </div>
+          </>
+        )}
+      </Link>
+
+      {/* Bottom Info Bar */}
+      <div className="flex items-start justify-between gap-4 mt-auto pt-2">
+        <div className="min-w-0 flex-1">
+          <Link href={`/projects/${project.slug}`} className="hover:underline">
+            <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-copy truncate">
+              {project.title}
+            </h3>
+          </Link>
+          <p className="text-xs md:text-sm text-muted mt-1 max-w-sm line-clamp-1">
+            {project.summary}
+          </p>
+
+          {/* 3 Action Icons: GitHub | Live Site | Details Page */}
+          <div className="flex items-center gap-1 mt-3">
+            {project.githubUrl && (
+              <Link
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg hover:bg-surface-raised"
+                aria-label={`GitHub repository for ${project.title}`}
+                title="GitHub Repository"
+              >
+                <Github className="size-4" />
+              </Link>
+            )}
+            {project.liveUrl && (
+              <Link
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg hover:bg-surface-raised"
+                aria-label={`Live site for ${project.title}`}
+                title="Live Site"
+              >
+                <Globe className="size-4" />
+              </Link>
+            )}
+            <Link
+              href={`/projects/${project.slug}`}
+              className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg hover:bg-surface-raised"
+              aria-label={`View details for ${project.title}`}
+              title="View Details"
+            >
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+
+        <span className="shrink-0 rounded-md bg-surface-raised px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-copy border border-rule mt-1">
+          {project.techTags[0] ?? "PROJECT"}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
   return (
     <div className="w-full">
@@ -19,123 +137,9 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
 
       {/* Unified Project Grid — Sleek dark photo cards matching FixMyCampus aesthetic */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-        {projects.map((project, idx) => {
-          const cover = project.images?.find((img) => img.isCover) ?? project.images?.[0];
-
-          return (
-            <div
-              key={project.id}
-              className="group flex flex-col rounded-3xl bg-surface border border-rule overflow-hidden p-5 md:p-6 transition-all duration-300 hover:shadow-lg hover:border-muted/50"
-            >
-              {/* Mockup / Preview Area — Sleek dark aesthetic */}
-              <Link
-                href={`/projects/${project.slug}`}
-                className="group/preview relative aspect-[16/10] w-full rounded-2xl bg-neutral-950 text-white border border-neutral-800/80 overflow-hidden flex flex-col justify-between p-6 mb-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-neutral-700"
-              >
-                {/* Subtle Ambient Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-black via-neutral-900 to-neutral-800 opacity-90 transition-opacity duration-300 group-hover/preview:opacity-100" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
-
-                {/* Wireframe Architectural Accent Mark in Background */}
-                <div
-                  aria-hidden="true"
-                  className="absolute -right-6 -bottom-6 size-40 rounded-2xl border border-white/10 rotate-12 pointer-events-none"
-                />
-
-                {cover ? (
-                  <Image
-                    src={cover.url}
-                    alt={cover.alt}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover/preview:scale-[1.03]"
-                  />
-                ) : (
-                  <>
-                    {/* Top Bar: Project index + tag badge */}
-                    <div className="relative z-10 flex items-center justify-between">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
-                        PROJECT / {String(idx + 1).padStart(2, "0")}
-                      </span>
-                      <span className="rounded-md bg-white/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-200 border border-white/15 backdrop-blur-sm">
-                        {project.techTags[0] ?? "PROJECT"}
-                      </span>
-                    </div>
-
-                    {/* Center: Punchy Title & Summary Graphic */}
-                    <div className="relative z-10 my-auto text-center px-4 select-none">
-                      <h4 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white mb-2">
-                        {project.title}
-                      </h4>
-                      <p className="text-xs md:text-sm text-neutral-300/85 line-clamp-2 max-w-sm mx-auto leading-relaxed">
-                        {project.summary}
-                      </p>
-                    </div>
-
-                    {/* Bottom: Tech tags */}
-                    <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-neutral-400">
-                      <span>{project.techTags.slice(0, 3).join(" / ")}</span>
-                      <span className="text-[10px] tracking-wider text-neutral-500 uppercase">CASE STUDY</span>
-                    </div>
-                  </>
-                )}
-              </Link>
-
-            {/* Bottom Info Bar */}
-            <div className="flex items-start justify-between gap-4 mt-auto pt-2">
-              <div className="min-w-0 flex-1">
-                <Link href={`/projects/${project.slug}`} className="hover:underline">
-                  <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-copy truncate">
-                    {project.title}
-                  </h3>
-                </Link>
-                <p className="text-xs md:text-sm text-muted mt-1 max-w-sm line-clamp-1">
-                  {project.summary}
-                </p>
-
-                {/* 3 Action Icons: GitHub | Live Site | Details Page */}
-                <div className="flex items-center gap-1 mt-3">
-                  {project.githubUrl && (
-                    <Link
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg hover:bg-surface-raised"
-                      aria-label={`GitHub repository for ${project.title}`}
-                      title="GitHub Repository"
-                    >
-                      <Github className="size-4" />
-                    </Link>
-                  )}
-                  {project.liveUrl && (
-                    <Link
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg hover:bg-surface-raised"
-                      aria-label={`Live site for ${project.title}`}
-                      title="Live Site"
-                    >
-                      <Globe className="size-4" />
-                    </Link>
-                  )}
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg hover:bg-surface-raised"
-                    aria-label={`View details for ${project.title}`}
-                    title="View Details"
-                  >
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </div>
-              </div>
-
-              <span className="shrink-0 rounded-md bg-surface-raised px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-copy border border-rule mt-1">
-                {project.techTags[0] ?? "PROJECT"}
-              </span>
-            </div>
-          </div>
-        );
-      })}
+        {projects.map((project, idx) => (
+          <ProjectCard key={project.id} project={project} index={idx} />
+        ))}
       </div>
 
       {/* View More Projects Button */}

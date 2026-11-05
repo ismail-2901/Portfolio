@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { CaseStudyCard } from "@/components/site/case-study-card";
 import { DatabaseUnavailableNotice } from "@/components/site/database-unavailable-notice";
+import { ProjectCard } from "@/components/site/project-grid";
 import { getPublishedProjects } from "@/lib/queries";
 
 export const metadata: Metadata = {
@@ -17,8 +17,6 @@ export const metadata: Metadata = {
 export default async function ProjectsPage() {
   const projectsResult = await getPublishedProjects();
   const projects = projectsResult.available ? projectsResult.data : [];
-  const leadProject = projects.find((project) => project.featured) ?? projects[0];
-  const remainingProjects = projects.filter((project) => project.id !== leadProject?.id);
 
   return (
     <main id="main-content" tabIndex={-1} className="w-full">
@@ -44,33 +42,11 @@ export default async function ProjectsPage() {
 
         {!projectsResult.available ? <DatabaseUnavailableNotice className="mb-8" /> : null}
 
-        {leadProject ? (
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <span className="size-2.5 rounded-full bg-emerald-500" />
-              <p className="text-xs font-bold uppercase tracking-wider text-copy">
-                Featured Case Study / 01
-              </p>
-            </div>
-            <div className="mt-2">
-              <CaseStudyCard project={leadProject} index={1} variant="featured" priority />
-            </div>
-          </div>
-        ) : null}
-
-        {remainingProjects.length ? (
-          <div className="mt-20 md:mt-28">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="size-2.5 rounded-full bg-neutral-400" />
-              <p className="text-xs font-bold uppercase tracking-wider text-copy">
-                Additional Projects
-              </p>
-            </div>
-            <div className="mt-4">
-              {remainingProjects.map((project, index) => (
-                <CaseStudyCard key={project.id} project={project} index={index + 2} variant="secondary" />
-              ))}
-            </div>
+        {projects.length ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+            {projects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
           </div>
         ) : null}
 
