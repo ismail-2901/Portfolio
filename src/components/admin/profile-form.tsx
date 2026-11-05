@@ -1,4 +1,6 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 import { ImagePlus, Trash2 } from "lucide-react";
 
 import { SubmitButton } from "@/components/admin/submit-button";
@@ -21,13 +23,29 @@ function getInitials(name: string) {
 }
 
 export function ProfileForm({ profile }: { profile: PublicProfile }) {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(profile.imageUrl);
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPreviewUrl(URL.createObjectURL(file));
+      setFileName(file.name);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="admin-profile-card rounded-panel border border-rule bg-surface-raised p-6">
         <div className="flex flex-col gap-5 md:flex-row md:items-center">
-          <div className="admin-avatar flex size-24 items-center justify-center overflow-hidden rounded-full border border-accent/30 text-subheading font-semibold text-accent">
-            {profile.imageUrl ? (
-              <Image src={profile.imageUrl} alt={profile.name} width={96} height={96} className="size-full object-cover" />
+          <div className="admin-avatar relative flex size-24 items-center justify-center overflow-hidden rounded-full border border-accent/30 bg-surface text-subheading font-semibold text-accent">
+            {previewUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={previewUrl}
+                alt={profile.name}
+                className="size-full object-cover"
+              />
             ) : (
               getInitials(profile.name)
             )}
@@ -41,13 +59,21 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
 
             <div className="flex flex-col gap-3 sm:flex-row">
               <form action={uploadProfileImageAction} className="flex flex-1 items-center gap-3">
-                <input type="file" name="file" accept="image/avif,image/jpeg,image/png,image/webp" className="peer sr-only" id="profile-image-upload" required />
+                <input
+                  type="file"
+                  name="file"
+                  accept="image/avif,image/jpeg,image/png,image/webp"
+                  className="peer sr-only"
+                  id="profile-image-upload"
+                  required
+                  onChange={handleFileChange}
+                />
                 <label
                   htmlFor="profile-image-upload"
-                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-2 text-label font-medium text-accent transition duration-interactive hover:border-accent/60 hover:bg-accent/15 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
+                  className="inline-flex min-h-11 max-w-[220px] cursor-pointer items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-label font-medium text-accent transition duration-interactive hover:border-accent/60 hover:bg-accent/15 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
                 >
-                  <ImagePlus aria-hidden="true" className="size-4" />
-                  Choose file
+                  <ImagePlus aria-hidden="true" className="size-4 shrink-0" />
+                  <span className="truncate">{fileName ?? "Choose file"}</span>
                 </label>
                 <SubmitButton className="shrink-0" pendingLabel="Uploading">Save upload</SubmitButton>
               </form>

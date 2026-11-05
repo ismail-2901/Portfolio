@@ -219,6 +219,7 @@ export async function uploadProfileImageAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/about");
+  revalidatePath("/admin/profile");
   redirect("/admin/profile?notice=uploaded");
 }
 
@@ -248,5 +249,6 @@ export async function deleteProfileImageAction() {
 
   revalidatePath("/");
   revalidatePath("/about");
+  revalidatePath("/admin/profile");
   redirect("/admin/profile?notice=deleted");
 }
