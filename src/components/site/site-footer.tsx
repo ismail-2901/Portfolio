@@ -49,7 +49,7 @@ export async function SiteFooter() {
             <Link
               href="https://github.com/ismail-2901"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="hover:text-copy transition-colors inline-flex items-center gap-1.5"
               aria-label="GitHub"
             >

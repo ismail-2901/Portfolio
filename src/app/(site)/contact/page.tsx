@@ -83,7 +83,7 @@ export default async function ContactPage() {
                   <Link
                     href={profile.githubUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity min-h-[44px] py-1 border-b border-rule/50"
                   >
                     <span>GITHUB</span>

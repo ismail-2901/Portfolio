@@ -116,7 +116,7 @@ export function GithubSection() {
             <Link
               href="https://github.com/ismail-2901"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-xs md:text-sm font-bold uppercase tracking-wider text-copy underline underline-offset-4 hover:opacity-75 transition-opacity"
             >
               VIEW PROFILE <ArrowUpRight className="size-4" />
