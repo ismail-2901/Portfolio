@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { SkipLink } from "@/components/site/skip-link";
 import { getPublicProfile } from "@/lib/queries";
 import { serializeStructuredData } from "@/lib/structured-data";
 import { getSiteUrl } from "@/lib/utils";
@@ -22,7 +23,7 @@ export default async function SiteLayout({ children }: Readonly<{ children: Reac
 
   return (
     <>
-      <a className="skip-link" href="#main-content">Skip to content</a>
+      <SkipLink />
       <SiteHeader />
       {children}
       <SiteFooter />
