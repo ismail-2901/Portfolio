@@ -84,9 +84,9 @@ export function ArticleForm({ article }: { article?: ArticleFormValue }) {
       </form>
 
       {article ? (
-        <form action={deleteArticleAction.bind(null, article.id)} className="h-fit rounded-panel border border-danger/20 bg-danger-surface/5 p-5">
+        <form action={deleteArticleAction.bind(null, article.id)} className="h-fit rounded-panel border border-danger/30 bg-danger-surface/5 p-5">
           <h2 className="text-heading-compact font-semibold text-danger-strong">Delete Article</h2>
-          <p className="mt-2 text-body-small text-danger-soft/80">This removes the article and detaches its tags.</p>
+          <p className="mt-2 text-body-small text-danger-soft">This removes the article and detaches its tags.</p>
           <SubmitButton variant="danger" pendingLabel="Deleting" className="mt-4">
             <Trash2 aria-hidden="true" className="size-4" />
             Delete article
