@@ -10,11 +10,9 @@ export function SiteHeader() {
         <SiteNavigationLink
           href="/"
           aria-label="Home"
-          className="group flex items-center justify-center min-h-[44px] min-w-[44px] text-copy hover:opacity-85 transition-opacity focus-ring rounded-xl"
+          className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold min-h-[44px] inline-flex items-center tracking-wider"
         >
-          <span className="flex size-9 items-center justify-center rounded-xl bg-copy text-canvas font-black text-xs tracking-wider border border-rule transition-transform duration-200 group-hover:scale-105 shadow-xs select-none">
-            IH
-          </span>
+          IH
         </SiteNavigationLink>
 
         <nav
