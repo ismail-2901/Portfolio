@@ -2,7 +2,7 @@
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+  --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --color-canvas: #f8f8f9;
   --color-surface: #ffffff;
   --color-surface-raised: #f1f2f4;
