@@ -117,7 +117,7 @@ export const fallbackProfile: PublicProfile = {
     "Undergraduate Software Engineering student at Daffodil International University (DIU), building production-ready full-stack web applications with modern technologies. Passionate about clean architecture, meaningful user experiences, and AI-integrated systems.",
   email: "ismailsajinabusaleh@gmail.com",
   githubUrl: "https://github.com/ismail-2901",
-  linkedinUrl: "https://www.linkedin.com/in/md-ismail-hossain-2001",
+  linkedinUrl: "https://www.linkedin.com/in/md-ismail-hossain-b10073263",
   twitterUrl: null,
   resumeUrl: "/resume",
   imageUrl: null,

@@ -54,7 +54,7 @@ export function ContactSection() {
             {/* Social Links List */}
             <div className="pt-2 flex flex-col gap-1">
               <Link
-                href="https://www.linkedin.com/in/md-ismail-hossain-2001"
+                href="https://www.linkedin.com/in/md-ismail-hossain-b10073263"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity min-h-[44px] py-1 border-b border-rule/50"

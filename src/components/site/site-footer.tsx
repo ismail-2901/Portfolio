@@ -56,7 +56,7 @@ export async function SiteFooter() {
               <Github className="size-3.5" /> GitHub <ArrowUpRight className="size-3" />
             </Link>
             <Link
-              href="https://www.linkedin.com/in/md-ismail-hossain-2001"
+              href="https://www.linkedin.com/in/md-ismail-hossain-b10073263"
               target="_blank"
               rel="noreferrer"
               className="hover:text-copy transition-colors inline-flex items-center gap-1.5"
