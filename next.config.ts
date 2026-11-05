@@ -69,21 +69,7 @@ const nextConfig: NextConfig = {
     ]
   },
   poweredByHeader: false,
-  reactStrictMode: true,
-  async redirects() {
-    return [
-      {
-        source: "/experience",
-        destination: "/#experience",
-        permanent: false
-      },
-      {
-        source: "/skills",
-        destination: "/#skills",
-        permanent: false
-      }
-    ];
-  }
+  reactStrictMode: true
 };
 
 export default nextConfig;

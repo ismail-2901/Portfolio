@@ -66,18 +66,6 @@ export function MobileNavigation() {
           </SiteNavigationLink>
         ))}
         <SiteNavigationLink
-          href="/#experience"
-          className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-copy hover:text-accent"
-        >
-          Experience
-        </SiteNavigationLink>
-        <SiteNavigationLink
-          href="/#skills"
-          className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-copy hover:text-accent"
-        >
-          Skills
-        </SiteNavigationLink>
-        <SiteNavigationLink
           href="/resume"
           className="focus-ring mobile-navigation-link flex min-h-11 items-center px-3 py-3 text-body-small text-copy hover:text-accent"
         >
