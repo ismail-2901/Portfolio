@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
 
 import type { PublicProfile, PublicSkill } from "@/lib/queries";
 
@@ -44,18 +43,10 @@ export function HeroSection({
           </div>
         </div>
 
-        {/* Centered Bracketed Paragraph */}
+        {/* Centered Bio Statement */}
         <div className="max-w-3xl mx-auto text-center px-4">
-          <p className="text-lg md:text-2xl lg:text-3xl font-medium tracking-tight text-copy leading-relaxed md:leading-snug">
-            [A Software Engineering student &amp;{" "}
-            <Link
-              href="#projects"
-              className="inline-flex items-center underline underline-offset-4 decoration-muted hover:decoration-copy transition-colors group"
-            >
-              Full-Stack Developer
-              <ArrowUpRight className="inline size-4 md:size-5 ml-0.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </Link>{" "}
-            from Bangladesh, building high-performance digital experiences where modern design meets scalable technology, clean architecture, and intelligent solutions.]
+          <p className="text-lg md:text-2xl lg:text-3xl font-medium tracking-tight text-copy leading-relaxed md:leading-snug text-balance">
+            A Software Engineering student &amp; Full-Stack Developer from Bangladesh, building high-performance digital experiences where modern design meets scalable technology, clean architecture, and intelligent solutions.
           </p>
 
           {/* Action Row */}
