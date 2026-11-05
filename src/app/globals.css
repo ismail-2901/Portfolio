@@ -425,25 +425,47 @@ main {
 .project-media-index,
 .project-media-tags {
   color: var(--color-muted);
-  font: 10px/1.4 var(--font-mono);
+  font: 11px/1.4 var(--font-mono);
+  position: relative;
+  z-index: 2;
 }
 
 .project-media-title {
   position: relative;
-  z-index: 1;
-  max-width: 14ch;
-  font-size: clamp(24px, 4vw, 44px);
-  line-height: 1.08;
+  z-index: 2;
+  max-width: 16ch;
+  font-size: clamp(20px, 3.2vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .project-media-mark {
   position: absolute;
-  right: 12%;
-  bottom: 16%;
-  width: 28%;
+  right: -5%;
+  bottom: -5%;
+  width: 36%;
   aspect-ratio: 1;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 48%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 14%, transparent);
   transform: rotate(45deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.case-study-featured > a,
+.case-study-secondary > a {
+  min-width: 0;
+  width: 100%;
+}
+
+.case-study-featured-copy,
+.case-study-secondary-copy {
+  min-width: 0;
+}
+
+.case-study-secondary .project-media-title {
+  font-size: clamp(17px, 2vw, 24px);
+  max-width: 18ch;
 }
 
 .case-study-featured {

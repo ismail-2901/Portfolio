@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Github, Globe } from "lucide-react";
 
@@ -16,24 +17,68 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
       {/* Hairline Divider */}
       <div className="hairline-divider mt-6 md:mt-8 mb-10 md:mb-14" />
 
-      {/* Unified Project Grid — Every card has identical consistent design */}
+      {/* Unified Project Grid — Sleek dark photo cards matching FixMyCampus aesthetic */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="group flex flex-col rounded-3xl bg-surface border border-rule overflow-hidden p-5 md:p-6 transition-all duration-300 hover:shadow-lg hover:border-muted/50"
-          >
-            {/* Mockup / Preview Area */}
-            <Link
-              href={`/projects/${project.slug}`}
-              className="relative aspect-[16/10] w-full rounded-2xl bg-surface-raised border border-rule/60 overflow-hidden flex items-center justify-center p-6 mb-5 group-hover:opacity-95 transition-opacity"
+        {projects.map((project, idx) => {
+          const cover = project.images?.find((img) => img.isCover) ?? project.images?.[0];
+
+          return (
+            <div
+              key={project.id}
+              className="group flex flex-col rounded-3xl bg-surface border border-rule overflow-hidden p-5 md:p-6 transition-all duration-300 hover:shadow-lg hover:border-muted/50"
             >
-              <div className="text-center p-4">
-                <p className="text-sm md:text-base font-semibold text-copy/90 max-w-xs leading-snug">
-                  {project.summary}
-                </p>
-              </div>
-            </Link>
+              {/* Mockup / Preview Area — Sleek dark aesthetic */}
+              <Link
+                href={`/projects/${project.slug}`}
+                className="group/preview relative aspect-[16/10] w-full rounded-2xl bg-neutral-950 text-white border border-neutral-800/80 overflow-hidden flex flex-col justify-between p-6 mb-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-neutral-700"
+              >
+                {/* Subtle Ambient Background Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-black via-neutral-900 to-neutral-800 opacity-90 transition-opacity duration-300 group-hover/preview:opacity-100" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
+
+                {/* Wireframe Architectural Accent Mark in Background */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -right-6 -bottom-6 size-40 rounded-2xl border border-white/10 rotate-12 pointer-events-none"
+                />
+
+                {cover ? (
+                  <Image
+                    src={cover.url}
+                    alt={cover.alt}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover/preview:scale-[1.03]"
+                  />
+                ) : (
+                  <>
+                    {/* Top Bar: Project index + tag badge */}
+                    <div className="relative z-10 flex items-center justify-between">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                        PROJECT / {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <span className="rounded-md bg-white/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-200 border border-white/15 backdrop-blur-sm">
+                        {project.techTags[0] ?? "PROJECT"}
+                      </span>
+                    </div>
+
+                    {/* Center: Punchy Title & Summary Graphic */}
+                    <div className="relative z-10 my-auto text-center px-4 select-none">
+                      <h4 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white mb-2">
+                        {project.title}
+                      </h4>
+                      <p className="text-xs md:text-sm text-neutral-300/85 line-clamp-2 max-w-sm mx-auto leading-relaxed">
+                        {project.summary}
+                      </p>
+                    </div>
+
+                    {/* Bottom: Tech tags */}
+                    <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-neutral-400">
+                      <span>{project.techTags.slice(0, 3).join(" / ")}</span>
+                      <span className="text-[10px] tracking-wider text-neutral-500 uppercase">CASE STUDY</span>
+                    </div>
+                  </>
+                )}
+              </Link>
 
             {/* Bottom Info Bar */}
             <div className="flex items-start justify-between gap-4 mt-auto pt-2">
@@ -89,7 +134,8 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
               </span>
             </div>
           </div>
-        ))}
+        );
+      })}
       </div>
 
       {/* View More Projects Button */}
