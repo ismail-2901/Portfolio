@@ -1310,10 +1310,10 @@ main {
 
 /* ── Reference 1:1 Typography & Divider Tokens ───────────────────────── */
 .hero-giant-title {
-  font-size: clamp(2.25rem, 10.5vw, 8.5rem);
+  font-size: clamp(1.25rem, 6.2vw, 6.5rem);
   font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 0.88;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   text-transform: uppercase;
   color: var(--color-copy);
 }

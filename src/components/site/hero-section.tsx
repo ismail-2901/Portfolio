@@ -21,7 +21,7 @@ export function HeroSection({
     <section className="pt-8 md:pt-16 pb-12 overflow-hidden" id="about">
       <div className="container-shell">
         {/* Massive All-Caps Heading */}
-        <h1 className="hero-giant-title text-center select-none">
+        <h1 className="hero-giant-title text-center select-none whitespace-nowrap">
           {name}
         </h1>
 
