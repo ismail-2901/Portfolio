@@ -20,40 +20,56 @@ export default async function BlogPage() {
   const articles = articlesResult.available ? articlesResult.data : [];
 
   return (
-    <main id="main-content" tabIndex={-1}>
+    <main id="main-content" tabIndex={-1} className="w-full">
       <section className="container-shell pb-24 pt-16 md:pb-32 md:pt-24">
-        <Reveal>
-          <p className="eyebrow">Writing / field notes</p>
-          <h1 className="mt-5 max-w-4xl text-balance text-display font-medium text-copy md:text-display-xl">
-            Notes on architecture, security, and product craft.
-          </h1>
-        </Reveal>
+        {/* Hairline Divider & Giant Title */}
+        <div className="hairline-divider mb-8" />
+        <h1 className="section-giant-title select-none leading-none mb-6">
+          WRITING
+        </h1>
 
-        {!articlesResult.available ? <DatabaseUnavailableNotice className="mt-8" /> : null}
+        {/* Sub-bar */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-rule/60 mb-12">
+          <p className="text-xs md:text-sm text-muted max-w-xl leading-relaxed">
+            Notes on software architecture, full-stack systems, security practices, and product engineering.
+          </p>
+        </div>
 
-        <div className="mt-12 divide-y divide-rule border-y border-rule">
-          {articles.map((article, index) => (
-            <Reveal key={article.id} delay={index * 0.04}>
-              <Link
-                href={`/blog/${article.slug}`}
-                className="focus-ring group grid gap-5 py-7 transition-colors hover:bg-copy/1.5 md:grid-cols-[1fr_auto] md:py-8"
-              >
-                <div>
-                  <div className="flex flex-wrap gap-2">
-                    {article.tags.map((tag) => (
-                      <Badge key={tag.slug}>{tag.name}</Badge>
-                    ))}
+        {!articlesResult.available ? <DatabaseUnavailableNotice className="mb-8" /> : null}
+
+        <div className="divide-y divide-rule/60 border-y border-rule/60">
+          {articles.length === 0 ? (
+            <p className="py-12 text-center text-xs md:text-sm text-muted">
+              Technical essays and engineering notes are being written.
+            </p>
+          ) : (
+            articles.map((article, index) => (
+              <Reveal key={article.id} delay={index * 0.04}>
+                <Link
+                  href={`/blog/${article.slug}`}
+                  className="focus-ring group grid gap-4 py-8 transition-colors hover:bg-surface-raised/40 md:grid-cols-[1fr_auto] md:py-9 px-2"
+                >
+                  <div>
+                    <div className="flex flex-wrap gap-2">
+                      {article.tags.map((tag) => (
+                        <Badge key={tag.slug}>{tag.name}</Badge>
+                      ))}
+                    </div>
+                    <h2 className="mt-4 text-xl md:text-2xl font-black uppercase tracking-tight text-copy group-hover:opacity-80 transition-opacity">
+                      {article.title}
+                    </h2>
+                    <p className="mt-2.5 max-w-2xl text-xs md:text-sm text-muted leading-relaxed">
+                      {article.excerpt}
+                    </p>
                   </div>
-                  <h2 className="mt-5 text-heading-small font-medium text-copy">{article.title}</h2>
-                  <p className="mt-3 max-w-2xl text-body text-muted">{article.excerpt}</p>
-                </div>
-                <div className="flex items-start gap-3 font-mono text-metadata text-muted">
-                  {article.readingMinutes} min read
-                  <ArrowUpRight aria-hidden="true" className="size-5 text-accent transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </div>
-              </Link>
-            </Reveal>
-          ))}
+                  <div className="flex items-center gap-3 font-mono text-xs text-muted md:self-start md:pt-2">
+                    <span>{article.readingMinutes} min read</span>
+                    <ArrowUpRight aria-hidden="true" className="size-4 text-copy transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                </Link>
+              </Reveal>
+            ))
+          )}
         </div>
       </section>
     </main>

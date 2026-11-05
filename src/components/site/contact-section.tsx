@@ -53,12 +53,12 @@ export function ContactSection() {
             </div>
 
             {/* Social Links List */}
-            <div className="pt-4 flex flex-col gap-2.5">
+            <div className="pt-4 flex flex-col gap-1">
               <Link
                 href="https://www.linkedin.com/in/md-ismail-hossain-2001"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity py-1 border-b border-rule/50"
+                className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity min-h-[44px] py-1 border-b border-rule/50"
               >
                 <span>LINKEDIN</span>
                 <ArrowUpRight className="size-3.5" />
@@ -67,14 +67,14 @@ export function ContactSection() {
                 href="https://github.com/ismail-2901"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity py-1 border-b border-rule/50"
+                className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity min-h-[44px] py-1 border-b border-rule/50"
               >
                 <span>GITHUB</span>
                 <ArrowUpRight className="size-3.5" />
               </Link>
               <Link
                 href="/resume"
-                className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity py-1 border-b border-rule/50"
+                className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-copy hover:opacity-75 transition-opacity min-h-[44px] py-1 border-b border-rule/50"
               >
                 <span>RESUME</span>
                 <ArrowUpRight className="size-3.5" />

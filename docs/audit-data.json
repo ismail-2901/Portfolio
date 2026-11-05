@@ -1,0 +1,143 @@
+{
+  "timestamp": "2026-11-05T05:49:17.964Z",
+  "viewports": {},
+  "publicPages": {
+    "home": {
+      "bodyFont": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+      "bodyBg": "rgb(248, 248, 249)",
+      "bodyColor": "rgb(10, 10, 10)",
+      "h1Font": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+      "h1Size": "136px",
+      "h1Weight": "900",
+      "h1LineHeight": "119.68px",
+      "navBg": "oklab(0.979403 0.000417322 -0.0012486 / 0.85)",
+      "smallTargetsCount": 36,
+      "smallTargetsSample": [
+        {
+          "text": "Md Ismail Hossain",
+          "tag": "A",
+          "width": 132,
+          "height": 24,
+          "color": "rgb(10, 10, 10)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "fontSize": "16px",
+          "ariaLabel": null
+        },
+        {
+          "text": "About",
+          "tag": "A",
+          "width": 40,
+          "height": 20,
+          "color": "rgb(113, 113, 122)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "fontSize": "14px",
+          "ariaLabel": null
+        },
+        {
+          "text": "Projects",
+          "tag": "A",
+          "width": 55,
+          "height": 20,
+          "color": "rgb(113, 113, 122)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "fontSize": "14px",
+          "ariaLabel": null
+        },
+        {
+          "text": "Blog",
+          "tag": "A",
+          "width": 30,
+          "height": 20,
+          "color": "rgb(113, 113, 122)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "fontSize": "14px",
+          "ariaLabel": null
+        },
+        {
+          "text": "Experience",
+          "tag": "A",
+          "width": 75,
+          "height": 20,
+          "color": "rgb(113, 113, 122)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "fontSize": "14px",
+          "ariaLabel": null
+        }
+      ]
+    },
+    "homeDark": {
+      "darkBg": "rgb(10, 10, 10)",
+      "darkColor": "rgb(255, 255, 255)",
+      "themeAttr": "dark"
+    }
+  },
+  "adminPages": {
+    "dashboard": {
+      "inputCount": 1,
+      "inputsWithoutLabel": 1,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "profile": {
+      "inputCount": 14,
+      "inputsWithoutLabel": 4,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "projects": {
+      "inputCount": 1,
+      "inputsWithoutLabel": 1,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "project-new": {
+      "inputCount": 13,
+      "inputsWithoutLabel": 2,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "skills": {
+      "inputCount": 187,
+      "inputsWithoutLabel": 92,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "articles": {
+      "inputCount": 1,
+      "inputsWithoutLabel": 1,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "article-new": {
+      "inputCount": 10,
+      "inputsWithoutLabel": 2,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "media": {
+      "inputCount": 16,
+      "inputsWithoutLabel": 11,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    },
+    "messages": {
+      "inputCount": 1,
+      "inputsWithoutLabel": 1,
+      "tableCount": 0,
+      "tables": [],
+      "emptyStatesSample": []
+    }
+  },
+  "a11yIssues": [],
+  "layoutIssues": [],
+  "typographyIssues": [],
+  "colorIssues": []
+}

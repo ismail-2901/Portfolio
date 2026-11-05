@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Trash2, Upload } from "lucide-react";
 
@@ -140,10 +141,12 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
 
               <div className="mt-6 space-y-3">
                 {project.images.map((image) => (
-                  <div key={image.id} className="rounded-panel border border-rule bg-canvas/60 p-3">
-                    <p className="text-body-small text-copy">{image.alt}</p>
-                    <p className="mt-1 break-all font-mono text-metadata text-muted">{image.url}</p>
-                    <form action={deleteProjectImageAction.bind(null, image.id)} className="mt-3">
+                  <div key={image.id} className="rounded-panel border border-rule bg-canvas/60 p-3 flex flex-col gap-2">
+                    <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-surface">
+                      <Image src={image.url} alt={image.alt} fill className="object-cover" sizes="320px" />
+                    </div>
+                    <p className="text-body-small text-copy font-medium">{image.alt}</p>
+                    <form action={deleteProjectImageAction.bind(null, image.id)} className="mt-1">
                       <SubmitButton variant="danger" pendingLabel="Deleting">
                         <Trash2 aria-hidden="true" className="size-4" />
                         Delete

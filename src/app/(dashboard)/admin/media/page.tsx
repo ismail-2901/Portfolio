@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { Trash2, Upload } from "lucide-react";
 
+import { CopyUrlButton } from "@/components/admin/copy-url-button";
 import { SubmitButton } from "@/components/admin/submit-button";
 import { Badge } from "@/components/ui/badge";
 import { Field } from "@/components/ui/field";
@@ -67,24 +69,32 @@ export default async function AdminMediaPage() {
         </div>
       </form>
 
-      <div className="mt-8 grid gap-4">
+      <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {images.map((image) => (
-          <article key={image.id} className="rounded-panel border border-rule bg-surface-raised p-5">
-            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-              <div>
-                <div className="flex flex-wrap gap-2">
-                  <Badge>{image.project.title}</Badge>
-                  {image.isCover ? <Badge className="border-accent/30 text-accent">Cover</Badge> : null}
-                </div>
-                <p className="mt-4 text-copy">{image.alt}</p>
-                <p className="mt-2 break-all font-mono text-metadata text-muted">{image.url}</p>
+          <article key={image.id} className="group rounded-panel border border-rule bg-surface-raised overflow-hidden flex flex-col">
+            <div className="relative aspect-video bg-surface">
+              <Image
+                src={image.url}
+                alt={image.alt}
+                fill
+                className="object-cover transition-opacity duration-200 group-hover:opacity-90"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              />
+            </div>
+            <div className="p-3 flex flex-col gap-2 flex-1">
+              <div className="flex flex-wrap gap-1.5">
+                <Badge>{image.project.title}</Badge>
+                {image.isCover ? <Badge className="border-accent/30 text-accent">Cover</Badge> : null}
               </div>
-              <form action={deleteProjectImageAction.bind(null, image.id)}>
-                <SubmitButton variant="danger" pendingLabel="Deleting">
-                  <Trash2 aria-hidden="true" className="size-4" />
-                  Delete
-                </SubmitButton>
-              </form>
+              <p className="text-label text-copy line-clamp-1">{image.alt}</p>
+              <div className="mt-auto flex items-center gap-2 pt-1">
+                <CopyUrlButton url={image.url} />
+                <form action={deleteProjectImageAction.bind(null, image.id)}>
+                  <SubmitButton variant="danger" pendingLabel="…" aria-label={`Delete ${image.alt}`}>
+                    <Trash2 aria-hidden="true" className="size-3.5" />
+                  </SubmitButton>
+                </form>
+              </div>
             </div>
           </article>
         ))}

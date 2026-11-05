@@ -21,13 +21,18 @@ export async function updateProfileAction(formData: FormData) {
     email: formData.get("email"),
     githubUrl: formData.get("githubUrl"),
     linkedinUrl: formData.get("linkedinUrl"),
+    twitterUrl: formData.get("twitterUrl") ?? "",
     resumeUrl: formData.get("resumeUrl"),
-    imageUrl: formData.get("imageUrl") ?? ""
+    imageUrl: formData.get("imageUrl") ?? "",
+    availabilityStatus: formData.get("availabilityStatus") ?? "",
+    availableForHire: formData.get("availableForHire") === "on" || formData.get("availableForHire") === "true"
   });
 
   const normalizedProfile = {
     ...data,
-    imageUrl: data.imageUrl || null
+    imageUrl: data.imageUrl || null,
+    twitterUrl: data.twitterUrl || null,
+    availabilityStatus: data.availabilityStatus || null
   };
 
   await prisma.profile.upsert({

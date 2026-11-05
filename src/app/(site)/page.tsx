@@ -87,7 +87,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── SKILLS ───────────────────────────────────────────── */}
-      <SkillsSection />
+      <SkillsSection skills={skills} />
 
       {/* ── GITHUB ───────────────────────────────────────────── */}
       <GithubSection />

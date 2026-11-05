@@ -105,7 +105,7 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
                         href={featuredProject.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-neutral-400 hover:text-white transition-colors p-1"
+                        className="text-neutral-400 hover:text-white transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
                         aria-label={`GitHub for ${featuredProject.title}`}
                       >
                         <Github className="size-4" />
@@ -113,7 +113,7 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
                     )}
                     <Link
                       href={`/projects/${featuredProject.slug}`}
-                      className="text-neutral-400 hover:text-white transition-colors p-1"
+                      className="text-neutral-400 hover:text-white transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
                       aria-label={`View ${featuredProject.title}`}
                     >
                       <ArrowUpRight className="size-4" />
@@ -160,7 +160,7 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-muted hover:text-copy transition-colors"
+                      className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
                       aria-label={`GitHub for ${project.title}`}
                     >
                       <Github className="size-4" />
@@ -168,7 +168,7 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
                   )}
                   <Link
                     href={`/projects/${project.slug}`}
-                    className="text-muted hover:text-copy transition-colors"
+                    className="text-muted hover:text-copy transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
                     aria-label={`View ${project.title}`}
                   >
                     <ArrowUpRight className="size-4" />

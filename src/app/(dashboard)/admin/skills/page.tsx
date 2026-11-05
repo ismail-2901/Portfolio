@@ -1,4 +1,4 @@
-import { SkillForm } from "@/components/admin/skill-form";
+import { SkillsTable } from "@/components/admin/skills-table";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -13,11 +13,8 @@ export default async function AdminSkillsPage() {
       <p className="font-mono text-metadata uppercase text-accent">Skills</p>
       <h1 className="mt-2 text-heading font-semibold text-copy">Skill taxonomy</h1>
 
-      <div className="mt-8 space-y-4">
-        <SkillForm />
-        {skills.map((skill) => (
-          <SkillForm key={skill.id} skill={skill} />
-        ))}
+      <div className="mt-8">
+        <SkillsTable skills={skills} />
       </div>
     </div>
   );

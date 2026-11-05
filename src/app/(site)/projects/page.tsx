@@ -4,8 +4,6 @@ import { ArrowUpRight } from "lucide-react";
 
 import { CaseStudyCard } from "@/components/site/case-study-card";
 import { DatabaseUnavailableNotice } from "@/components/site/database-unavailable-notice";
-import { SectionIntro } from "@/components/site/section-intro";
-import { Button } from "@/components/ui/button";
 import { getPublishedProjects } from "@/lib/queries";
 
 export const metadata: Metadata = {
@@ -23,28 +21,38 @@ export default async function ProjectsPage() {
   const remainingProjects = projects.filter((project) => project.id !== leadProject?.id);
 
   return (
-    <main id="main-content" tabIndex={-1}>
+    <main id="main-content" tabIndex={-1} className="w-full">
       <section className="container-shell pb-24 pt-16 md:pb-32 md:pt-24">
-        <header className="mb-16 max-w-4xl md:mb-24">
-          <p className="eyebrow">Selected work / case studies</p>
-          <h1 className="mt-5 text-balance text-display font-medium text-copy md:text-display-xl">
-            Projects built for real users.
-          </h1>
-          <p className="copy-measure mt-6 text-body-large text-muted">
-            A closer look at full-stack projects I have designed and built: the problems, technical decisions, and
-            implementation details behind each one.
+        {/* Hairline Divider & Giant Title */}
+        <div className="hairline-divider mb-8" />
+        <h1 className="section-giant-title select-none leading-none mb-6">
+          SELECTED WORK
+        </h1>
+
+        {/* Sub-bar */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-rule/60 mb-12">
+          <p className="text-xs md:text-sm text-muted max-w-xl leading-relaxed">
+            A closer look at full-stack applications and engineering projects: architecture, technical decisions, and implementation details.
           </p>
-          <Button asChild variant="ghost" className="mt-5 px-0">
-            <Link href="/contact">Discuss a project <ArrowUpRight aria-hidden="true" className="size-4" /></Link>
-          </Button>
-        </header>
+          <Link
+            href="/contact"
+            className="inline-flex min-h-[44px] items-center gap-2 text-xs font-bold uppercase tracking-wider text-copy underline underline-offset-4 hover:opacity-75 transition-opacity self-start md:self-auto"
+          >
+            Discuss a project <ArrowUpRight className="size-3.5" />
+          </Link>
+        </div>
 
         {!projectsResult.available ? <DatabaseUnavailableNotice className="mb-8" /> : null}
 
         {leadProject ? (
           <div>
-            <SectionIntro eyebrow="Featured project / 01" title="Start with the project that shows the most." />
-            <div className="mt-4">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="size-2.5 rounded-full bg-emerald-500" />
+              <p className="text-xs font-bold uppercase tracking-wider text-copy">
+                Featured Case Study / 01
+              </p>
+            </div>
+            <div className="mt-2">
               <CaseStudyCard project={leadProject} index={1} variant="featured" priority />
             </div>
           </div>
@@ -52,7 +60,12 @@ export default async function ProjectsPage() {
 
         {remainingProjects.length ? (
           <div className="mt-20 md:mt-28">
-            <SectionIntro eyebrow="More projects" title="Other full-stack work." />
+            <div className="flex items-center gap-3 mb-6">
+              <span className="size-2.5 rounded-full bg-neutral-400" />
+              <p className="text-xs font-bold uppercase tracking-wider text-copy">
+                Additional Projects
+              </p>
+            </div>
             <div className="mt-4">
               {remainingProjects.map((project, index) => (
                 <CaseStudyCard key={project.id} project={project} index={index + 2} variant="secondary" />

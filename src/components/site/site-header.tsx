@@ -24,26 +24,26 @@ export function SiteHeader() {
               <SiteNavigationLink
                 key={item.href}
                 href={item.href}
-                className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold"
+                className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold min-h-[44px] inline-flex items-center"
               >
                 {item.label}
               </SiteNavigationLink>
             ))}
           <SiteNavigationLink
             href="/#experience"
-            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors"
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors min-h-[44px] inline-flex items-center"
           >
             Experience
           </SiteNavigationLink>
           <SiteNavigationLink
             href="/#skills"
-            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors"
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors min-h-[44px] inline-flex items-center"
           >
             Skills
           </SiteNavigationLink>
           <SiteNavigationLink
             href="/contact"
-            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold"
+            className="text-xs lg:text-sm font-medium text-muted hover:text-copy transition-colors aria-[current=page]:text-copy aria-[current=page]:font-bold min-h-[44px] inline-flex items-center"
           >
             Contact
           </SiteNavigationLink>

@@ -88,6 +88,25 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
           </Field>
         </div>
 
+        <div className="grid gap-5 md:grid-cols-2">
+          <Field>
+            <Label htmlFor="availabilityStatus">Availability Status</Label>
+            <Input id="availabilityStatus" name="availabilityStatus" defaultValue={profile.availabilityStatus ?? ""} placeholder="e.g. Open to internships & full-stack roles" />
+          </Field>
+          <div className="flex items-center gap-3 pt-6">
+            <input
+              type="checkbox"
+              id="availableForHire"
+              name="availableForHire"
+              defaultChecked={profile.availableForHire}
+              className="size-5 rounded border-rule text-accent focus:ring-accent"
+            />
+            <Label htmlFor="availableForHire" className="cursor-pointer font-medium">
+              Available for Hire / Open to Work
+            </Label>
+          </div>
+        </div>
+
         <Field>
           <Label htmlFor="shortBio">Short Bio</Label>
           <Textarea id="shortBio" name="shortBio" defaultValue={profile.shortBio} required />
@@ -98,7 +117,7 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
           <Input id="imageUrl" name="imageUrl" defaultValue={profile.imageUrl ?? ""} placeholder="https://images.example.com/profile.jpg" />
         </Field>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-4">
           <Field>
             <Label htmlFor="githubUrl">GitHub URL</Label>
             <Input id="githubUrl" name="githubUrl" defaultValue={profile.githubUrl} required />
@@ -106,6 +125,10 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
           <Field>
             <Label htmlFor="linkedinUrl">LinkedIn URL</Label>
             <Input id="linkedinUrl" name="linkedinUrl" defaultValue={profile.linkedinUrl} required />
+          </Field>
+          <Field>
+            <Label htmlFor="twitterUrl">Twitter / X URL</Label>
+            <Input id="twitterUrl" name="twitterUrl" defaultValue={profile.twitterUrl ?? ""} placeholder="https://x.com/username" />
           </Field>
           <Field>
             <Label htmlFor="resumeUrl">Resume URL or Path</Label>

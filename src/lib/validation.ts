@@ -98,8 +98,11 @@ export const profileSchema = z.object({
   email: z.string().trim().email().max(180),
   githubUrl: publicUrlOrPath,
   linkedinUrl: publicUrlOrPath,
+  twitterUrl: publicUrlOrPath.optional().or(z.literal("")),
   resumeUrl: publicUrlOrPath,
-  imageUrl: z.string().trim().url().or(z.literal(""))
+  imageUrl: z.string().trim().url().or(z.literal("")),
+  availabilityStatus: z.string().trim().max(160).optional().or(z.literal("")),
+  availableForHire: z.boolean().default(true)
 });
 
 export const imageUploadSchema = z.object({

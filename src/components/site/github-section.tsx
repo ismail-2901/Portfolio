@@ -122,72 +122,77 @@ export function GithubSection() {
           </Link>
         </div>
 
-        {/* Contribution Graph Container */}
-        <div className="relative overflow-x-auto pb-4">
-          {hoveredDay && (
-            <div
-              className="absolute pointer-events-none z-20 -top-8 px-2.5 py-1 rounded-md bg-neutral-900 text-white text-[10px] font-medium shadow-md -translate-x-1/2 whitespace-nowrap"
-              style={{ left: Math.max(80, hoveredDay.x - 30) }}
-            >
-              {hoveredDay.count} {hoveredDay.count === 1 ? "contribution" : "contributions"} on {hoveredDay.date}
-            </div>
-          )}
-          <div className="min-w-[700px] inline-block p-4 rounded-2xl bg-surface border border-rule">
-            {/* Months Header */}
-            <div className="flex justify-between text-[11px] text-muted mb-2 px-8">
-              {weeks.months.map((m, idx) => (
-                <span key={idx}>{m}</span>
-              ))}
-            </div>
-
-            {/* Grid Area with Day Labels */}
-            <div className="flex gap-2">
-              <div className="flex flex-col justify-between text-[9px] text-muted pr-1 py-1">
-                <span>Mon</span>
-                <span>Wed</span>
-                <span>Fri</span>
+        {/* Contribution Graph Container with Mobile Scroll Affordance */}
+        <div className="relative">
+          <div className="relative overflow-x-auto pb-4 after:absolute after:right-0 after:top-0 after:bottom-4 after:w-16 after:bg-gradient-to-l after:from-canvas after:to-transparent after:pointer-events-none md:after:hidden">
+            {hoveredDay && (
+              <div
+                className="absolute pointer-events-none z-20 -top-8 px-2.5 py-1 rounded-md bg-neutral-900 text-white text-[10px] font-medium shadow-md -translate-x-1/2 whitespace-nowrap"
+                style={{ left: Math.max(80, hoveredDay.x - 30) }}
+              >
+                {hoveredDay.count} {hoveredDay.count === 1 ? "contribution" : "contributions"} on {hoveredDay.date}
               </div>
-
-              <div className="flex gap-1.5 flex-1 justify-between">
-                {weeks.grid.map((week, wIdx) => (
-                  <div key={wIdx} className="flex flex-col gap-1.5">
-                    {week.map((day, dIdx) => (
-                      <div
-                        key={dIdx}
-                        className={`size-2.5 sm:size-3 rounded-[3px] transition-transform hover:scale-125 cursor-pointer ${getCellColor(
-                          day.level
-                        )}`}
-                        onMouseEnter={(e) => {
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          setHoveredDay({
-                            count: day.count,
-                            date: day.date,
-                            x: rect.x + rect.width / 2,
-                            y: rect.y
-                          });
-                        }}
-                        onMouseLeave={() => setHoveredDay(null)}
-                      />
-                    ))}
-                  </div>
+            )}
+            <div className="min-w-[700px] inline-block p-4 rounded-2xl bg-surface border border-rule">
+              {/* Months Header */}
+              <div className="flex justify-between text-[11px] text-muted mb-2 px-8">
+                {weeks.months.map((m, idx) => (
+                  <span key={idx}>{m}</span>
                 ))}
               </div>
-            </div>
 
-            {/* Bottom Footer Details */}
-            <div className="flex items-center justify-between text-[11px] text-muted mt-4 pt-3 border-t border-rule/50 px-2">
-              <span>Learn how we count contributions</span>
-              <div className="flex items-center gap-1.5">
-                <span>Less</span>
-                <span className="size-2.5 rounded-[2px] bg-neutral-200 dark:bg-neutral-800" />
-                <span className="size-2.5 rounded-[2px] bg-emerald-300 dark:bg-emerald-800" />
-                <span className="size-2.5 rounded-[2px] bg-emerald-400 dark:bg-emerald-600" />
-                <span className="size-2.5 rounded-[2px] bg-emerald-500 dark:bg-emerald-500" />
-                <span className="size-2.5 rounded-[2px] bg-emerald-600 dark:bg-emerald-400" />
-                <span>More</span>
+              {/* Grid Area with Day Labels */}
+              <div className="flex gap-2">
+                <div className="flex flex-col justify-between text-[9px] text-muted pr-1 py-1">
+                  <span>Mon</span>
+                  <span>Wed</span>
+                  <span>Fri</span>
+                </div>
+
+                <div className="flex gap-1.5 flex-1 justify-between">
+                  {weeks.grid.map((week, wIdx) => (
+                    <div key={wIdx} className="flex flex-col gap-1.5">
+                      {week.map((day, dIdx) => (
+                        <div
+                          key={dIdx}
+                          className={`size-2.5 sm:size-3 rounded-[3px] transition-transform hover:scale-125 cursor-pointer ${getCellColor(
+                            day.level
+                          )}`}
+                          onMouseEnter={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setHoveredDay({
+                              count: day.count,
+                              date: day.date,
+                              x: rect.x + rect.width / 2,
+                              y: rect.y
+                            });
+                          }}
+                          onMouseLeave={() => setHoveredDay(null)}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom Footer Details */}
+              <div className="flex items-center justify-between text-[11px] text-muted mt-4 pt-3 border-t border-rule/50 px-2">
+                <span>Learn how we count contributions</span>
+                <div className="flex items-center gap-1.5">
+                  <span>Less</span>
+                  <span className="size-2.5 rounded-[2px] bg-neutral-200 dark:bg-neutral-800" />
+                  <span className="size-2.5 rounded-[2px] bg-emerald-300 dark:bg-emerald-800" />
+                  <span className="size-2.5 rounded-[2px] bg-emerald-400 dark:bg-emerald-600" />
+                  <span className="size-2.5 rounded-[2px] bg-emerald-500 dark:bg-emerald-500" />
+                  <span className="size-2.5 rounded-[2px] bg-emerald-600 dark:bg-emerald-400" />
+                  <span>More</span>
+                </div>
               </div>
             </div>
           </div>
+          <p className="md:hidden text-[11px] text-muted mt-2 text-center select-none">
+            ← Swipe to view full year →
+          </p>
         </div>
       </div>
     </section>

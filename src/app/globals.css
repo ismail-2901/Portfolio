@@ -1310,7 +1310,7 @@ main {
 
 /* ── Reference 1:1 Typography & Divider Tokens ───────────────────────── */
 .hero-giant-title {
-  font-size: clamp(2.75rem, 10.5vw, 8.5rem);
+  font-size: clamp(2.25rem, 10.5vw, 8.5rem);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.88;
@@ -1319,7 +1319,7 @@ main {
 }
 
 .section-giant-title {
-  font-size: clamp(3rem, 11vw, 9rem);
+  font-size: clamp(2.5rem, 11vw, 9rem);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.88;
