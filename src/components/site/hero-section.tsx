@@ -80,13 +80,14 @@ export function HeroSection({
 
         {/* Centered Portrait Photo */}
         <div className="mt-16 md:mt-24 flex justify-center">
-          <div className="relative w-48 h-56 md:w-56 md:h-64 rounded-2xl overflow-hidden bg-surface-raised border border-rule shadow-sm">
+          <div className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[420px] aspect-[4/5] rounded-2xl overflow-hidden bg-surface-raised border border-rule shadow-sm">
             {imageUrl ? (
               <Image
                 src={imageUrl}
                 alt={name}
                 fill
-                className="object-cover"
+                sizes="(max-width: 640px) 320px, (max-width: 768px) 360px, 420px"
+                className="object-cover object-center"
                 priority
               />
             ) : (
