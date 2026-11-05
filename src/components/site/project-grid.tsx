@@ -47,12 +47,12 @@ export function ProjectGrid({ projects }: { projects: PublicProject[] }) {
   return (
     <div className="w-full">
       {/* Huge Section Title */}
-      <h2 className="section-giant-title text-center md:text-left select-none">
+      <h2 className="section-giant-title text-center select-none">
         PROJECTS
       </h2>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-6 mt-6 md:mt-8 text-xs font-semibold tracking-wider">
+      <div className="flex items-center justify-center gap-6 mt-6 md:mt-8 text-xs font-semibold tracking-wider">
         {categories.map((cat) => {
           const isActive = filter === cat.id;
           return (

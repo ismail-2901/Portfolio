@@ -46,10 +46,10 @@ export default async function HomePage() {
       {/* ── EXPERIENCE ───────────────────────────────────────── */}
       <section className="py-16 md:py-24 motion-reveal" id="experience">
         <div className="container-shell">
-          <h2 className="section-giant-title text-center md:text-left select-none mb-10 md:mb-14">
+          <h2 className="section-giant-title text-center select-none mb-10 md:mb-14">
             EXPERIENCE
           </h2>
-          <div className="flex flex-col gap-8 max-w-4xl">
+          <div className="flex flex-col gap-8 max-w-4xl mx-auto">
             {experience.map((item) => (
               <div
                 key={item.id}
