@@ -9,9 +9,12 @@ export function SiteHeader() {
       <div className="container-shell relative flex min-h-header-public items-center justify-between gap-4">
         <SiteNavigationLink
           href="/"
-          className="font-medium text-sm md:text-base text-copy hover:opacity-75 transition-opacity tracking-tight"
+          aria-label="Home"
+          className="group flex items-center justify-center min-h-[44px] min-w-[44px] text-copy hover:opacity-85 transition-opacity focus-ring rounded-xl"
         >
-          Md Ismail Hossain
+          <span className="flex size-9 items-center justify-center rounded-xl bg-copy text-canvas font-black text-xs tracking-wider border border-rule transition-transform duration-200 group-hover:scale-105 shadow-xs select-none">
+            IH
+          </span>
         </SiteNavigationLink>
 
         <nav
