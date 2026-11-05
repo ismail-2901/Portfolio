@@ -12,7 +12,7 @@ export function hashSensitive(value: string | null | undefined) {
 export async function assertSameOrigin() {
   const headerStore = await headers();
   const origin = headerStore.get("origin");
-  const host = headerStore.get("host");
+  const host = headerStore.get("x-forwarded-host") || headerStore.get("host");
 
   if (!origin || !host) {
     throw new Error("Invalid request origin.");

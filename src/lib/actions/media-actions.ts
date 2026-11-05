@@ -15,8 +15,24 @@ import { imageUploadSchema } from "@/lib/validation";
 const acceptedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
 const maxUploadBytes = 4 * 1024 * 1024;
 
+function cleanToken(token: string | undefined): string {
+  if (!token) return "";
+  const trimmed = token.trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1).trim();
+  }
+  return trimmed;
+}
+
 function getBlobToken() {
-  return process.env.BLOB_READ_WRITE_TOKEN?.trim() || process.env.PORTFOLIO_BLOB_READ_WRITE_TOKEN?.trim() || "";
+  return (
+    cleanToken(process.env.BLOB_READ_WRITE_TOKEN) ||
+    cleanToken(process.env.PORTFOLIO_BLOB_READ_WRITE_TOKEN) ||
+    ""
+  );
 }
 
 function assertUploadTokenConfigured() {
@@ -93,6 +109,10 @@ export async function uploadProjectImageAction(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/projects");
+  const returnTo = formData.get("returnTo");
+  if (typeof returnTo === "string" && returnTo.startsWith("/admin")) {
+    redirect(`${returnTo}?notice=uploaded`);
+  }
   redirect(`/admin/projects/${parsed.projectId}?notice=uploaded`);
 }
 

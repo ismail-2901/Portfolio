@@ -47,7 +47,7 @@ export function ProfileForm({ profile }: { profile: PublicProfile }) {
                   className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-2 text-label font-medium text-accent transition duration-interactive hover:border-accent/60 hover:bg-accent/15 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
                 >
                   <ImagePlus aria-hidden="true" className="size-4" />
-                  Upload
+                  Choose file
                 </label>
                 <SubmitButton className="shrink-0" pendingLabel="Uploading">Save upload</SubmitButton>
               </form>

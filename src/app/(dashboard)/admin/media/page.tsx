@@ -35,6 +35,7 @@ export default async function AdminMediaPage() {
       <h1 className="mt-2 text-heading font-semibold text-copy">Project image management</h1>
 
       <form action={uploadProjectImageAction} className="mt-8 grid gap-5 rounded-panel border border-rule bg-surface-raised p-6 md:grid-cols-2">
+        <input type="hidden" name="returnTo" value="/admin/media" />
         <Field>
           <Label htmlFor="projectId">Project</Label>
           <Select id="projectId" name="projectId" required>
