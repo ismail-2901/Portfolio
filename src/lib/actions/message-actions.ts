@@ -47,3 +47,23 @@ export async function archiveMessageAction(id: string) {
   revalidatePath("/admin/messages");
   redirect("/admin/messages?notice=archived");
 }
+
+export async function deleteMessageAction(id: string) {
+  const session = await requireAdmin();
+  await assertSameOrigin();
+
+  await prisma.contactMessage.delete({
+    where: { id }
+  });
+
+  await writeAuditLog({
+    actorId: session.user.id,
+    action: "delete",
+    entity: "contactMessage",
+    entityId: id
+  });
+
+  revalidatePath("/admin/messages");
+  revalidatePath("/admin");
+  redirect("/admin/messages?notice=deleted");
+}
