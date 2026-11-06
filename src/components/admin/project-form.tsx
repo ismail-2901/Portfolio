@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { createProjectAction, deleteProjectAction, updateProjectAction } from "@/lib/actions/project-actions";
-import { updateProjectImageAction, uploadProjectImagesAction } from "@/lib/actions/media-actions";
+import { deleteProjectImageAction, updateProjectImageAction, uploadProjectImagesAction } from "@/lib/actions/media-actions";
 
 type ProjectFormValue = {
   id: string;
@@ -336,15 +336,22 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
                     {!isEditing ? (
                       <>
                         <p className="text-body-small text-copy font-medium break-words">{image.alt}</p>
-                        {/* Edit Button directly under Alt Text replacing Delete Button */}
-                        <button
-                          type="button"
-                          onClick={() => setEditingImageId(image.id)}
-                          className="focus-ring mt-1 inline-flex w-full items-center justify-center gap-1.5 rounded-button border border-rule bg-surface px-3 py-1.5 text-xs font-semibold text-copy transition hover:border-accent hover:text-accent"
-                        >
-                          <Pencil aria-hidden="true" className="size-3.5" />
-                          Edit
-                        </button>
+                        <div className="mt-1 flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setEditingImageId(image.id)}
+                            className="focus-ring inline-flex flex-1 items-center justify-center gap-1.5 rounded-button border border-rule bg-surface px-3 py-1.5 text-xs font-semibold text-copy transition hover:border-accent hover:text-accent"
+                          >
+                            <Pencil aria-hidden="true" className="size-3.5" />
+                            Edit
+                          </button>
+                          <form action={deleteProjectImageAction.bind(null, image.id)}>
+                            <SubmitButton variant="danger" pendingLabel="Deleting" className="px-3 py-1.5 text-xs">
+                              <Trash2 aria-hidden="true" className="size-3.5" />
+                              Delete
+                            </SubmitButton>
+                          </form>
+                        </div>
                       </>
                     ) : (
                       <form action={updateProjectImageAction.bind(null, image.id)} className="mt-2 space-y-3 border-t border-rule pt-3">
@@ -373,13 +380,24 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
                           <Input id={`file-${image.id}`} name="file" type="file" accept="image/avif,image/jpeg,image/png,image/webp" />
                         </Field>
 
-                        <div className="flex items-center gap-2 pt-1">
-                          <SubmitButton pendingLabel="Saving">
-                            <Check aria-hidden="true" className="size-3.5" />
-                            Save
-                          </SubmitButton>
-                          <Button type="button" variant="secondary" onClick={() => setEditingImageId(null)}>
-                            Cancel
+                        <div className="flex items-center justify-between gap-2 pt-1">
+                          <div className="flex items-center gap-2">
+                            <SubmitButton pendingLabel="Saving">
+                              <Check aria-hidden="true" className="size-3.5" />
+                              Save
+                            </SubmitButton>
+                            <Button type="button" variant="secondary" onClick={() => setEditingImageId(null)}>
+                              Cancel
+                            </Button>
+                          </div>
+                          <Button
+                            type="button"
+                            variant="danger"
+                            onClick={() => deleteProjectImageAction(image.id)}
+                            className="px-3 py-1.5 text-xs"
+                          >
+                            <Trash2 aria-hidden="true" className="size-3.5" />
+                            Delete
                           </Button>
                         </div>
                       </form>

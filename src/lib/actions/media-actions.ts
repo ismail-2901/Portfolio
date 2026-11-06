@@ -269,6 +269,8 @@ export async function deleteProjectImageAction(id: string) {
 
   revalidatePath("/");
   revalidatePath("/projects");
+  revalidatePath("/admin/projects");
+  revalidatePath(`/admin/projects/${image.projectId}`);
   redirect(`/admin/projects/${image.projectId}?notice=deleted`);
 }
 
