@@ -93,7 +93,7 @@ export default async function HomePage() {
       <GithubSection />
 
       {/* ── CONTACT ──────────────────────────────────────────── */}
-      <ContactSection />
+      <ContactSection profile={profile} />
 
       <div className="container-shell pointer-events-none" aria-hidden="true">
         <div className="engineering-object-stage h-[1px] opacity-0" />

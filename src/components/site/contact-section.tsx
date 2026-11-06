@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-export function ContactSection() {
+import type { PublicProfile } from "@/lib/queries";
+
+export function ContactSection({ profile }: { profile?: PublicProfile | null } = {}) {
   return (
     <section className="py-16 md:py-24" id="contact">
       <div className="container-shell">
@@ -15,14 +18,35 @@ export function ContactSection() {
         {/* Centered Showcase Card */}
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center p-6 sm:p-8 md:p-10 rounded-3xl bg-surface border border-rule shadow-sm">
           {/* Left Column: Visual Container */}
-          <div className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden bg-surface-raised border border-rule shadow-xs flex items-center justify-center">
-            <div className="w-full h-full bg-gradient-to-tr from-neutral-300 via-neutral-200 to-neutral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-700 p-6 flex flex-col justify-end">
-              <span className="text-xs font-bold uppercase tracking-wider text-copy/90">
+          <div className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 shadow-md group flex items-center justify-center">
+            {profile?.imageUrl ? (
+              <Image
+                src={profile.imageUrl}
+                alt={profile.name}
+                fill
+                sizes="(max-width: 640px) 100vw, 480px"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            ) : (
+              <div className="size-full bg-gradient-to-tr from-neutral-900 via-neutral-800 to-neutral-700" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+            <div className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full bg-black/60 px-3 py-1 backdrop-blur-md border border-white/10 shadow-sm">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              </span>
+              <span className="text-[11px] font-bold uppercase tracking-wider text-white">
+                {profile?.availableForHire ? "Available for Hire" : "Engineering Openings"}
+              </span>
+            </div>
+            <div className="absolute bottom-4 inset-x-4 z-10 select-none">
+              <p className="text-xs font-bold uppercase tracking-wider text-white drop-shadow">
                 Engineering Collaboration
-              </span>
-              <span className="text-[11px] text-muted mt-1 leading-relaxed">
-                Open to Full-Stack &amp; Software Engineering Internships
-              </span>
+              </p>
+              <p className="text-[11px] text-neutral-200/90 mt-0.5 leading-relaxed drop-shadow">
+                {profile?.availabilityStatus || "Open to Full-Stack & Software Engineering Internships"}
+              </p>
             </div>
           </div>
 
