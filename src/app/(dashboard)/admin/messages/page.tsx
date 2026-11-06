@@ -10,7 +10,7 @@ export default async function AdminMessagesPage() {
   });
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="mx-auto max-w-6xl w-full min-w-0">
       <p className="font-mono text-metadata uppercase text-accent">Messages</p>
       <h1 className="mt-2 text-heading font-semibold text-copy">Contact inbox</h1>
 
