@@ -25,18 +25,6 @@ export function MessagesList({ messages }: { messages: MessageItem[] }) {
     setExpandedIds((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const expandAll = () => {
-    const all: Record<string, boolean> = {};
-    messages.forEach((m) => {
-      all[m.id] = true;
-    });
-    setExpandedIds(all);
-  };
-
-  const collapseAll = () => {
-    setExpandedIds({});
-  };
-
   if (messages.length === 0) {
     return (
       <div className="rounded-panel border border-rule bg-surface-raised p-8 text-center">
@@ -45,30 +33,12 @@ export function MessagesList({ messages }: { messages: MessageItem[] }) {
     );
   }
 
-  const allExpanded = messages.length > 0 && messages.every((m) => expandedIds[m.id]);
-
   return (
     <div className="w-full max-w-full space-y-4">
       <div className="flex items-center justify-between gap-2">
         <p className="text-xs text-muted">
           Showing {messages.length} {messages.length === 1 ? "message" : "messages"}
         </p>
-        <Button
-          type="button"
-          variant="ghost"
-          className="h-8 px-2 text-xs text-muted hover:text-copy"
-          onClick={allExpanded ? collapseAll : expandAll}
-        >
-          {allExpanded ? (
-            <>
-              <ChevronUp className="size-3.5 mr-1" /> Collapse all
-            </>
-          ) : (
-            <>
-              <ChevronDown className="size-3.5 mr-1" /> Expand all
-            </>
-          )}
-        </Button>
       </div>
 
       <div className="grid w-full max-w-full gap-3">
