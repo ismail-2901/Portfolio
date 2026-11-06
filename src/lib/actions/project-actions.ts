@@ -59,13 +59,13 @@ async function uploadProjectImagesFromFormData(projectId: string, projectTitle: 
 
   const fileAlts = formData.getAll("fileAlts").map(String);
   const fileOrders = formData.getAll("fileOrders").map(Number);
-  const coverIndex = Number(formData.get("coverIndex") ?? 0);
+  const fileIsCovers = formData.getAll("fileIsCovers").map((v) => v === "true");
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const isCover = i === coverIndex;
+    const isCover = fileIsCovers[i] === true;
     const alt = fileAlts[i] || `${projectTitle} screenshot ${i + 1}`;
-    const order = !isNaN(fileOrders[i]) ? fileOrders[i] : i;
+    const order = !isNaN(fileOrders[i]) ? fileOrders[i] : i + 1;
 
     if (isCover) {
       await prisma.projectImage.updateMany({

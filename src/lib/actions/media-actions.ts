@@ -202,13 +202,13 @@ export async function uploadProjectImagesAction(formData: FormData) {
 
   const fileAlts = formData.getAll("fileAlts").map(String);
   const fileOrders = formData.getAll("fileOrders").map(Number);
-  const coverIndex = Number(formData.get("coverIndex") ?? -1);
+  const fileIsCovers = formData.getAll("fileIsCovers").map((v) => v === "true");
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const isCover = coverIndex === i;
+    const isCover = fileIsCovers[i] === true;
     const alt = fileAlts[i] || file.name.replace(/\.[^.]+$/, "");
-    const order = !isNaN(fileOrders[i]) ? fileOrders[i] : i;
+    const order = !isNaN(fileOrders[i]) ? fileOrders[i] : i + 1;
 
     if (isCover) {
       await prisma.projectImage.updateMany({

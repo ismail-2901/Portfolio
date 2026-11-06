@@ -43,26 +43,31 @@ type PendingImage = {
   previewUrl: string;
   alt: string;
   order: number;
+  isCover: boolean;
 };
 
 export function ProjectForm({ project }: { project?: ProjectFormValue }) {
   const action = project ? updateProjectAction.bind(null, project.id) : createProjectAction;
 
   const [pendingImages, setPendingImages] = useState<PendingImage[]>([]);
-  const [coverIndex, setCoverIndex] = useState<number>(0);
   const [editingImageId, setEditingImageId] = useState<string | null>(null);
 
   const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
 
-    const startOrder = (project?.images?.length ?? 0) + pendingImages.length;
+    const existingOrders = project?.images?.map((img) => img.order) ?? [];
+    const pendingOrders = pendingImages.map((p) => p.order);
+    const maxOrder = Math.max(0, ...existingOrders, ...pendingOrders, project?.images?.length ?? 0);
+    const startOrder = maxOrder + 1;
+
     const newItems: PendingImage[] = files.map((file, idx) => ({
       id: `${file.name}-${Date.now()}-${idx}`,
       file,
       previewUrl: URL.createObjectURL(file),
       alt: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
-      order: startOrder + idx
+      order: startOrder + idx,
+      isCover: false
     }));
 
     setPendingImages((prev) => [...prev, ...newItems]);
@@ -70,13 +75,7 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
   };
 
   const removePendingImage = (id: string) => {
-    setPendingImages((prev) => {
-      const filtered = prev.filter((item) => item.id !== id);
-      if (coverIndex >= filtered.length) {
-        setCoverIndex(Math.max(0, filtered.length - 1));
-      }
-      return filtered;
-    });
+    setPendingImages((prev) => prev.filter((item) => item.id !== id));
   };
 
   const updatePendingAlt = (id: string, alt: string) => {
@@ -87,13 +86,22 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
     setPendingImages((prev) => prev.map((item) => (item.id === id ? { ...item, order } : item)));
   };
 
+  const togglePendingCover = (id: string, checked: boolean) => {
+    setPendingImages((prev) =>
+      prev.map((item) => ({
+        ...item,
+        isCover: item.id === id ? checked : false
+      }))
+    );
+  };
+
   const handleMainSubmit = async (formData: FormData) => {
     pendingImages.forEach((pi) => {
       formData.append("files", pi.file);
       formData.append("fileAlts", pi.alt);
       formData.append("fileOrders", String(pi.order));
+      formData.append("fileIsCovers", String(pi.isCover));
     });
-    formData.set("coverIndex", String(coverIndex));
     await action(formData);
   };
 
@@ -217,7 +225,7 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
               <p className="text-xs font-semibold text-copy uppercase tracking-wider">
                 Ready to save ({pendingImages.length})
               </p>
-              {pendingImages.map((item, idx) => (
+              {pendingImages.map((item) => (
                 <div key={item.id} className="rounded-panel border border-rule bg-canvas/60 p-3 space-y-2">
                   <div className="flex items-center gap-3">
                     <Image
@@ -266,10 +274,9 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
 
                   <label className="flex items-center gap-2 text-xs text-copy cursor-pointer pt-1">
                     <input
-                      type="radio"
-                      name="pendingCoverRadio"
-                      checked={coverIndex === idx}
-                      onChange={() => setCoverIndex(idx)}
+                      type="checkbox"
+                      checked={item.isCover}
+                      onChange={(e) => togglePendingCover(item.id, e.target.checked)}
                       className="focus-ring size-3.5 accent-accent-secondary"
                     />
                     <span>Set as cover image</span>
@@ -287,8 +294,8 @@ export function ProjectForm({ project }: { project?: ProjectFormValue }) {
                       fd.append("files", pi.file);
                       fd.append("fileAlts", pi.alt);
                       fd.append("fileOrders", String(pi.order));
+                      fd.append("fileIsCovers", String(pi.isCover));
                     });
-                    fd.set("coverIndex", String(coverIndex));
                     await uploadProjectImagesAction(fd);
                     setPendingImages([]);
                   }}
