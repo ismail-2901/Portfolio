@@ -372,9 +372,10 @@ export const getExperienceTimeline = cache(function getExperienceTimeline(): Pro
 });
 
 export async function getDashboardStats() {
-  const [projects, articles, skills, unreadMessages] = await Promise.all([
+  const [projects, articles, experience, skills, unreadMessages] = await Promise.all([
     prisma.project.count(),
     prisma.article.count(),
+    prisma.experience.count(),
     prisma.skill.count(),
     prisma.contactMessage.count({
       where: {
@@ -384,7 +385,7 @@ export async function getDashboardStats() {
     })
   ]);
 
-  return { projects, articles, skills, unreadMessages };
+  return { projects, articles, experience, skills, unreadMessages };
 }
 
 export type PublicEducation = {

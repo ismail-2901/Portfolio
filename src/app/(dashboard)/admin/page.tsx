@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, FileText, Inbox, Layers3, Sparkles, UserCheck, Mail } from "lucide-react";
+import { ArrowRight, Briefcase, FileText, Inbox, Layers3, Sparkles, UserCheck, Mail } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 const cards = [
   { label: "Projects", key: "projects", href: "/admin/projects", icon: Layers3 },
   { label: "Articles", key: "articles", href: "/admin/articles", icon: FileText },
+  { label: "Experience", key: "experience", href: "/admin/experience", icon: Briefcase },
   { label: "Skills", key: "skills", href: "/admin/skills", icon: Sparkles },
   { label: "Unread Messages", key: "unreadMessages", href: "/admin/messages", icon: Inbox }
 ] as const;

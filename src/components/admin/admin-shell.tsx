@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { BarChart3, FileText, Images, Inbox, Layers3, Settings, Sparkles } from "lucide-react";
+import { BarChart3, Briefcase, FileText, Images, Inbox, Layers3, Settings, Sparkles } from "lucide-react";
 
 import { LogoutButton } from "@/components/admin/logout-button";
 
@@ -12,6 +12,7 @@ const navItems = [
   { href: "/admin/profile", label: "Profile", icon: Settings },
   { href: "/admin/projects", label: "Projects", icon: Layers3 },
   { href: "/admin/articles", label: "Articles", icon: FileText },
+  { href: "/admin/experience", label: "Experience", icon: Briefcase },
   { href: "/admin/skills", label: "Skills", icon: Sparkles },
   { href: "/admin/media", label: "Media", icon: Images },
   { href: "/admin/messages", label: "Messages", icon: Inbox }

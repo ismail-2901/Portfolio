@@ -49,7 +49,7 @@ describe("admin responsive controls", () => {
     const links = container.querySelectorAll('nav[aria-label="Admin navigation"] a');
     const sidebar = container.querySelector("aside");
 
-    expect(links).toHaveLength(14);
+    expect(links).toHaveLength(16);
     expect(sidebar).toHaveClass("overflow-y-auto");
     expect(container.querySelector('header a[href="/"]')).toHaveClass("min-h-11");
     for (const link of links) {

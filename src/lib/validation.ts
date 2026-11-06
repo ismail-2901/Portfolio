@@ -74,6 +74,18 @@ export const articleSchema = z.object({
   status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"])
 });
 
+export const experienceSchema = z.object({
+  company: z.string().trim().min(2, "Company must be at least 2 characters.").max(120),
+  role: z.string().trim().min(2, "Role must be at least 2 characters.").max(120),
+  location: z.string().trim().max(120).optional().or(z.literal("")),
+  summary: z.string().trim().min(10, "Summary must be at least 10 characters.").max(3000),
+  startDate: z.string().min(4, "Start date is required."),
+  endDate: z.string().optional().or(z.literal("")),
+  current: z.boolean().default(false),
+  order: z.coerce.number().int().min(0).max(9999),
+  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]).default("PUBLISHED")
+});
+
 export const skillSchema = z.object({
   name: z.string().trim().min(2).max(80),
   category: z.string().trim().min(2).max(80),
