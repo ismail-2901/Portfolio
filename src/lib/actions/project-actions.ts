@@ -1,6 +1,7 @@
 "use server";
 
 import { ContentStatus } from "@prisma/client";
+import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -40,6 +41,57 @@ function projectDataFromForm(formData: FormData) {
   };
 }
 
+async function uploadProjectImagesFromFormData(projectId: string, projectTitle: string, formData: FormData) {
+  const files = formData.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
+  if (files.length === 0) {
+    const singleFile = formData.get("file");
+    if (singleFile instanceof File && singleFile.size > 0) {
+      files.push(singleFile);
+    }
+  }
+  if (files.length === 0) return;
+
+  const blobToken =
+    process.env.BLOB_READ_WRITE_TOKEN?.trim() ||
+    process.env.PORTFOLIO_BLOB_READ_WRITE_TOKEN?.trim() ||
+    "";
+  if (!blobToken) return;
+
+  const fileAlts = formData.getAll("fileAlts").map(String);
+  const fileOrders = formData.getAll("fileOrders").map(Number);
+  const coverIndex = Number(formData.get("coverIndex") ?? 0);
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const isCover = i === coverIndex;
+    const alt = fileAlts[i] || `${projectTitle} screenshot ${i + 1}`;
+    const order = !isNaN(fileOrders[i]) ? fileOrders[i] : i;
+
+    if (isCover) {
+      await prisma.projectImage.updateMany({
+        where: { projectId },
+        data: { isCover: false }
+      });
+    }
+
+    const blob = await put(`project-images/${projectId}/${file.name}`, file, {
+      access: "public",
+      token: blobToken,
+      addRandomSuffix: true
+    });
+
+    await prisma.projectImage.create({
+      data: {
+        projectId,
+        url: blob.url,
+        alt,
+        isCover,
+        order
+      }
+    });
+  }
+}
+
 export async function createProjectAction(formData: FormData) {
   const session = await requireAdmin();
   await assertSameOrigin();
@@ -71,6 +123,8 @@ export async function createProjectAction(formData: FormData) {
     entityId: project.id,
     metadata: { slug: project.slug }
   });
+
+  await uploadProjectImagesFromFormData(project.id, project.title, formData);
 
   revalidatePath("/");
   revalidatePath("/projects");
@@ -111,6 +165,8 @@ export async function updateProjectAction(id: string, formData: FormData) {
     entityId: project.id,
     metadata: { slug: project.slug }
   });
+
+  await uploadProjectImagesFromFormData(project.id, project.title, formData);
 
   revalidatePath("/");
   revalidatePath("/projects");

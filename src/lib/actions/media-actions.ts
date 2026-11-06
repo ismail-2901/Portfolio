@@ -116,6 +116,138 @@ export async function uploadProjectImageAction(formData: FormData) {
   redirect(`/admin/projects/${parsed.projectId}?notice=uploaded`);
 }
 
+export async function updateProjectImageAction(id: string, formData: FormData) {
+  const session = await requireAdmin();
+  await assertSameOrigin();
+
+  const alt = String(formData.get("alt") ?? "").trim();
+  const order = Number(formData.get("order") ?? 0);
+  const isCover = formData.get("isCover") === "on" || formData.get("isCover") === "true";
+
+  if (!alt) {
+    throw new Error("Alt text is required.");
+  }
+
+  const existing = await prisma.projectImage.findUnique({ where: { id } });
+  if (!existing) {
+    throw new Error("Image not found.");
+  }
+
+  if (isCover) {
+    await prisma.projectImage.updateMany({
+      where: { projectId: existing.projectId },
+      data: { isCover: false }
+    });
+  }
+
+  const file = formData.get("file");
+  let url = existing.url;
+  if (file instanceof File && file.size > 0) {
+    const blobToken = getBlobToken();
+    assertUploadTokenConfigured();
+    const blob = await put(`project-images/${existing.projectId}/${file.name}`, file, {
+      access: "public",
+      token: blobToken,
+      addRandomSuffix: true
+    });
+    url = blob.url;
+  }
+
+  await prisma.projectImage.update({
+    where: { id },
+    data: {
+      alt,
+      order,
+      isCover,
+      url
+    }
+  });
+
+  await writeAuditLog({
+    actorId: session.user.id,
+    action: "update",
+    entity: "projectImage",
+    entityId: id,
+    metadata: { projectId: existing.projectId }
+  });
+
+  revalidatePath("/");
+  revalidatePath("/projects");
+  revalidatePath(`/admin/projects/${existing.projectId}`);
+  redirect(`/admin/projects/${existing.projectId}?notice=saved`);
+}
+
+export async function uploadProjectImagesAction(formData: FormData) {
+  const session = await requireAdmin();
+  await assertSameOrigin();
+  const blobToken = getBlobToken();
+  assertUploadTokenConfigured();
+
+  const projectId = String(formData.get("projectId") ?? "");
+  if (!projectId) {
+    throw new Error("Project ID is required.");
+  }
+
+  const files = formData.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
+  if (files.length === 0) {
+    const singleFile = formData.get("file");
+    if (singleFile instanceof File && singleFile.size > 0) {
+      files.push(singleFile);
+    }
+  }
+
+  if (files.length === 0) {
+    throw new Error("Select at least one image file.");
+  }
+
+  const fileAlts = formData.getAll("fileAlts").map(String);
+  const fileOrders = formData.getAll("fileOrders").map(Number);
+  const coverIndex = Number(formData.get("coverIndex") ?? -1);
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const isCover = coverIndex === i;
+    const alt = fileAlts[i] || file.name.replace(/\.[^.]+$/, "");
+    const order = !isNaN(fileOrders[i]) ? fileOrders[i] : i;
+
+    if (isCover) {
+      await prisma.projectImage.updateMany({
+        where: { projectId },
+        data: { isCover: false }
+      });
+    }
+
+    const blob = await put(`project-images/${projectId}/${file.name}`, file, {
+      access: "public",
+      token: blobToken,
+      addRandomSuffix: true
+    });
+
+    await prisma.projectImage.create({
+      data: {
+        projectId,
+        url: blob.url,
+        alt,
+        isCover,
+        order
+      }
+    });
+  }
+
+  await writeAuditLog({
+    actorId: session.user.id,
+    action: "upload",
+    entity: "projectImage",
+    entityId: projectId,
+    metadata: { count: files.length }
+  });
+
+  revalidatePath("/");
+  revalidatePath("/projects");
+  revalidatePath(`/admin/projects/${projectId}`);
+  redirect(`/admin/projects/${projectId}?notice=uploaded`);
+}
+
 export async function deleteProjectImageAction(id: string) {
   const session = await requireAdmin();
   await assertSameOrigin();

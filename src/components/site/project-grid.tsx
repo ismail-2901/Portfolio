@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Github, Globe } from "lucide-react";
@@ -7,7 +8,19 @@ import { ArrowRight, Github, Globe } from "lucide-react";
 import type { PublicProject } from "@/lib/queries";
 
 export function ProjectCard({ project, index }: { project: PublicProject; index: number }) {
-  const cover = project.images?.find((img) => img.isCover) ?? project.images?.[0];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const images = (project.images && project.images.length > 0)
+    ? [...project.images].sort((a, b) => (b.isCover ? 1 : 0) - (a.isCover ? 1 : 0) || a.order - b.order)
+    : [];
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [images.length]);
 
   return (
     <div
@@ -29,13 +42,38 @@ export function ProjectCard({ project, index }: { project: PublicProject; index:
           className="absolute -right-6 -bottom-6 size-40 rounded-2xl border border-white/10 rotate-12 pointer-events-none"
         />
 
-        {cover ? (
-          <Image
-            src={cover.url}
-            alt={cover.alt}
-            fill
-            className="object-cover transition-transform duration-500 group-hover/preview:scale-[1.03]"
-          />
+        {images.length > 0 ? (
+          <div className="relative size-full">
+            {images.map((img, imgIdx) => (
+              <div
+                key={img.id || imgIdx}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                  imgIdx === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                }`}
+              >
+                <Image
+                  src={img.url}
+                  alt={img.alt || project.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover/preview:scale-[1.03]"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            ))}
+
+            {images.length > 1 && (
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
+                {images.map((_, dotIdx) => (
+                  <span
+                    key={dotIdx}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      dotIdx === currentSlide ? "w-4 bg-white" : "w-1.5 bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         ) : (
           <>
             {/* Top Bar: Project index + tag badge */}
